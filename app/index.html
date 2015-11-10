@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="{$ lang $}">
+{% include "head.html" %}
+<body unresolved class="fullbleed vertical layout">
+  <span id="browser-sync-binding"></span>
+
+  <template is="dom-bind" id="app">
+
+      <header class="Header">
+        <h1 class="Header-logo">e<span class="Header-logo--blue">x</span>ago</h1>
+        <h2 class="Header-subhead">Inspect the quality of your Go project</h2>
+        <input type="text" name="repo" class="Header-search" placeholder="github.com/">
+        <paper-fab icon="chevron-right" mini></paper-fab>
+      </header>
+
+      <!-- Main Content -->
+      <iron-pages class="Main-content" attr-for-selected="data-route" selected="{{route}}">
+
+        <section class="Page" data-route="home">
+
+          <paper-material class="Page-paper" elevation="1">
+            <header>Your last checks</header>
+              <dl>
+                <dt>jgautheron/gocha</dt>
+                <dd>88%</dd>
+                <dt>jgautheron/foobar</dt>
+                <dd>71%</dd>
+                <dt>jgautheron/datbar</dt>
+                <dd>30%</dd>
+              </dl>
+          </paper-material>
+        </section>
+
+        <section class="Page" data-route="repository">
+          <paper-material class="Page-paper" elevation="1">
+            <h2 class="Page-title">Repository</h2>
+            <p>This is the users section</p>
+          </paper-material>
+        </section>
+
+        <section class="Page" data-route="info">
+          <paper-material class="Page-paper" elevation="1">
+            <h2 class="Page-title">Info</h2>
+            <p>This is the contact section</p>
+          </paper-material>
+        </section>
+
+      </iron-pages>
+
+  </template>
+
+  <!-- build:js scripts/app.js -->
+  <script src="scripts/app.js"></script>
+  <!-- endbuild-->
+
+  <!-- Google Analytics code -->
+  <start-google-analytics-tracker code="UA-XXXXX-Y"></start-google-analytics-tracker>
+</body>
+
+</html>

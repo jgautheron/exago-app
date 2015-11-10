@@ -1,0 +1,46 @@
+/** @define Header */
+
+.Header {
+  background: var(--default-primary-color);
+  min-height: 370px;
+  text-align: center;
+
+  @nest &-logo {
+    font-weight: 500;
+    line-height: 61px !important;
+    margin-bottom: 0;
+    @apply(--paper-font-display3);
+
+    @nest &--blue {
+      color: var(--accent-color);
+      font-weight: 500;
+    }
+  }
+
+  @nest &-subhead {
+    margin-bottom: 100px;
+    @apply(--paper-font-subhead);
+  }
+
+  @nest &-search {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--accent-color);
+    padding: 5px;
+    font-size: 22px;
+    outline: 0;
+
+    @nest &:focus {
+      border-bottom-width: 2px;
+    }
+    @nest & + paper-fab {
+      display: inline-block;
+      margin-left: 10px;
+    }
+  }
+
+  @nest &-icon {
+    --iron-icon-fill-color: var(--accent-color);
+    cursor: pointer;
+  }
+}
