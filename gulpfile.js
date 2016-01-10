@@ -219,7 +219,13 @@ gulp.task('serve', ['images', 'js', 'lint', 'manifest', 'styles', 'views'], func
     },
     server: {
       baseDir: ['.tmp', 'app'],
-      middleware: [ historyApiFallback() ],
+      middleware: [ historyApiFallback({
+        rewrites: [
+          // dots in the path are interpreted by default as a file path
+          { from: /\.go$/, to: '/index.html'},
+          { from: /project\/\w+\.\w+/, to: '/index.html'}
+        ]
+      })],
       routes: {
         '/bower_components': 'bower_components'
       }

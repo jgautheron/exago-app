@@ -1,19 +1,24 @@
 /** @define Header */
 
 .Header {
-  background: var(--default-primary-color);
+  background: var(--light-primary-color);
   min-height: 370px;
   text-align: center;
 
   @nest &-logo {
+    display: block;
+    text-decoration: none;
     font-weight: 500;
     line-height: 61px !important;
     margin-bottom: 0;
     @apply(--paper-font-display3);
 
     @nest &--blue {
-      color: var(--accent-color);
+      color: var(--default-primary-color);
       font-weight: 500;
+    }
+    @nest &:visited {
+      color: inherit;
     }
   }
 
@@ -22,25 +27,40 @@
     @apply(--paper-font-subhead);
   }
 
-  @nest &-search {
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid var(--accent-color);
-    padding: 5px;
-    font-size: 22px;
-    outline: 0;
+  @nest &-icon {
+    --iron-icon-fill-color: var(--default-primary-color);
+    cursor: pointer;
+  }
 
-    @nest &:focus {
-      border-bottom-width: 2px;
-    }
-    @nest & + paper-fab {
-      display: inline-block;
-      margin-left: 10px;
+  @nest &-searchContainer {
+    @nest & span {
+      display: block;
+      margin-top: 10px;
+      @apply(--paper-font-body1);
     }
   }
 
-  @nest &-icon {
-    --iron-icon-fill-color: var(--accent-color);
-    cursor: pointer;
+  @nest &[mini] {
+    height: 100px;
+    min-height: 100px;
+    text-align: left;
+
+    @nest & .Header-logo {
+      margin: 16px 0 0 70px;
+    }
+
+    @nest & .Header-subhead {
+      display: none !important;
+    }
+
+    @nest & .Header-searchContainer {
+      position: absolute;
+      top: 0;
+      right: 70px;
+
+      @nest & span {
+        display: none;
+      }
+    }
   }
 }

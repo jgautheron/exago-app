@@ -1,0 +1,41 @@
+/** @define Project */
+
+.Project {
+    @nest &-header {
+        margin: 0 16px;
+        padding: 16px;
+        min-height: 110px;
+
+        @nest & h1 {
+            @apply(--paper-font-display3);
+            margin: 20px;
+
+            @nest & iron-icon {
+                --iron-icon-height: 48px;
+                --iron-icon-width: 48px;
+            }
+        }
+
+        @nest & h2 {
+            @apply(--paper-font-subhead);
+        }
+    }
+
+    @nest &-headerHelp {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    @nest &-headerBadge {
+        @apply(--paper-font-display3);
+        background: var(--light-primary-color);
+        color: var(--default-primary-color);
+        padding: 25px;
+        border-radius: 15px;
+        position: absolute;
+        top: 16px;
+        right: 16px;
+    }
+}
+

@@ -1,0 +1,58 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+
+<dom-module id="search-input">
+  <style is="custom-style">
+    :host {
+      display: block;
+      position: relative;
+      margin: 0 auto;
+      width: 400px;
+    }
+    :host .Search-input {
+      --paper-input-container-label: {
+        @apply(--paper-font-title);
+      }
+      --paper-input-container-input: {
+        @apply(--paper-font-title);
+      }
+    }
+  </style>
+  <template>
+    <iron-a11y-keys id="a11y" target="[[target]]" keys="enter" on-keys-pressed="onEnter"></iron-a11y-keys>
+    <paper-input id="searchInput" class="Search-input" value="{{userInput::input}}" placeholder="user/repo @ GitHub" pattern="\w+\/\w+" error-message="This is not a valid repository">
+      <paper-icon-button suffix icon="search" on-click="search"></paper-icon-button>
+    </paper-input>
+  </template>
+
+  <script>
+    'use strict';
+    Polymer({
+      is: 'search-input',
+      properties: {
+        userInput: {
+          type: String,
+          notify: true,
+        },
+        target: {
+          type: Object,
+          value: function() {
+            return this.$.searchInput;
+          }
+        }
+      },
+      onEnter() {
+        if (this.$.searchInput.validate()) {
+          this.search();
+        }
+      },
+      search() {
+        // only github.com supported for now
+        let registry = 'github.com';
+        let [username, repository] = this.userInput.split('/');
+        page('/project/' + registry + '/' + username + '/' + repository);
+      }
+    });
+  </script>
+
+</dom-module>

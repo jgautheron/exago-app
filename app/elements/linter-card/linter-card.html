@@ -1,0 +1,365 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../common-styles.html">
+
+<!-- Iron elements -->
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<!-- Paper elements -->
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
+
+<!-- Neon elements -->
+<link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-down-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+<dom-module id="linter-card">
+  <style include="common-styles"></style>
+  <template>
+    <style>
+      :host {
+        position: relative;
+        display: block;
+        @apply(--shadow-elevation-2dp);
+        min-height: 120px;
+      }
+
+      :host h2 {
+        @apply(--paper-font-display1);
+        font-weight: 300;
+        margin: 0 0 20px 0;
+      }
+
+      :host .main-column {
+        @apply(--layout-flex-11);
+        text-align: left;
+        padding-top: 14px;
+      }
+
+      :host .side-column {
+        @apply(--layout-flex-1);
+        text-align: left;
+      }
+      :host .side-column paper-toggle-button {
+        display: block;
+      }
+
+      :host .linter-toggles {
+        margin-top: 16px;
+      }
+
+      :host .file-name {
+        @apply(--paper-font-title);
+        font-weight: 300;
+      }
+      :host .file-name ~ dd > dl {
+        margin-top: 0;
+      }
+      :host .file-name ~ dd {
+        margin-left: 10px;
+      }
+
+      :host .linter-results {
+        margin-bottom: 0;
+      }
+      :host .linter-results dt, :host .linter-results dd {
+        display: inline-block;
+        vertical-align: top;
+      }
+      :host .linter-results dt {
+        width: 100px;
+      }
+      :host .linter-results dt iron-icon {
+        opacity: 0.2;
+        cursor: pointer;
+      }
+      :host .linter-results dt iron-icon:hover {
+        opacity: 1;
+      }
+      :host .linter-results dt + dd {
+        margin-left: 10px;
+      }
+      :host .linter-results dd.messages {
+        display: none;
+        margin-left: 0;
+      }
+      :host .linter-results dd.messages ul {
+        margin: 0;
+      }
+      :host .linter-results em {
+        font-size: 10px;
+        font-style: normal;
+        position: relative;
+        top: -1px;
+      }
+      :host .linter-results.collapsed dd.messages {
+        display: block;
+      }
+      :host .linter-results.collapsed dt iron-icon {
+        transform: rotate(90deg);
+        opacity: 0.8;
+      }
+      :host .horizontal-bar {
+        display: inline-block;
+        height: 10px;
+        background: var(--default-primary-color);
+      }
+
+      :host paper-progress {
+        --paper-progress-height: 6px;
+      }
+
+      :host .Linter-loading {
+        position: absolute;
+        top: 60px;
+        left: 16px;
+        right: 16px;
+      }
+      :host .Linter-loading span {
+        @apply(--paper-font-title);
+      }
+
+      :host .results {
+        display: none;
+      }
+    </style>
+
+    <iron-ajax id="linterQuery" handle-as="json" on-response="handleResponse"></iron-ajax>
+
+    <h2>Results</h2>
+
+    <div id="linterLoading" class="Linter-loading">
+      <p>Please wait while we're analysing the code...</p>
+      <paper-progress value="{{progress}}" max$="{{linters.length}}" id="linterProgress"></paper-progress>
+    </div>
+
+    <div id="linterResults" class="results">
+      <div class="layout horizontal">
+        <div class="main-column">
+          <dl>
+            <template is="dom-repeat" items="{{messages}}" filter="{{computeFilter(filterString)}}">
+              <template is="dom-if" if="{{_hasVisibleLinters(item)}}">
+                <dt class="file-name">
+                  <a href$="/project/{{repository}}/file/{{item.name}}" foo="bar">{{item.name}}</a>
+                </dt>
+                <template is="dom-repeat" items="{{item.value}}" filter="{{computeLinters(item.value)}}">
+                  <dd>
+                    <dl class="linter-results">
+                      <dt>{{item.name}}<iron-icon icon="chevron-right" on-click="_showMessages"></iron-icon></dt>
+                      <dd>
+                        <span class="horizontal-bar" style$="width: {{item.value.length}}px"></span>
+                        <em>{{item.value.length}}</em>
+                      </dd>
+                      <dd class="messages">
+                        <ul>
+                          <template is="dom-repeat" items="{{item.value}}">
+                            <li><em>line {{item.line}}</em> {{item.message}}</li>
+                          </template>
+                        </ul>
+                      </dd>
+                  </dd>
+                </template>
+              </template>
+            </template>
+          </dl>
+        </div>
+        <div class="side-column">
+          <paper-input label="Filter by filename" class="search" value="{{filterString::input}}">
+            <div suffix>.go</div>
+          </paper-input>
+          <div class="linter-toggles">
+            <template is="dom-repeat" id="linters" items="{{linters}}">
+              <paper-toggle-button id="toggle-{{item}}" on-click="_toggleLinter" disabled>{{item}}</paper-toggle-button>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    'use strict';
+
+    Polymer({
+      is: 'linter-card',
+      properties: {
+        data: {
+          type: Object,
+          observer: '_dataChanged'
+        },
+        messages: {
+          type: Array,
+          notify: true
+        },
+        progress: {
+          type: Number,
+          observer: '_progressChanged'
+        },
+        linters: Array,
+        animationConfig: {
+          type: Object,
+          value: function() {
+            return {
+              'show-loader': [
+                {
+                  name: 'fade-in-animation',
+                  node: this.$.linterLoading,
+                  timing: {duration: 300}
+                }
+              ],
+              'hide-loader': [
+                {
+                  name: 'fade-out-animation',
+                  node: this.$.linterLoading,
+                  timing: {duration: 300}
+                }
+              ],
+              'show-results': [
+                {
+                  name: 'fade-in-animation',
+                  node: this.$.linterResults,
+                  timing: {duration: 800}
+                }
+              ]
+            };
+          }
+        }
+      },
+      behaviors: [Polymer.NeonAnimationRunnerBehavior],
+      listeners: {
+        'neon-animation-finish': '_onNeonAnimationFinish'
+      },
+
+      ready() {
+        // all linters are visible by default
+        this.visibleLinters = this.linters;
+      },
+
+      _dataChanged() {
+        this._loading = false;
+        this.playAnimation('hide-loader');
+        this.$.linterResults.style.display = 'block';
+        this.playAnimation('show-results');
+
+        this.messages = this._toArray(this.data);
+        this.updateTogglers();
+      },
+      updateTogglers() {
+        let usedLinters = () => {
+          let linters = {}, i;
+          for (i in this.messages) {
+            linters[this.messages[i].value[0].name] = true;
+          }
+          return Object.keys(linters);
+        }();
+
+        let i, usedLinter, toggle;
+        for (i = 0; usedLinter = usedLinters[i++];) {
+          toggle = this.$$('#toggle-' + usedLinter);
+          toggle.disabled = false;
+          toggle.checked = true;
+        }
+
+        let linter;
+        for (i = 0; linter = this.linters[i++];) {
+          if (usedLinters.indexOf(linter) === -1) {
+            toggle = this.$$('#toggle-' + linter);
+            toggle.disabled = true;
+            toggle.checked = false;
+          }
+        }
+      },
+      _progressChanged(val) {
+        if (val === 0) {
+          this.set('messages', []);
+          this.$.linterResults.style.display = 'none';
+          this._loading = true;
+          this.playAnimation('show-loader');
+        }
+      },
+      computeFilter(str) {
+        if (!str) {
+          // set filter to null to disable filtering
+          return null;
+        } else {
+          // return a filter function for the current search string
+          str = str.toLowerCase();
+          return function(message) {
+            var fileName = message.name.toLowerCase();
+            return fileName.indexOf(str) != -1;
+          };
+        }
+      },
+
+      computeLinters() {
+        return (linter) => {
+          return this._isLinterVisible(linter.name);
+        };
+      },
+
+      _isLinterVisible(linter) {
+        return this.visibleLinters.indexOf(linter) >= 0;
+      },
+
+      _toggleLinter(e) {
+        let linter = this.$.linters.itemForElement(e.target),
+          index = this.visibleLinters.indexOf(linter);
+
+        if (index > -1) {
+          this.visibleLinters.splice(index, 1);
+        } else {
+          this.visibleLinters.push(linter);
+        }
+
+        // trigger change event
+        this.messages = this._toArray(this.data);
+      },
+
+      _hasVisibleLinters(message) {
+        let i = message.value.length;
+        while (i--) {
+          if (this._isLinterVisible(message.value[i].name)) {
+            return true;
+          }
+        }
+        
+        return false;
+      },
+
+      _showMessages(e) {
+        let icon = Polymer.dom(e.target),
+          dt = Polymer.dom(icon.parentNode),
+          dl = Polymer.dom(dt.parentNode),
+          messages = dl.querySelector('dd.messages'),
+          display = messages.style.display;
+
+        this.toggleClass('collapsed', !dl.classList.contains('collapsed'), dl);
+      },
+
+      _onNeonAnimationFinish() {
+        if (!this._loading) {
+          //this.$.linterLoading.style.visibility = 'hidden';
+        }
+      },
+
+      _toArray(obj) {
+        return Object.keys(obj).map(function(key) {
+          return {
+            name: key,
+            value: Object.keys(obj[key]).map(function(k) {
+            return {
+              name: k,
+              value: obj[key][k]
+            };
+          })
+          };
+        });
+      }
+
+    });
+  </script>
+
+</dom-module>

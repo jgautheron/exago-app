@@ -1,0 +1,46 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="help-icon">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      :host iron-icon {
+        --iron-icon-fill-color: var(--light-primary-color);
+      }
+      :host iron-icon:hover {
+        fill: var(--default-primary-color);
+      }
+    </style>
+    <iron-icon icon="help-outline" id="{{id}}"></iron-icon>
+    <paper-tooltip for="{{id}}" position="left" offset="2" animation-delay="100">{{text}}</paper-tooltip>
+  </template>
+
+  <script>
+    'use strict';
+  
+    class HelpIcon {
+
+      beforeRegister() {
+        this.is = 'help-icon';
+        this.properties = {
+          text: String
+        };
+      }
+
+      ready() {
+        this.id = 'tooltip-' + this._generateUniqueID();
+      }
+
+      _generateUniqueID() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+    }
+
+    Polymer(HelpIcon);
+  </script>
+
+</dom-module>

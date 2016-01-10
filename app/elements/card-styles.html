@@ -1,0 +1,32 @@
+<dom-module id="card-styles">
+  <template>
+    <style>
+      :host {
+        position: relative;
+        display: block;
+        @apply(--shadow-elevation-2dp);
+      }
+
+      :host h2 {
+        @apply(--paper-font-display1);
+        font-weight: 300 !important;
+        margin: 0 0 20px 0;
+      }
+
+      :host strong {
+        @apply(--paper-font-display3);
+      }
+
+      :host help-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      :host paper-spinner {
+        position: absolute;
+        top: 90px;
+      }
+    </style>
+  </template>
+</dom-module>

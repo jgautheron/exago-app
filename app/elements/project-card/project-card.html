@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+
+<link rel="import" href="../card-styles.html">
+
+<dom-module id="project-card">
+  <style include="card-styles"></style>
+  <template>
+    <h2>{{title}}</h2>
+    <paper-spinner active id="loading"></paper-spinner>
+    <div id="content" style="opacity: 0">
+      <strong>{{content}}</strong>
+      <help-icon text$="{{help}}"></help-icon>
+    </div>
+  </template>
+
+  <script>
+    'use strict';
+    Polymer({
+      is: 'project-card',
+      properties: {
+        title: String,
+        help: String,
+        content: {
+          type: String,
+          notify: true,
+          observer: '_contentChanged'
+        },
+        _loading: {
+          type: Boolean,
+          observer: '_loadingChanged'
+        },
+        animationConfig: {
+          type: Object,
+          value: function() {
+            return {
+              'show-results': [
+                {
+                  name: 'fade-in-animation',
+                  node: this.$.content,
+                  timing: {duration: 500}
+                }
+              ]
+            };
+          }
+        }
+      },
+      behaviors: [Polymer.NeonAnimationRunnerBehavior],
+      listeners: {
+        'neon-animation-finish': '_onNeonAnimationFinish'
+      },
+      showLoader() {
+        this._loading = true;
+      },
+      _contentChanged(content) {
+        this.content = content;
+        this._loading = false;
+        this.playAnimation('show-results');
+      },
+      _onNeonAnimationFinish() {
+        if (!this._loading) {
+          this.$.content.style.opacity = 1;
+        }
+      },
+      _loadingChanged(val) {
+        this.$.loading.active = val;
+      }
+    });
+  </script>
+
+</dom-module>

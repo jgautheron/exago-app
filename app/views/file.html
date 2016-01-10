@@ -1,0 +1,10 @@
+<template id="file" is="dom-bind">
+    <h1>
+      <iron-icon icon="custom:github-mark"></iron-icon>
+      <a href="/project/{{registry}}/{{username}}/{{repository}}">{{username}}/{{repository}}</a> — {{path}}
+    </h1>
+    <template is="dom-if" if="{{fullName}}">
+        <code-displayer language="go" repository$="{{fullName}}" path$="{{path}}">
+        </code-displayer>
+    </template>
+</template>

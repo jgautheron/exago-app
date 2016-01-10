@@ -9,7 +9,11 @@
     "neon-elements": "PolymerElements/neon-elements#1.0.x",
     "start-elements": "StartPolymer/start-elements#1.1.x",
     "font-roboto": "StartPolymer/font-empty#1.1.x",
-    "page": "visionmedia/page.js#1.6.x"
+    "page": "visionmedia/page.js#1.6.x",
+    "polymer-code-mirror": "~0.2.0",
+    "underscore.string": "~3.2.2",
+    "blend.js": "~1.1.0",
+    "dom-if-else": "~0.9.0"
   },
   "devDependencies": {
     "web-component-tester": "*",

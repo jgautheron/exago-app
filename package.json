@@ -61,8 +61,5 @@
   },
   "engines": {
     "node": ">=0.12.0"
-  },
-  "dependencies": {
-    "cssnext": "^1.8.4"
   }
 }
