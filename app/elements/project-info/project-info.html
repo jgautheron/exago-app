@@ -58,7 +58,7 @@
             <project-card title="Tests" content="{{_data.loc.tests}}" help="mooo" class="Project-block"></project-card>
             <project-card title="Test Coverage" content="{{_data.test.coverageMean}}" help="foo" class="Project-block"></project-card>
             <project-card title="Test Duration" content="{{_data.test.durationMean}}" help="foo" class="Project-block"></project-card>
-            <project-card title="Project Rating" content="B+" help="foo" class="Project-block"></project-card>
+            <project-card title="Project Rating" content="{{_data.rating}}" help="foo" class="Project-block"></project-card>
           </div>
 
           <linter-card id="linterCard" repository="{{repository}}" class="Project-block" linters="{{linters}}"></linter-card>
@@ -194,7 +194,7 @@
             testPassed = false;
             return;
           }
-          
+
           cov.push(parseFloat(pkg.coverage));
           duration.push(parseFloat(pkg.execution_time));
         });
@@ -219,6 +219,9 @@
           testPassed: testPassed
         };
         this.notifyPath('_data.test', this._data.test);
+
+        this._data.rating = 'B';
+        this.notifyPath('_data.rating', this._data.rating);
       },
       _repoExistsChanged(val) {
         if (!!val) {
@@ -231,7 +234,7 @@
         this._data = {};
         this.linterResults = {};
         document.querySelector('#linterCard').progress = 0;
-        
+
         // reinitialise cards state
         let cards = document.querySelectorAll('project-card'), card, i;
         for (i = 0; card = cards[i++];) {
