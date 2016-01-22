@@ -1,18 +1,21 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/polymer-code-mirror/code-mirror.html"/>
-
-<!-- Neon elements -->
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
 
-<link rel="import" href="../card-styles.html">
+<link rel="import" href="../../bower_components/polymer-codemirror-go/code-mirror.html"/>
+
+<link rel="import" href="../common-styles.html">
 
 <script src="../../bower_components/underscore.string/dist/underscore.string.min.js"></script>
 <script src="../../bower_components/blend.js/lib/blend.min.js"></script>
 
 <dom-module id="code-displayer">
   <template>
-    <style>
+    <style include="common-styles">
       :host {
         position: relative;
         display: block;
@@ -24,141 +27,28 @@
         top: 20px;
         left: 50%;
       }
-      :host #codeMirror {
+      #codeMirror {
         opacity: 0;
       }
     </style>
-    <iron-meta id="meta" key="files" value="{{_files}}"></iron-meta>
-    <iron-ajax id="githubRequest" handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
+
+    <iron-meta id="meta"></iron-meta>
+    <iron-ajax id="codeRequest" handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     <paper-spinner active id="codeLoading"></paper-spinner>
     <code-mirror id="codeMirror" mode$="{{language}}" value$="{{content}}" readonly hidecursor>
     </code-mirror>
-    <template is="dom-if" if="{{error}}">
-      <h3>Oops!</h3>
-      <p>It seems something went wrong while we were fetching <em>{{repository}}/{{path}}</em>.</p>
-      <p>We received the following message:<br><em>{{error}}</em></p>
+    <template is="dom-if" if="{{_error}}">
+      <div class="Message">
+        <iron-icon icon="error-outline"></iron-icon>
+        <div class="Message-contents">
+          <h2>Oops!</h2>
+          <p>It seems something went wrong while we were fetching <em>{{repository}}/{{path}}</em>.</p>
+          <p>The application received the following message:<br><em>{{_error}}</em></p>
+        </div>
+      </div>
     </template>
   </template>
 
-  <script>
-    'use strict';
-    Polymer({
-      is: 'code-displayer',
-      properties: {
-        repository: {
-          type: String,
-          notify: true
-        },
-        language: String,
-        path: {
-          type: String,
-          notify: true
-        },
-        messages: {
-          type: Array,
-          value: []
-        },
-        _loading: {
-          type: Boolean,
-          notify: true,
-          observer: '_loadingChanged'
-        },
-        _files: Object,
-        animationConfig: {
-          type: Object,
-          value: function() {
-            return {
-              'show-code': [
-                {
-                  name: 'fade-in-animation',
-                  node: this.$.codeMirror,
-                  timing: {duration: 500}
-                }
-              ]
-            };
-          }
-        }
-      },
-      behaviors: [Polymer.NeonAnimationRunnerBehavior],
-      listeners: {
-        'neon-animation-finish': '_onNeonAnimationFinish'
-      },
-      ready() {
-        this.showContent();
-      },
-      showContent() {
-        if (!this.path && !this.repository) {
-          return;
-        }
-
-        if (this._files && this._files.hasOwnProperty(this.path)) {
-          this.content = this._files[this.path];
-          this.playAnimation('show-code');
-        } else {
-          this.requestFile();
-        }
-      },
-      requestFile() {
-        // cache content locally
-        this._loading = true;
-        this.$.githubRequest.url = s.sprintf('http://localhost:8080/%s/contents/%s', this.repository, this.path);
-        this.$.githubRequest.generateRequest();
-      },
-      handleError(e, req) {
-        // display error message
-        console.log(req.request.status, req.error);
-        this._loading = false;
-        this.error = req.error;
-      },
-      handleResponse(e, req) {
-        this._loading = false;
-
-        if (req.response.status !== 'success') {
-          // handle error! toast notification?
-          return;
-        }
-
-        this.content = req.response.data;
-
-        let files = {};
-        files[this.path] = this.content;
-        this._files = blend(true, false, this._files, files);
-
-        let results;
-        let retry = setInterval(function() {
-          results = this.$.meta.byKey('linterResults');
-          if (results) {
-            clearInterval(retry);
-            if (results.hasOwnProperty(this.path)) {
-              this._setLineWidgets(results[this.path]);
-            }
-          }
-        }.bind(this), 50);
-
-        this.playAnimation('show-code');
-      },
-      _setLineWidgets(linterResults) {
-        let linter, message, i;
-        for (linter in linterResults) {
-          for (i = 0; message = linterResults[linter][i++];) {
-            let row = document.createElement('div');
-            row.className = 'linter-message';
-            row.innerHTML = '<iron-icon icon="warning"></iron-icon>';
-            row.innerHTML += linter + ': ' + message.message;
-
-            this.$.codeMirror.getMirror().addLineWidget(message.line-1, row, {coverGutter: true, above: true});
-          }
-        }
-      },
-      _loadingChanged(val) {
-        this.$.codeLoading.active = val;
-      },
-      _onNeonAnimationFinish() {
-        if (!this.loading) {
-          this.$.codeMirror.style.opacity = 1;
-        }
-      }
-    });
-  </script>
+  <script src="code-displayer.js"></script>
 
 </dom-module>

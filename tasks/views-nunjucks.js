@@ -14,7 +14,11 @@ module.exports = function ($, config, gulp) { return function () {
   }
 
   return gulp.src([
-      'app/*.html'
+      'app/**/*.html',
+      '!app/bower_components/**',
+      '!app/test/**',
+      '!app/themes/**',
+      '!app/views/**'
     ])
     .pipe($.plumber({
       handleError: function (error) {
@@ -25,8 +29,8 @@ module.exports = function ($, config, gulp) { return function () {
       }
     }))
     .pipe($.nunjucksHtml({
-      locals: require('merge')(variables.html, metadata),
-      searchPaths: ['app/content', 'app/views'],
+      locals: require('merge')(variables.metadata, metadata),
+      searchPaths: ['app/content', 'app/elements', 'app/views'],
       tags: {
         variableStart: '{$',
         variableEnd: '$}'

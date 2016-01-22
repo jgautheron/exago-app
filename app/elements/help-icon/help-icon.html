@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 
 <dom-module id="help-icon">
   <template>
@@ -17,30 +19,6 @@
     <paper-tooltip for="{{id}}" position="left" offset="2" animation-delay="100">{{text}}</paper-tooltip>
   </template>
 
-  <script>
-    'use strict';
-  
-    class HelpIcon {
-
-      beforeRegister() {
-        this.is = 'help-icon';
-        this.properties = {
-          text: String
-        };
-      }
-
-      ready() {
-        this.id = 'tooltip-' + this._generateUniqueID();
-      }
-
-      _generateUniqueID() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1);
-      }
-    }
-
-    Polymer(HelpIcon);
-  </script>
+  <script src="help-icon.js"></script>
 
 </dom-module>

@@ -10,7 +10,7 @@
     "start-elements": "StartPolymer/start-elements#1.1.x",
     "font-roboto": "StartPolymer/font-empty#1.1.x",
     "page": "visionmedia/page.js#1.6.x",
-    "polymer-codemirror-go": "~0.3.0",
+    "polymer-codemirror-go": "~0.3.1",
     "underscore.string": "~3.2.2",
     "blend.js": "~1.1.0",
     "dom-if-else": "~0.9.0"

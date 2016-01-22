@@ -1,0 +1,86 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- App Theme -->
+<link rel="import" href="../../themes/{$ theme $}/theme.html">
+
+<!-- Iron elements -->
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+
+<!-- Paper elements -->
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+
+<!-- Custom elements -->
+<link rel="import" href="../search-input/search-input.html">
+<link rel="import" href="../project-info/project-info.html">
+<link rel="import" href="../code-displayer/code-displayer.html">
+
+<dom-module id="exago-app">
+  <template>
+    <style include="shared-styles">
+      @import "theme";
+    </style>
+    <header class="Header">
+      <a href="/" class="Header-logo">e<span class="Header-logo--blue">x</span>ago</a>
+      <h2 class="Header-subhead">Go Quality Dashboard</h2>
+      <div class="Header-searchContainer">
+        <search-input></search-input>
+        <span>Example: <a href="/project/github.com/inconshreveable/log15">inconshreveable/log15</a></span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <iron-pages class="Main-content" attr-for-selected="data-route" selected="{{route}}">
+
+      <section class="Page" data-route="home">
+        <paper-material class="Page-paper" elevation="1">
+          <h3>Your last reports</h3>
+          <ul>
+            <li><a href="/project/github.com/alecthomas/gometalinter">alecthomas/gometalinter</a></li>
+            <li><a href="/project/github.com/inconshreveable/log15">inconshreveable/log15</a></li>
+            <li><a href="/project/github.com/gin-gonic/gin">gin-gonic/gin</a></li>
+          </ul>
+        </paper-material>
+      </section>
+
+      <section class="Page" data-route="project">
+        {% include "project.html" %}
+      </section>
+
+      <section class="Page" data-route="file">
+        {% include "file.html" %}
+      </section>
+
+      <section class="Page" data-route="info">
+        <paper-material class="Page-paper" elevation="1">
+          <h2 class="Page-title">Info</h2>
+          <p>This is the contact section</p>
+        </paper-material>
+      </section>
+
+    </iron-pages>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'exago-app'
+      });
+    })();
+  </script>
+
+</dom-module>

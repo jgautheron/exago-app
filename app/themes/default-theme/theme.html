@@ -8,28 +8,21 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
 <link rel="stylesheet" href="fonts/fonts.css">
 
-<!-- Shared styles between elements and theme -->
+<!-- Shared styles between elements -->
 <dom-module id="shared-styles">
 <template><style>
-
   @import "breakpoints";
-  @import "components/header";
+  @import "components/main";
   @import "components/page";
-
+  @import "components/header";
+  @import 'components/project';
 </style></template>
 </dom-module>
-
-<!-- Theme styles -->
-<style is="custom-style" include="shared-styles">
-
-  @import "variables";
-  @import "breakpoints";
-
-  @import "components/main";
-  @import "components/project";
-
-</style>
 
 <link rel="import" href="icons.html">

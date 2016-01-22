@@ -1,8 +1,8 @@
 <head>
+  <base href="/">
   <meta charset="{$ charset $}">
   <meta name="description" content="{$ description $}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Polymer Starter Kit Plus">
   <title>{$ title $}</title>
   <!-- Place favicon.ico in the `app/` directory -->
   <link rel="shortcut icon" href="favicon.ico">
@@ -33,11 +33,12 @@
   <!-- Tile icon for Win8 (144x144) -->
   <meta name="msapplication-TileImage" content="/images/touch/ms-touch-icon-144x144-precomposed.png">
 
-  <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
-  <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <!-- endbuild -->
+  <!-- Because this project uses vulcanize this should be your only html import
+       in this file. All other imports should go in base-bundle.html -->
+  <link rel="import" id="elementsBaseBundle" href="elements/base-bundle.html" async>
 
-  <!-- will be replaced with elements/elements.vulcanized.html -->
-  <link rel="import" href="/elements/elements.html">
-  <!-- endreplace -->
+  <!-- Skeleton styles -->
+  <style>
+    @import "head";
+  </style>
 </head>

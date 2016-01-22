@@ -12,7 +12,7 @@
   "noarg": true,
   "quotmark": "single",
   "undef": true,
-  "unused": true,
+  "unused": false,
   "newcap": false,
   "globals": {
     "wrap": true,
@@ -20,6 +20,8 @@
     "Polymer": true,
     "Platform": true,
     "page": true,
-    "app": true
+    "app": true,
+    "s": true,
+    "blend": true
   }
 }

@@ -1,3 +1,5 @@
+var config = require('../config');
+
 module.exports = {
   title: 'exago',
   description: 'Code quality for Go projects',
@@ -6,5 +8,9 @@ module.exports = {
   // Add to homescreen for Chrome on Android
   applicationName: 'Exago',
   // Add to homescreen for Safari on iOS
-  appleMobileWebAppTitle: 'Exago'
+  appleMobileWebAppTitle: 'Exago',
+  // Google Analytics Tracking ID
+  googleAnalyticsTrackingId: 'UA-XXXXX-Y',
+  // App Theme
+  theme: config.theme
 };

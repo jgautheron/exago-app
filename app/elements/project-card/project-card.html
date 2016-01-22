@@ -1,71 +1,46 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
 
+<link rel="import" href="../help-icon/help-icon.html">
+<link rel="import" href="../common-styles.html">
 <link rel="import" href="../card-styles.html">
 
 <dom-module id="project-card">
-  <style include="card-styles"></style>
   <template>
+    <style include="card-styles"></style>
+    <style include="common-styles">
+      :host {
+        min-height: 102px;
+      }
+      :host iron-icon {
+        width: 60px;
+        height: 60px;
+        top: -4px;
+      }
+    </style>
     <h2>{{title}}</h2>
     <paper-spinner active id="loading"></paper-spinner>
     <div id="content" style="opacity: 0">
-      <strong>{{content}}</strong>
+      <strong>
+        {{content}}
+        <template is="dom-if" if="{{icon}}">
+          <iron-icon icon="{{icon}}" id="{{id}}"></iron-icon>
+          <template is="dom-if" if="{{iconTooltip}}">
+            <paper-tooltip for="{{id}}" position="right" offset="2" animation-delay="100">{{iconTooltip}}</paper-tooltip>
+          </template>
+        </template>
+      </strong>
+      <template is="dom-if" if="{{error}}">
+        <iron-icon icon="clear"></iron-icon>
+      </template>
       <help-icon text$="{{help}}"></help-icon>
     </div>
   </template>
 
-  <script>
-    'use strict';
-    Polymer({
-      is: 'project-card',
-      properties: {
-        title: String,
-        help: String,
-        content: {
-          type: String,
-          notify: true,
-          observer: '_contentChanged'
-        },
-        _loading: {
-          type: Boolean,
-          observer: '_loadingChanged'
-        },
-        animationConfig: {
-          type: Object,
-          value: function() {
-            return {
-              'show-results': [
-                {
-                  name: 'fade-in-animation',
-                  node: this.$.content,
-                  timing: {duration: 500}
-                }
-              ]
-            };
-          }
-        }
-      },
-      behaviors: [Polymer.NeonAnimationRunnerBehavior],
-      listeners: {
-        'neon-animation-finish': '_onNeonAnimationFinish'
-      },
-      showLoader() {
-        this._loading = true;
-      },
-      _contentChanged(content) {
-        this.content = content;
-        this._loading = false;
-        this.playAnimation('show-results');
-      },
-      _onNeonAnimationFinish() {
-        if (!this._loading) {
-          this.$.content.style.opacity = 1;
-        }
-      },
-      _loadingChanged(val) {
-        this.$.loading.active = val;
-      }
-    });
-  </script>
+  <script src="project-card.js"></script>
 
 </dom-module>

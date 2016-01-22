@@ -1,13 +1,21 @@
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
+
 <link rel="import" href="../../bower_components/dom-if-else/dom-if-else.html">
+
+<link rel="import" href="../project-card/project-card.html">
+<link rel="import" href="../linter-card/linter-card.html">
 <link rel="import" href="../common-styles.html">
 
 <script src="../../bower_components/underscore.string/dist/underscore.string.min.js"></script>
 <script src="../../bower_components/blend.js/lib/blend.min.js"></script>
 
 <dom-module id="project-info">
-  <style include="common-styles"></style>
   <template>
-    <style>
+    <style include="common-styles">
       :host {
         position: relative;
         display: block;
@@ -15,29 +23,31 @@
       :host paper-progress {
         --paper-progress-height: 3px;
       }
-      :host .Project-block {
+      :host project-card, :host linter-card {
         margin: 15px 16px 0 16px;
         padding: 16px;
         @apply(--layout-flex);
         text-align: center;
       }
-      :host h2 {
-        @apply(--paper-font-display1);
-        font-weight: 300;
-        margin: 0 0 20px 0;
+      :host linter-card {
+        display: none;
       }
-      :host strong {
-        @apply(--paper-font-display3);
+      :host .explore {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        flex-direction: column !important;
+        -webkit-flex-direction: column !important;
+        -ms-flex-direction: column !important;
+        --paper-button: {
+          font-size: 20px;
+          margin: 15px 16px 0 16px;
+        }
       }
-      :host .Project-notFound iron-icon {
-        width: 120px;
-        height: 120px;
-      }
-      :host .Project-notFoundText {
-        margin: 22px 0 0 20px;
-      }
-      :host .Project-notFoundText h2, :host .Project-notFoundText p {
-        margin: 0;
+      :host .explore paper-progress {
+        --paper-progress-container-color: var(--default-primary-color);
+        --paper-progress-active-color: var(--light-primary-color);
+        margin: 0 auto;
+        width: 100px;
       }
     </style>
 
@@ -49,18 +59,22 @@
       <if-then>
         <section class="Project-details">
           <div class="layout horizontal">
-            <project-card title="Total/Average Lines" content="{{_data.loc.totalAvgLoc}}" help="mooo" class="Project-block"></project-card>
-            <project-card title="Ratio LOC/CLOC" content="{{_data.loc.ratioLocCloc}}" help="foo" class="Project-block"></project-card>
-            <project-card title="Third Parties" content="{{_data.imports.thirdPartiesCount}}" help="foo" class="Project-block"></project-card>
-            <project-card title="Checklist Compliance" content="{{_data.test.checklist}}" help="foo" class="Project-block"></project-card>
+            <project-card title="Total/Average Lines" content="{{_data.loc.totalAvgLoc}}" help="Total lines of code and average lines of code per file" linter="loc"></project-card>
+            <project-card title="Ratio LOC/CLOC" content="{{_data.loc.ratioLocCloc}}" help="Ratio between lines of code and lines of comment" linter="loc"></project-card>
+            <project-card title="Third Parties" content="{{_data.imports.thirdPartiesCount}}" help="How many third party libraries are used" linter="imports"></project-card>
+            <project-card title="Checklist Compliance" content="{{_data.test.checklist}}" help="Compliance with a few items from the Go checklist" linter="test"></project-card>
           </div>
           <div class="layout horizontal">
-            <project-card title="Tests" content="{{_data.loc.tests}}" help="mooo" class="Project-block"></project-card>
-            <project-card title="Test Coverage" content="{{_data.test.coverageMean}}" help="foo" class="Project-block"></project-card>
-            <project-card title="Test Duration" content="{{_data.test.durationMean}}" help="foo" class="Project-block"></project-card>
-            <project-card title="Project Rating" content="{{_data.rating}}" help="foo" class="Project-block"></project-card>
+            <project-card title="Tests" content="{{_data.loc.tests}}" icon="{{_testsIcon}}" icon-tooltip="{{_testsIconTooltip}}" help="How many tests across all packages" linter="loc"></project-card>
+            <project-card title="Test Coverage" content="{{_data.test.coverageMean}}" help="Average code coverage across all packages" linter="test"></project-card>
+            <project-card title="Test Duration" content="{{_data.test.durationMean}}" help="The time it took to run all tests with the following configuration: i5 - 512MB" linter="test"></project-card>
+            <project-card title="Project Rating" content="{{_data.rating}}" help="Global rating based on the few metrics visible here" linter="test"></project-card>
           </div>
 
+          <paper-button raised noink class="explore" on-click="_showResults" disabled>
+            <div>Explore</div>
+            <paper-progress value="{{_linterProgress}}" max="{{linters.length}}"></paper-progress>
+          </paper-button>
           <linter-card id="linterCard" repository="{{repository}}" class="Project-block" linters="{{linters}}"></linter-card>
         </section>
       </if-then>
@@ -70,9 +84,9 @@
             <paper-progress indeterminate></paper-progress>
           </if-then>
           <if-else>
-            <div class="Project-notFound layout horizontal">
+            <div class="Message">
               <iron-icon icon="error-outline"></iron-icon>
-              <div class="Project-notFoundText">
+              <div class="Message-contents">
                 <h2>Oops!</h2>
                 <p>The repository couldn't be found on Github :(</p>
               </div>
@@ -83,187 +97,6 @@
     </template>
   </template>
 
-  <script>
-    'use strict';
-
-    const DEFAULT_LINTERS = ['errcheck', 'gofmt', 'goimports', 'golint', 'deadcode', 'dupl', 'gocyclo', 'ineffassign', 'varcheck', 'vet', 'vetshadow'];
-
-    Polymer({
-      is: 'project-info',
-      properties: {
-        repository: {
-          type: String,
-          notify: true,
-          observer: '_repoChanged'
-        },
-        linters: Array,
-        _repoExists: {
-          type: Boolean,
-          observer: '_repoExistsChanged'
-        },
-        _data: {
-          type: Object,
-          notify: true
-        }
-      },
-      ready() {
-        if (!this.linters) {
-          this.linters = DEFAULT_LINTERS;
-        }
-      },
-      requestData() {
-        let [registry, username, repository] = this.repository.split('/');
-        this._loading = true;
-
-        let urls = [
-          'http://localhost:8080/%s/%s/%s/loc',
-          'http://localhost:8080/%s/%s/%s/imports',
-          'http://localhost:8080/%s/%s/%s/test',
-        ];
-
-        let i, url;
-        for (i = 0; url = urls[i++];) {
-          this.$.query.url = s.sprintf(url, registry, username, repository);
-          this.$.query.generateRequest();
-        }
-
-        let linter, linterURL = 'http://localhost:8080/%s/%s/%s/lint/%s';
-        for (i = 0; linter = this.linters[i++];) {
-          this.$.query.url = s.sprintf(linterURL, registry, username, repository, linter);
-          this.$.query.generateRequest();
-        }
-      },
-      _handleLinterError(e, req) {
-        // display error message
-        console.log(req.request.status, req.error);
-        this._loading = false;
-        this.error = req.error;
-      },
-      _handleLinter(e, req) {
-        if ('success' !== req.response.status) {
-          // handle the error
-          return;
-        }
-
-        let data = req.response.data;
-        let responseURL = this._parseURL(req.url);
-        let [,,,, res] = responseURL.pathname.split('/');
-
-        this['_setUp' + res[0].toUpperCase() + res.slice(1)](data, responseURL);
-      },
-      _setUpLoc(data) {
-        if (!Object.keys(data).length) {
-          return;
-        }
-
-        this._data.loc = {
-          totalAvgLoc: data.LOC.toFixed(0)  + ' / ' +  (data.LOC / data.NOF).toFixed(0),
-          ratioLocCloc: ((data.LOC / data.NCLOC)).toFixed(3),
-          tests: data.Test
-        };
-        this.notifyPath('_data.loc', this._data.loc);
-      },
-      _setUpImports(data) {
-        this._data.imports = {
-          thirdPartiesCount: data.length
-        };
-        this.notifyPath('_data.imports', this._data.imports);
-      },
-      _setUpLint(data, URL) {
-        let linterCard = document.querySelector('#linterCard');
-        // increment the progress bar for each linter loaded
-        linterCard.progress += 1;
-
-        // merge each time the data into linterResults
-        // identify the last call and then inject the results in linterCard
-        if (Object.keys(data).length) {
-          this.linterResults = blend(true, false, this.linterResults, data);
-        }
-
-        if (linterCard.progress !== this.linters.length) {
-          return;
-        }
-
-        linterCard.data = this.linterResults;
-      },
-      _setUpTest(data) {
-        let testPassed = true, cov = [], duration = [];
-
-        data.packages.forEach(function(pkg) {
-          if (!pkg.success) {
-            testPassed = false;
-            return;
-          }
-
-          cov.push(parseFloat(pkg.coverage));
-          duration.push(parseFloat(pkg.execution_time));
-        });
-
-        let covMean = 0;
-        cov.forEach(function(v) {
-          covMean += v;
-        });
-        covMean /= cov.length;
-
-        let durationMean = 0;
-        duration.forEach(function(v) {
-          durationMean += v;
-        });
-        durationMean /= duration.length;
-
-        let checklistTotalItems = data.checklist.Passed.length + data.checklist.Failed.length;
-        this._data.test = {
-          checklist: data.checklist.Passed.length + ' / ' + checklistTotalItems,
-          coverageMean: covMean + '%',
-          durationMean: durationMean + 's',
-          testPassed: testPassed
-        };
-        this.notifyPath('_data.test', this._data.test);
-
-        this._data.rating = 'B';
-        this.notifyPath('_data.rating', this._data.rating);
-      },
-      _repoExistsChanged(val) {
-        if (!!val) {
-          this.requestData();
-        }
-      },
-      _repoChanged(repo) {
-        this._loading = true;
-        this._repoExists = false;
-        this._data = {};
-        this.linterResults = {};
-        document.querySelector('#linterCard').progress = 0;
-
-        // reinitialise cards state
-        let cards = document.querySelectorAll('project-card'), card, i;
-        for (i = 0; card = cards[i++];) {
-          card.showLoader();
-        }
-
-        this._checkRepoExists();
-      },
-      _handleRepoExists(e, req) {
-        this._repoExists = !req.hasOwnProperty('error') && 'success' === req.response.status;
-        this._loading = false;
-      },
-      _checkRepoExists() {
-        this.$.queryRepoExists.url = s.sprintf('http://localhost:8080/%s/exists', this.repository);
-        this.$.queryRepoExists.generateRequest();
-      },
-      _parseURL(href) {
-        var match = href.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/);
-        return match && {
-          protocol: match[1],
-          host: match[2],
-          hostname: match[3],
-          port: match[4],
-          pathname: match[5],
-          search: match[6],
-          hash: match[7]
-        }
-      }
-    });
-  </script>
+  <script src="project-info.js"></script>
 
 </dom-module>

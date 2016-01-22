@@ -7,8 +7,30 @@
         width: 100%;
       }
 
+      :host paper-button {
+        background: var(--default-primary-color);
+        color: var(--light-primary-color);
+      }
+
       :host a, :host a:visited {
         color: var(--default-primary-color);
+      }
+
+      :host .Message {
+        @apply(--layout-horizontal);
+      }
+
+      :host .Message iron-icon {
+        width: 120px;
+        height: 120px;
+      }
+      
+      :host .Message-contents {
+        margin: 22px 0 0 20px;
+      }
+
+      :host .Message-contents h2, :host .Message-contents p {
+        margin: 0;
       }
     </style>
   </template>
