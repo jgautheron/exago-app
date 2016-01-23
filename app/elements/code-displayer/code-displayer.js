@@ -1,6 +1,8 @@
 (() => {
   'use strict';
 
+  const SERVICE_HOST = 'http://localhost:8080';
+
   Polymer({
     is: 'code-displayer',
     properties: {
@@ -60,7 +62,7 @@
     requestFile() {
       this._error = false;
       this._loading = true;
-      this.$.codeRequest.url = s.sprintf('http://localhost:8080/%s/contents/%s', this.repository, this.path);
+      this.$.codeRequest.url = s.sprintf('%s/%s/contents/%s', SERVICE_HOST, this.repository, this.path);
       this.$.codeRequest.generateRequest();
     },
     handleError(e, req) {

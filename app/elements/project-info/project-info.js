@@ -15,6 +15,8 @@
     'vetshadow'
   ];
 
+  const SERVICE_HOST = 'http://localhost:8080';
+
   Polymer({
     is: 'project-info',
     properties: {
@@ -43,20 +45,20 @@
       this._loading = true;
 
       let urls = [
-        'http://localhost:8080/%s/%s/%s/loc',
-        'http://localhost:8080/%s/%s/%s/imports',
-        'http://localhost:8080/%s/%s/%s/test',
+        '%s/%s/%s/%s/loc',
+        '%s/%s/%s/%s/imports',
+        '%s/%s/%s/%s/test',
       ];
 
       let i, url;
       for (i = 0; url = urls[i++];) {
-        this.$.query.url = s.sprintf(url, registry, username, repository);
+        this.$.query.url = s.sprintf(url, SERVICE_HOST, registry, username, repository);
         this.$.query.generateRequest();
       }
 
-      let linter, linterURL = 'http://localhost:8080/%s/%s/%s/lint/%s';
+      let linter, linterURL = '%s/%s/%s/%s/lint/%s';
       for (i = 0; linter = this.linters[i++];) {
-        this.$.query.url = s.sprintf(linterURL, registry, username, repository, linter);
+        this.$.query.url = s.sprintf(linterURL, SERVICE_HOST, registry, username, repository, linter);
         this.$.query.generateRequest();
       }
     },
@@ -318,7 +320,7 @@
       this._loading = false;
     },
     _checkRepoExists() {
-      this.$.queryRepoExists.url = s.sprintf('http://localhost:8080/%s/exists', this.repository);
+      this.$.queryRepoExists.url = s.sprintf('%s/%s/exists', SERVICE_HOST, this.repository);
       this.$.queryRepoExists.generateRequest();
     },
     _showResults() {
