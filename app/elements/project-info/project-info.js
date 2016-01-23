@@ -158,8 +158,8 @@
       let checklistTotalItems = data.checklist.Passed.length + data.checklist.Failed.length;
       this.set('_data.test', {
         checklist: data.checklist.Passed.length + ' / ' + checklistTotalItems,
-        coverageMean: covMean + '%',
-        durationMean: durationMean + 's',
+        coverageMean: covMean.toFixed(2) + '%',
+        durationMean: durationMean.toFixed(3) + 's',
         testPassed: testPassed
       });
       this.set('_rawData.test', data);
