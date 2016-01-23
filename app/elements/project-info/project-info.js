@@ -15,7 +15,7 @@
     'vetshadow'
   ];
 
-  const SERVICE_HOST = 'http://localhost:8080';
+  const SERVICE_HOST = 'http://exago.io:8080';
 
   Polymer({
     is: 'project-info',

@@ -45,6 +45,7 @@
     showLoader() {
       this._loading = true;
       this.error = false;
+      this.icon = '';
     },
     _contentChanged(content) {
       this.content = content;

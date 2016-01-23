@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const SERVICE_HOST = 'http://localhost:8080';
+  const SERVICE_HOST = 'http://exago.io:8080';
 
   Polymer({
     is: 'code-displayer',
@@ -91,7 +91,7 @@
         if (results) {
           clearInterval(retry);
           if (results.hasOwnProperty(this.path)) {
-            this._setLineWidgets(results[this.path]);
+            setTimeout(() => this._setLineWidgets(results[this.path]), 10);
           }
         }
       }, 50);
