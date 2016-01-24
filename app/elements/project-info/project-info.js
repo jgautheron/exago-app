@@ -74,7 +74,7 @@
       // display error message
       console.log(el.request.status, el.error);
       this._loading = false;
-      this.error = el.error;
+      //this.error = el.error;
     },
     _handleLinter(e, req) {
       if ('success' !== req.response.status) {
@@ -315,12 +315,13 @@
 
       this._checkRepoExists();
     },
-    _handleRepoExists(e, req) {
-      this._repoExists = !req.hasOwnProperty('error') && 'success' === req.response.status;
+    _handleRepoExists(e, el) {
+      this._repoExists = !el.hasOwnProperty('error') && 'success' === el.response.status;
       this._loading = false;
+      this._errorMessage = el.request.xhr.response.message;
     },
     _checkRepoExists() {
-      this.$.queryRepoExists.url = s.sprintf('%s/%s/exists', SERVICE_HOST, this.repository);
+      this.$.queryRepoExists.url = s.sprintf('%s/%s/valid', SERVICE_HOST, this.repository);
       this.$.queryRepoExists.generateRequest();
     },
     _showResults() {

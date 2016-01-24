@@ -23,7 +23,7 @@
   </style>
   <template>
     <iron-a11y-keys id="a11y" target="[[target]]" keys="enter" on-keys-pressed="onEnter"></iron-a11y-keys>
-    <paper-input id="searchInput" class="Search-input" value="{{userInput::input}}" placeholder="user/repo @ GitHub" pattern="\w+\/\w+" error-message="This is not a valid repository">
+    <paper-input id="searchInput" class="Search-input" value="{{userInput::input}}" placeholder="user/repo @ GitHub" pattern="[\w\-]+\/[\w\-]+" error-message="This is not a valid repository">
       <paper-icon-button suffix icon="search" on-click="search"></paper-icon-button>
     </paper-input>
   </template>
