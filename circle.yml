@@ -1,0 +1,27 @@
+machine:
+  timezone:
+    Europe/Warsaw
+  node:
+    version: 4.1.0
+  services:
+    - docker
+
+dependencies:
+  override:
+    - npm install -g bower gulp
+    - npm install
+    - bower install --production --allow-root --config.interactive=false
+
+test:
+  pre:
+    - gulp serve:dist:
+          background: true
+    - sleep 15
+  override:
+    - curl http://localhost:3000
+
+deployment:
+  release:
+    branch: master
+    commands:
+      - docker run -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock jgautheron/exago-builder
