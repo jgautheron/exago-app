@@ -14,8 +14,7 @@ dependencies:
 
 test:
   pre:
-    - gulp serve:dist:
-          background: true
+    - gulp serve:dist
     - sleep 15
   override:
     - curl http://localhost:3000
