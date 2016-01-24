@@ -11,6 +11,7 @@ dependencies:
     - npm install -g bower gulp
     - npm install
     - bower install --production --allow-root --config.interactive=false
+    - gulp download:fonts
 
 test:
   pre:
