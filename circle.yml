@@ -28,6 +28,6 @@ deployment:
     branch: master
     commands:
       - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD -e $REGISTRY_EMAIL
-      - docker build -t jgautheron/exago:$TAG
+      - docker build -t jgautheron/exago:$TAG .
       - docker push jgautheron/exago:$TAG
       #- docker run -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock jgautheron/exago-builder
