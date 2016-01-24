@@ -27,6 +27,7 @@ deployment:
   release:
     branch: master
     commands:
+      - npm dedupe
       - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD -e $REGISTRY_EMAIL
       - docker build -t jgautheron/exago:$TAG .
       - docker push jgautheron/exago:$TAG
