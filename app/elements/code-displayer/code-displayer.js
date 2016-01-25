@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const SERVICE_HOST = 'http://exago.io:3000';
+  const SERVICE_HOST = 'http://exago.io:8080';
 
   Polymer({
     is: 'code-displayer',

@@ -71,8 +71,8 @@
             <project-card title="Project Rating" content="{{_data.rating}}" help="Global rating based on the few metrics visible here" linter="test"></project-card>
           </div>
 
-          <paper-button raised noink class="explore" on-click="_showResults" disabled>
-            <div>Explore</div>
+          <paper-button noink class="explore" on-click="_showResults" disabled>
+            <div>Loading</div>
             <paper-progress value="{{_linterProgress}}" max="{{linters.length}}"></paper-progress>
           </paper-button>
           <linter-card id="linterCard" repository="{{repository}}" class="Project-block" linters="{{linters}}"></linter-card>

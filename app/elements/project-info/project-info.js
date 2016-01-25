@@ -15,7 +15,7 @@
     'vetshadow'
   ];
 
-  const SERVICE_HOST = 'http://exago.io:3000';
+  const SERVICE_HOST = 'http://exago.io:8080';
 
   Polymer({
     is: 'project-info',
@@ -28,12 +28,11 @@
       _repoExists: {
         type: Boolean,
         observer: '_repoExistsChanged'
-      },
-      _data: Object,
-      _rawData: Object
+      }
     },
     observers: [
-      '_rawDataChanged(_rawData.*)'
+      '_rawDataChanged(_rawData.*)',
+      '_linterIsLoading(_linterProgress)'
     ],
     ready() {
       if (!this.linters) {
@@ -116,18 +115,31 @@
         this.linterResults = blend(true, false, this.linterResults, data);
       }
 
-      if (this._linterProgress !== this.linters.length) {
+      if (this._linterIsLoading()) {
         return;
+      }
+
+      let disabled = false, raised = true, html = 'Explore';
+
+      // no linter result, then there's nothing to show
+      if (Object.keys(this.linterResults).length === 0) {
+        disabled = true;
+        raised = false;
+        html = 'Awesome! all linters passed <iron-icon icon="check"></iron-icon>';
       }
 
       this.set('_rawData.linter', this.linterResults);
       this.$$('linter-card').data = this.linterResults;
-      this.$$('paper-button.explore').disabled = false;
+
+      this.$$('paper-button.explore div').innerHTML = html;
+      this.$$('paper-button.explore paper-progress').style.display = 'none';
+      this.$$('paper-button.explore').disabled = disabled;
+      this.$$('paper-button.explore').raised = raised;
     },
     _setUpTest(data) {
       let testPassed = true, cov = [], duration = [];
 
-      data.packages.forEach(function(pkg) {
+      data.packages.forEach((pkg) => {
         if (!pkg.success) {
           testPassed = false;
           return;
@@ -240,7 +252,7 @@
           score += 10;
           break;
         case parseFloat(this._data.test.coverageMean) === 0:
-          score -= 10;
+          score -= 20;
           break;
       }
 
@@ -255,6 +267,11 @@
       }
 
       // linter results
+      if (Object.keys(this.linterResults).length === 0) {
+        // this feat is more impressive on large codebases
+        score += (this._rawData.loc.LOC * 0.02);
+      }
+
       switch (true) {
         case score >= 80:
           score = 'A';
@@ -276,6 +293,9 @@
       }
 
       return score;
+    },
+    _linterIsLoading(progress) {
+      return this._linterProgress !== this.linters.length;
     },
     _rawDataChanged(val) {
       if (val.base.hasOwnProperty('imports') &&
