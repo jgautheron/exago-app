@@ -318,7 +318,9 @@
     _handleRepoExists(e, el) {
       this._repoExists = !el.hasOwnProperty('error') && 'success' === el.response.status;
       this._loading = false;
-      this._errorMessage = el.request.xhr.response.message;
+      if (!this._repoExists) {
+        this._errorMessage = el.request.xhr.response.message;
+      }
     },
     _checkRepoExists() {
       this.$.queryRepoExists.url = s.sprintf('%s/%s/valid', SERVICE_HOST, this.repository);
