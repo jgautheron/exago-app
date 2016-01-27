@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/dom-if-else/dom-if-else.html">
 
 <link rel="import" href="../project-card/project-card.html">
+<link rel="import" href="../checklist-card/checklist-card.html">
 <link rel="import" href="../linter-card/linter-card.html">
 <link rel="import" href="../common-styles.html">
 
@@ -23,7 +24,7 @@
       :host paper-progress {
         --paper-progress-height: 3px;
       }
-      :host project-card, :host linter-card {
+      :host project-card, :host checklist-card, :host linter-card {
         margin: 15px 16px 0 16px;
         padding: 16px;
         @apply(--layout-flex);
@@ -52,17 +53,18 @@
     </style>
 
     <iron-meta key="linterResults" value="{{linterResults}}"></iron-meta>
-    <iron-ajax id="queryRepoExists" handle-as="json" on-response="_handleRepoExists" on-error="_handleRepoExists"></iron-ajax>
+    <iron-ajax id="queryRepoValid" handle-as="json" on-response="_handleRepoValid" on-error="_handleRepoValid"></iron-ajax>
     <iron-ajax id="query" handle-as="json" on-response="_handleLinter" on-error="_handleLinterError"></iron-ajax>
 
-    <template is="dom-if-else" if="{{_repoExists}}">
+    <template is="dom-if-else" if="{{_repoValid}}">
       <if-then>
         <section class="Project-details">
           <div class="layout horizontal">
             <project-card title="Total/Average Lines" content="{{_data.loc.totalAvgLoc}}" help="Total lines of code and average lines of code per file" linter="loc"></project-card>
             <project-card title="Ratio LOC/CLOC" content="{{_data.loc.ratioLocCloc}}" help="Ratio between lines of code and lines of comment" linter="loc"></project-card>
             <project-card title="Third Parties" content="{{_data.imports.thirdPartiesCount}}" help="How many third party libraries are used" linter="imports"></project-card>
-            <project-card title="Checklist Compliance" content="{{_data.test.checklist}}" help="Compliance with a few items from the Go checklist" linter="test"></project-card>
+            <checklist-card title="Checklist Compliance" content="{{_data.test.checklist}}" help="Compliance with a few items from the Go checklist" linter="test" data="{{_rawData.test.checklist}}">
+            </checklist-card>
           </div>
           <div class="layout horizontal">
             <project-card title="Tests" content="{{_data.loc.tests}}" icon="{{_testsIcon}}" icon-tooltip="{{_testsIconTooltip}}" help="How many tests across all packages" linter="loc"></project-card>

@@ -15,7 +15,7 @@
     'vetshadow'
   ];
 
-  const SERVICE_HOST = 'http://exago.io:8080';
+  const SERVICE_HOST = 'http://localhost:8080';
 
   Polymer({
     is: 'project-info',
@@ -25,9 +25,9 @@
         observer: '_repoChanged'
       },
       linters: Array,
-      _repoExists: {
+      _repoValid: {
         type: Boolean,
-        observer: '_repoExistsChanged'
+        observer: '_repoValidChanged'
       }
     },
     observers: [
@@ -38,6 +38,8 @@
       if (!this.linters) {
         this.linters = DEFAULT_LINTERS;
       }
+
+      this._cards = this.querySelectorAll('[linter]');
     },
     requestData() {
       let [registry, username, repository] = this.repository.split('/');
@@ -63,7 +65,7 @@
     },
     _handleLinterError(e, el) {
       let res = this._getTaskNameFromURL(el.request.url);
-      let nodes = this.querySelectorAll('project-card[linter="'+res+'"]');
+      let nodes = this.querySelectorAll('[linter="'+res+'"]');
 
       let i, node;
       for (i = 0; node = nodes[i++];) {
@@ -119,7 +121,8 @@
         return;
       }
 
-      let disabled = false, raised = true, html = 'Explore';
+      let disabled = false, raised = true,
+        html = 'Explore <iron-icon icon="chevron-right"></iron-icon>';
 
       // no linter result, then there's nothing to show
       if (Object.keys(this.linterResults).length === 0) {
@@ -311,14 +314,14 @@
         this.set('_testsIconTooltip', 'The tests didn\'t pass');
       }
     },
-    _repoExistsChanged(val) {
+    _repoValidChanged(val) {
       if (!!val) {
         this.requestData();
       }
     },
     _repoChanged() {
       this._loading = true;
-      this._repoExists = false;
+      this._repoValid = false;
       this._data = {};
       this._rawData = {};
       this._linterProgress = 0;
@@ -328,23 +331,27 @@
       this.$$('linter-card').style.display = 'none';
 
       // reinitialise cards state
-      let cards = this.querySelectorAll('project-card'), card, i;
-      for (i = 0; card = cards[i++];) {
+      let card, i;
+      for (i = 0; card = this._cards[i++];) {
         card.showLoader();
       }
 
-      this._checkRepoExists();
+      this._checkRepoValid();
     },
-    _handleRepoExists(e, el) {
-      this._repoExists = !el.hasOwnProperty('error') && 'success' === el.response.status;
+    _handleRepoValid(e, el) {
+      this._repoValid = !el.hasOwnProperty('error') && 'success' === el.response.status;
       this._loading = false;
-      if (!this._repoExists) {
-        this._errorMessage = el.request.xhr.response.message;
+      if (!this._repoValid) {
+        if (el.request.xhr.response) {
+          this._errorMessage = el.request.xhr.response.message;
+        } else {
+          this._errorMessage = 'Something went wrong';
+        }
       }
     },
-    _checkRepoExists() {
-      this.$.queryRepoExists.url = s.sprintf('%s/%s/valid', SERVICE_HOST, this.repository);
-      this.$.queryRepoExists.generateRequest();
+    _checkRepoValid() {
+      this.$.queryRepoValid.url = s.sprintf('%s/%s/valid', SERVICE_HOST, this.repository);
+      this.$.queryRepoValid.generateRequest();
     },
     _showResults() {
       this.$$('paper-button.explore').style.display = 'none';
