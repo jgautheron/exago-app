@@ -19,7 +19,7 @@ test:
   pre:
     - gulp serve:dist:
           background: true
-    - sleep 20
+    - sleep 25
   override:
     - curl http://localhost:3000
 
