@@ -2,7 +2,7 @@ machine:
   timezone:
     Europe/Warsaw
   node:
-    version: 4.1.0
+    version: 5.1.0
   services:
     - docker
   environment:
@@ -31,4 +31,3 @@ deployment:
       - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD -e $REGISTRY_EMAIL
       - docker build -t jgautheron/exago:$TAG .
       - docker push jgautheron/exago:$TAG
-      #- docker run -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock jgautheron/exago-builder
