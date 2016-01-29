@@ -28,6 +28,12 @@ body {
   text-size-adjust: 100%;
 }
 
+:root {
+  @import 'colors';
+  @import 'variables';
+  @import 'typography';
+}
+
 .linter-message {
   padding-left: 10px;
 
@@ -36,12 +42,6 @@ body {
     width: 16px;
     height: 16px;
   }
-}
-
-:root {
-  @import 'colors';
-  @import 'variables';
-  @import 'typography';
 }
 
 @import 'components/skeleton';

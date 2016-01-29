@@ -46,14 +46,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-pages class="Main-content" attr-for-selected="data-route" selected="{{route}}">
 
       <section class="Page" data-route="home">
-        <paper-material class="Page-paper" elevation="1">
-          <h3>Your last reports</h3>
-          <ul>
-            <li><a href="/project/github.com/alecthomas/gometalinter">alecthomas/gometalinter</a></li>
-            <li><a href="/project/github.com/inconshreveable/log15">inconshreveable/log15</a></li>
-            <li><a href="/project/github.com/gin-gonic/gin">gin-gonic/gin</a></li>
-          </ul>
-        </paper-material>
       </section>
 
       <section class="Page" data-route="project">
@@ -64,10 +56,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         {% include "file.html" %}
       </section>
 
-      <section class="Page" data-route="info">
+      <section class="Page" data-route="about">
         <paper-material class="Page-paper" elevation="1">
-          <h2 class="Page-title">Info</h2>
-          <p>This is the contact section</p>
+          {% include "about.html" %}
         </paper-material>
       </section>
 

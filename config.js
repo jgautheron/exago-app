@@ -26,17 +26,6 @@ module.exports = {
       port: 3001
     }
   },
-  // PageSpeed Insights
-  // Please feel free to use the `nokey` option to try out PageSpeed
-  // Insights as part of your build process. For more frequent use,
-  // we recommend registering for your own API key. For more info:
-  // https://developers.google.com/speed/docs/insights/v1/getting_started
-  pageSpeed: {
-    key: '', // need uncomment in task
-    nokey: true,
-    site: 'https://polymer-starter-kit-plus.firebaseapp.com',
-    strategy: 'mobile' // or desktop
-  },
   // Polymer Theme
   // Set theme also in file app/elements/elements.html
   // <link rel="import" href="../themes/default-theme/theme.html">

@@ -1,0 +1,31 @@
+paper-progress {
+  --paper-progress-container-color: var(--light-primary-color);
+  --paper-progress-active-color: var(--default-primary-color);
+  width: 100%;
+}
+
+paper-button {
+  background: var(--default-primary-color);
+  color: var(--light-primary-color);
+}
+
+a, a:visited {
+  color: var(--default-primary-color);
+}
+
+.Message {
+  @apply(--layout-horizontal);
+}
+
+.Message iron-icon {
+  width: 120px;
+  height: 120px;
+}
+
+.Message-contents {
+  margin: 22px 0 0 20px;
+}
+
+.Message-contents h2, .Message-contents p {
+  margin: 0;
+}

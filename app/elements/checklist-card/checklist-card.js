@@ -13,6 +13,10 @@
       this.$$('paper-dialog').open();
     },
     _dataChanged(data) {
+      if (!data || Object.keys(data).length === 0) {
+        return;
+      }
+
       let sortedData = {minimumCriteria: [], goodCitizen: [], extraCredit: []}, i, item;
       for (i = 0; item = data.Passed[i++];) {
         sortedData[item.Category].push({

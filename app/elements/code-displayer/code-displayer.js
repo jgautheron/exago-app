@@ -43,6 +43,7 @@
       'neon-animation-finish': '_onNeonAnimationFinish'
     },
     ready() {
+      this.$.codeMirror.style.opacity = 0;
       this.showContent();
     },
     showContent() {
@@ -118,7 +119,8 @@
       }
     },
     _onNeonAnimationFinish() {
-      if (!this.loading) {
+      console.log(this._loading, this.$.codeMirror);
+      if (!this._loading) {
         this.$.codeMirror.style.opacity = 1;
       }
     }

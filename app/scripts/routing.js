@@ -13,6 +13,14 @@ window.addEventListener('WebComponentsReady', () => {
     next();
   }
 
+  function initProject() {
+    let project = document.querySelector('#project');
+    project.registry = app.params.registry;
+    project.username = app.params.username;
+    project.repository = app.params.repository;
+    project.fullName = app.params.registry + '/' + app.params.username + '/' + app.params.repository;
+  }
+
   // Routes
   page('*', scrollToTop, (ctx, next) => {
     next();
@@ -22,30 +30,22 @@ window.addEventListener('WebComponentsReady', () => {
     app.route = 'home';
   });
 
-  page('/info', scrollToTop, () => {
-    app.route = 'info';
+  page('/about', setMiniHeader, () => {
+    app.route = 'about';
   });
 
   page('/project/:registry/:username/:repository', setMiniHeader, data => {
     app.route = 'project';
     app.params = data.params;
 
-    let project = document.querySelector('#project');
-    project.registry = app.params.registry;
-    project.username = app.params.username;
-    project.repository = app.params.repository;
-    project.fullName = app.params.registry + '/' + app.params.username + '/' + app.params.repository;
+    initProject();
   });
 
   page('/project/:registry/:username/:repository/file/*', setMiniHeader, data => {
     app.route = 'file';
     app.params = data.params;
 
-    let project = document.querySelector('#project');
-    project.registry = app.params.registry;
-    project.username = app.params.username;
-    project.repository = app.params.repository;
-    project.fullName = app.params.registry + '/' + app.params.username + '/' + app.params.repository;
+    initProject();
 
     let file = document.querySelector('#file');
     file.registry = app.params.registry;

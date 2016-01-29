@@ -3,8 +3,10 @@
   let ProjectCardBehaviorImpl = {
     properties: {
       title: String,
-      icon: String,
-      iconTooltip: String,
+      icon: {
+        type: String,
+        notify: true
+      },
       help: String,
       error: {
         type: Boolean,
@@ -36,9 +38,6 @@
     },
     listeners: {
       'neon-animation-finish': '_onNeonAnimationFinish'
-    },
-    ready() {
-      this.id = 'tooltip-' + this._generateUniqueID();
     },
     showLoader() {
       this._loading = true;

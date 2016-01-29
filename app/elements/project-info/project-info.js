@@ -36,8 +36,6 @@
       if (!this.linters) {
         this.linters = DEFAULT_LINTERS;
       }
-
-      this._cards = this.querySelectorAll('[linter]');
     },
     requestData() {
       let [registry, username, repository] = this.repository.split('/');
@@ -315,8 +313,9 @@
 
       if (val.base.hasOwnProperty('loc') &&
         val.base.hasOwnProperty('test')) {
-        this.set('_testsIcon', this._data.test.testPassed ? 'check' : 'clear');
-        this.set('_testsIconTooltip', 'The tests didn\'t pass');
+        if (this._data.loc.tests > 0) {
+          this.set('_testsIcon', this._data.test.testPassed ? 'check' : 'clear');
+        }
       }
     },
     _repoValidChanged(val) {
@@ -336,8 +335,8 @@
       this.$$('linter-card').style.display = 'none';
 
       // reinitialise cards state
-      let card, i;
-      for (i = 0; card = this._cards[i++];) {
+      let cards = this.querySelectorAll('[linter]'), card, i;
+      for (i = 0; card = cards[i++];) {
         card.showLoader();
       }
 
@@ -347,8 +346,13 @@
       this._repoValid = !el.hasOwnProperty('error') && 'success' === el.response.status;
       this._loading = false;
       if (!this._repoValid) {
-        if (el.request.xhr.response) {
-          this._errorMessage = el.request.xhr.response.message;
+        if (el.request.xhr.response && el.request.xhr.response.hasOwnProperty('message')) {
+          let msg = el.request.xhr.response.message;
+          if (typeof msg === 'object') {
+            this._errorMessage = 'Something went wrong';
+          } else {
+            this._errorMessage = el.request.xhr.response.message;
+          }
         } else {
           this._errorMessage = 'Something went wrong';
         }

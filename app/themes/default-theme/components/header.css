@@ -7,6 +7,7 @@
 
   @nest &-logo {
     display: inline-block;
+    color: #000 !important;
     text-decoration: none;
     font-weight: 500;
     line-height: 61px !important;

@@ -9,14 +9,12 @@
 
 <link rel="import" href="../../bower_components/polymer-codemirror-go/code-mirror.html"/>
 
-<link rel="import" href="../common-styles.html">
-
 <script src="../../bower_components/underscore.string/dist/underscore.string.min.js"></script>
 <script src="../../bower_components/blend.js/lib/blend.min.js"></script>
 
 <dom-module id="code-displayer">
   <template>
-    <style include="common-styles">
+    <style>
       :host {
         position: relative;
         display: block;
@@ -27,9 +25,6 @@
         position: absolute;
         top: 20px;
         left: 50%;
-      }
-      #codeMirror {
-        opacity: 0;
       }
     </style>
 
