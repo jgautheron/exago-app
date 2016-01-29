@@ -10,7 +10,7 @@ module.exports = {
   // Add to homescreen for Safari on iOS
   appleMobileWebAppTitle: 'Exago',
   // Google Analytics Tracking ID
-  googleAnalyticsTrackingId: 'UA-XXXXX-Y',
+  googleAnalyticsTrackingId: 'UA-2118940-7',
   // App Theme
   theme: config.theme
 };
