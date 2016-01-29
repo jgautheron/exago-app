@@ -32,13 +32,3 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   }
 }
-
-.linter-message {
-  padding-left: 10px;
-
-  @nest & iron-icon {
-    padding-right: 6px;
-    width: 16px;
-    height: 16px;
-  }
-}

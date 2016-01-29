@@ -41,6 +41,12 @@ window.addEventListener('WebComponentsReady', () => {
     app.route = 'file';
     app.params = data.params;
 
+    let project = document.querySelector('#project');
+    project.registry = app.params.registry;
+    project.username = app.params.username;
+    project.repository = app.params.repository;
+    project.fullName = app.params.registry + '/' + app.params.username + '/' + app.params.repository;
+
     let file = document.querySelector('#file');
     file.registry = app.params.registry;
     file.username = app.params.username;
@@ -50,7 +56,6 @@ window.addEventListener('WebComponentsReady', () => {
 
     let cd = document.querySelector('code-displayer');
     let editor = document.querySelector('code-displayer #codeMirror');
-
     if (editor) {
       editor.style.opacity = 0;
       cd.showContent();

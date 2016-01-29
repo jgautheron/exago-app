@@ -1,8 +1,6 @@
 (() => {
   'use strict';
 
-  const SERVICE_HOST = 'http://exago.io:8080';
-
   Polymer({
     is: 'code-displayer',
     properties: {
@@ -62,7 +60,7 @@
     requestFile() {
       this._error = false;
       this._loading = true;
-      this.$.codeRequest.url = s.sprintf('%s/%s/contents/%s', SERVICE_HOST, this.repository, this.path);
+      this.$.codeRequest.url = s.sprintf('%s/%s/contents/%s', app.SERVICE_HOST, this.repository, this.path);
       this.$.codeRequest.generateRequest();
     },
     handleError(e, req) {
@@ -91,7 +89,7 @@
         if (results) {
           clearInterval(retry);
           if (results.hasOwnProperty(this.path)) {
-            setTimeout(() => this._setLineWidgets(results[this.path]), 10);
+            this._setLineWidgets(results[this.path]);
           }
         }
       }, 50);
@@ -113,6 +111,11 @@
     },
     _loadingChanged(val) {
       this.$.codeLoading.active = val;
+    },
+    _lintSignal(e, linterResults) {
+      if (linterResults.hasOwnProperty(this.path)) {
+        this._setLineWidgets(linterResults[this.path]);
+      }
     },
     _onNeonAnimationFinish() {
       if (!this.loading) {

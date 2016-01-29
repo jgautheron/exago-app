@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
 <link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
@@ -33,6 +34,7 @@
     </style>
 
     <iron-meta id="meta"></iron-meta>
+    <iron-signals on-iron-signal-lint="_lintSignal"></iron-signals>
     <iron-ajax id="codeRequest" handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     <paper-spinner active id="codeLoading"></paper-spinner>
     <code-mirror id="codeMirror" mode$="{{language}}" value$="{{content}}" readonly hidecursor>

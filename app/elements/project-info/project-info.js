@@ -15,8 +15,6 @@
     'vetshadow'
   ];
 
-  const SERVICE_HOST = 'http://exago.io:8080';
-
   Polymer({
     is: 'project-info',
     properties: {
@@ -53,13 +51,13 @@
 
       let i, url;
       for (i = 0; url = urls[i++];) {
-        this.$.query.url = s.sprintf(url, SERVICE_HOST, registry, username, repository);
+        this.$.query.url = s.sprintf(url, app.SERVICE_HOST, registry, username, repository);
         this.$.query.generateRequest();
       }
 
       let linter, linterURL = '%s/%s/%s/%s/lint/%s';
       for (i = 0; linter = this.linters[i++];) {
-        this.$.query.url = s.sprintf(linterURL, SERVICE_HOST, registry, username, repository, linter);
+        this.$.query.url = s.sprintf(linterURL, app.SERVICE_HOST, registry, username, repository, linter);
         this.$.query.generateRequest();
       }
     },
@@ -131,8 +129,15 @@
         html = 'Awesome! all linters passed <iron-icon icon="check"></iron-icon>';
       }
 
+      // rawData is used for internal -unfiltered- processing
       this.set('_rawData.linter', this.linterResults);
+
+      // update the view
       this.$$('linter-card').data = this.linterResults;
+
+      // propagate the linter results so that they can be caught
+      // asynchronously in some other element
+      this.fire('iron-signal', {name: 'lint', data: this.linterResults});
 
       this.$$('paper-button.explore div').innerHTML = html;
       this.$$('paper-button.explore paper-progress').style.display = 'none';
@@ -350,7 +355,7 @@
       }
     },
     _checkRepoValid() {
-      this.$.queryRepoValid.url = s.sprintf('%s/%s/valid', SERVICE_HOST, this.repository);
+      this.$.queryRepoValid.url = s.sprintf('%s/%s/valid', app.SERVICE_HOST, this.repository);
       this.$.queryRepoValid.generateRequest();
     },
     _showResults() {

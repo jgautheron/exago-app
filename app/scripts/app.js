@@ -7,6 +7,9 @@
   app.setMiniHeader = () => document.querySelector('.Header').setAttribute('mini', '');
   app.unsetMiniHeader = () => document.querySelector('.Header').removeAttribute('mini');
 
+  // Constants
+  app.SERVICE_HOST = 'http://exago.io:8080';
+
   // Debug mode
   app.debug = true;
 
