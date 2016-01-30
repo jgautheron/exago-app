@@ -13,6 +13,10 @@ paper-material {
   padding: 16px;
 }
 
+paper-drawer-panel {
+  overflow: auto;
+}
+
 a, a:visited {
   color: var(--default-primary-color);
 }

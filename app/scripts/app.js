@@ -6,7 +6,7 @@
   app.scrollPageToTop = () => document.getElementsByTagName('body')[0].scrollTop = 0;
 
   // Constants
-  app.SERVICE_HOST = 'http://exago.io:8080';
+  app.SERVICE_HOST = 'http://localhost:8080';
 
   // Debug mode
   app.debug = true;
