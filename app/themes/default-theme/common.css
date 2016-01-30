@@ -9,6 +9,10 @@ paper-button {
   color: var(--light-primary-color);
 }
 
+paper-material {
+  padding: 16px;
+}
+
 a, a:visited {
   color: var(--default-primary-color);
 }

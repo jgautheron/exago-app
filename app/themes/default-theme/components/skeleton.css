@@ -10,7 +10,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 /** @define Skeleton */
 
 .Skeleton {
-  @apply(--paper-font-subhead);
-  text-align: center;
-  padding-top: 20px;
+  @nest & * {
+    box-sizing: border-box;
+  }
+
+  @nest &-main {
+    background-color: var(--secondary-background-color);
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    right: 0;
+    top: 0;
+  }
+
+  @nest &-mainHeader {
+    background-color: var(--primary-color);
+    height: calc(56px * 3);
+    left: 0;
+    position: relative;
+    right: 0;
+    top: 0;
+
+    @media (--md-viewport) {
+      height: calc(64px * 3);
+    }
+  }
+
+  @nest &-mainHeaderTopBar {
+    background-color: var(--dark-primary-color);
+    height: 56px;
+
+    @media (--md-viewport) {
+      height: 64px;
+    }
+  }
+
+  @nest &-headerLogo {
+    font-family: 'Roboto', 'Noto', sans-serif;
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: -.01em;
+    display: block;
+    color: #fff !important;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    top: 9px;
+    left: 80px;
+  }
 }

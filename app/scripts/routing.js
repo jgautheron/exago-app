@@ -4,14 +4,6 @@ window.addEventListener('WebComponentsReady', () => {
     app.scrollPageToTop();
     next();
   }
-  function setMiniHeader(ctx, next) {
-    app.setMiniHeader();
-    next();
-  }
-  function unsetMiniHeader(ctx, next) {
-    app.unsetMiniHeader();
-    next();
-  }
 
   function initProject() {
     let project = document.querySelector('#project');
@@ -26,22 +18,22 @@ window.addEventListener('WebComponentsReady', () => {
     next();
   });
 
-  page('/', unsetMiniHeader, () => {
+  page('/', () => {
     app.route = 'home';
   });
 
-  page('/about', setMiniHeader, () => {
+  page('/about', () => {
     app.route = 'about';
   });
 
-  page('/project/:registry/:username/:repository', setMiniHeader, data => {
+  page('/project/:registry/:username/:repository', data => {
     app.route = 'project';
     app.params = data.params;
 
     initProject();
   });
 
-  page('/project/:registry/:username/:repository/file/*', setMiniHeader, data => {
+  page('/project/:registry/:username/:repository/file/*', data => {
     app.route = 'file';
     app.params = data.params;
 

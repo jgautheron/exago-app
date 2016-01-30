@@ -9,15 +9,23 @@
     :host {
       display: block;
       position: relative;
-      margin: 0 auto;
       width: 400px;
     }
     :host .Search-input {
+      width: 400px;
       --paper-input-container-label: {
         @apply(--paper-font-title);
       };
       --paper-input-container-input: {
         @apply(--paper-font-title);
+        color: #fff;
+      };
+      --paper-input-container-color: var(--light-primary-color);
+      --paper-input-container-underline: {
+        background-color: var(--light-primary-color);
+      };
+      --paper-input-container-underline-focus: {
+        background-color: #fff;
       };
     }
   </style>

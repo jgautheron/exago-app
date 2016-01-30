@@ -8,40 +8,38 @@
     color: var(--primary-text-color);
     @media (--md-viewport) {
       @apply(--paper-font-body2);
-      padding: 28px 62px;
-    }
-
-    @nest & a:visited {
-      color: var(--default-primary-color);
+      padding: 20px;
     }
   }
 
-  @nest &-headerMiddleContent  {
-    height: 100%;
-    margin-left: 48px;
+  @nest &-headerTopBar {
+    @apply(--layout-horizontal);
+    @apply(--layout-center);
+
+    background-color: var(--dark-primary-color);
+    bottom: 0;
+    left: 0;
+    padding: 0 16px;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 
-  @nest &-header:not(.tall) &-headerMiddleContent {
-    font-size: 18px;
-    padding-bottom: 0;
+  @nest &-headerLogo {
+    @apply(--layout-horizontal);
+    @apply(--layout-flex);
+    @apply(--paper-font-display1);
+
+    display: block;
+    color: #fff !important;
+    text-decoration: none;
+    position: relative;
+    top: -3px;
   }
 
-  @nest &-headerBottomContent {
-    margin-left: 48px;
-    /* Required for main area's paper-scroll-header-panel custom condensing transformation */
-    transform-origin: left center;
-  }
+  @nest &-headerSearch {
+    @apply(--layout-horizontal);
 
-  @nest &-headerTitle {
-    @apply(--paper-font-headline);
-    /* Required for main area's paper-scroll-header-panel custom condensing transformation */
-    transform-origin: left center;
-    @media (--md-viewport) {
-      @apply(--paper-font-display2);
-    }
-  }
-
-  @nest &-headerSubTitle {
-    @apply(--paper-font-subhead);
+    top: -10px;
   }
 }

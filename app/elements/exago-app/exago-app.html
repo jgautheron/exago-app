@@ -23,7 +23,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 
 <!-- Custom elements -->
 <link rel="import" href="../search-input/search-input.html">
@@ -35,37 +37,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
       @import "theme";
     </style>
-    <paper-drawer-panel id="paperDrawerPanel" responsive-width="599px" drawer-width="256px">
-      <header class="Header">
-        <a href="/" class="Header-logo">e<span class="Header-logo--blue">x</span>ago</a>
-        <h2 class="Header-subhead">Go Quality Dashboard</h2>
-        <div class="Header-searchContainer">
-          <search-input></search-input>
-          <span>Example: <a href="/project/github.com/inconshreveable/log15">inconshreveable/log15</a></span>
-        </div>
-      </header>
-
-      <!-- Main Content -->
-      <iron-pages class="Main-content" attr-for-selected="data-route" selected="{{route}}">
-
-        <section class="Page" data-route="home">
-        </section>
-
-        <section class="Page" data-route="project">
-          {% include "project.html" %}
-        </section>
-
-        <section class="Page" data-route="file">
-          {% include "file.html" %}
-        </section>
-
-        <section class="Page" data-route="about">
-          <paper-material class="Page-paper" elevation="1">
-            {% include "about.html" %}
-          </paper-material>
-        </section>
-
-      </iron-pages>
+    <paper-drawer-panel id="paperDrawerPanel" responsive-width="9999px" drawer-width="256px">
+      {% include "exago-app/views/drawer.html" %}
+      {% include "exago-app/views/main.html" %}
     </paper-drawer-panel>
     <paper-toast id="infoToast" class="Toast" duration="8000"></paper-toast>
   </template>
