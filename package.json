@@ -33,6 +33,7 @@
     "gulp-plumber": "^1.0.1",
     "gulp-postcss": "^6.0.0",
     "gulp-rename": "^1.2.0",
+    "gulp-replace": "^0.5.4",
     "gulp-rev-all": "^0.8.21",
     "gulp-shell": "^0.4.2",
     "gulp-size": "^2.0.0",
