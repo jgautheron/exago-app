@@ -2,6 +2,12 @@
 
 // Transpile all JS from ES2015 (ES6) to ES5
 module.exports = function ($, gulp) { return function () {
+  function replaceVars(content) {
+    if (process.env.DEV) {
+      return content.replace(/http\:\/\/exago.io/g, 'http://localhost');
+    }
+  }
+
   return gulp.src([
       'app/{scripts,elements}/**/*.js',
       '!app/scripts/analytics.js'
@@ -13,6 +19,7 @@ module.exports = function ($, gulp) { return function () {
       presets: ['es2015']
     })))
     .pipe($.sourcemaps.write('.'))
+    .pipe($.change(replaceVars))
     .pipe(gulp.dest('.tmp'))
     .pipe(gulp.dest('dist'));
 };};

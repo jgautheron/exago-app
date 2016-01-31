@@ -213,8 +213,13 @@ gulp.task('clean', function(cb) {
   return del(['.tmp', 'dist', 'deploy'], cb);
 });
 
+// Set the environment
+gulp.task('set-dev-env', function() {
+  process.env.DEV = true;
+});
+
 // Watch files for changes & reload
-gulp.task('serve', ['images', 'js', 'manifest', 'styles'], function() {
+gulp.task('serve', ['set-dev-env', 'images', 'js', 'manifest', 'styles'], function() {
   browserSync({
     browser: config.browserSync.browser,
     https: config.browserSync.https,
@@ -350,22 +355,6 @@ gulp.task('pre-deploy', function(cb) {
     'fix-paths-after-revision',
     cb);
 });
-
-// Deploy to development environment
-gulp.task('deploy:dev', ['pre-deploy'],
-  require(task('deploy'))($, config, gulp, 'development'));
-
-// Deploy to staging environment
-gulp.task('deploy:stag', ['pre-deploy'],
-  require(task('deploy'))($, config, gulp, 'staging'));
-
-// Deploy to production environment
-gulp.task('deploy:prod', ['pre-deploy'],
-  require(task('deploy'))($, config, gulp, 'production'));
-
-// Promote the staging version to the production environment
-gulp.task('deploy:promote',
-  require(task('deploy'))($, config, gulp, 'promote'));
 
 // Tool Tasks
 // ----------
