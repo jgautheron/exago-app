@@ -323,6 +323,7 @@
         this.requestData();
       }
     },
+    // Reinitialise the page state.
     _repoChanged() {
       this._loading = true;
       this._repoValid = false;
@@ -330,14 +331,29 @@
       this._rawData = {};
       this._linterProgress = 0;
       this.linterResults = {};
-      this.$$('paper-button.explore').disabled = true;
-      this.$$('paper-button.explore').style.display = 'block';
-      this.$$('linter-card').style.display = 'none';
+
+      let exploreBtn = this.$$('paper-button.explore');
+      if (exploreBtn) {
+        this.$$('paper-button.explore div').innerHTML = 'Loading';
+        exploreBtn.disabled = true;
+        exploreBtn.style.display = 'block';
+
+        // reinitialise the progress bar
+        this._linterProgress = 0;
+        this.$$('paper-button.explore paper-progress').style.display = 'block';
+      }
+
+      let linterCard = this.$$('linter-card');
+      if (linterCard) {
+        linterCard.style.display = 'none';
+      }
 
       // reinitialise cards state
       let cards = this.querySelectorAll('[linter]'), card, i;
-      for (i = 0; card = cards[i++];) {
-        card.showLoader();
+      if (cards) {
+        for (i = 0; card = cards[i++];) {
+          card.init();
+        }
       }
 
       this._checkRepoValid();

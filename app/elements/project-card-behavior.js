@@ -39,7 +39,7 @@
     listeners: {
       'neon-animation-finish': '_onNeonAnimationFinish'
     },
-    showLoader() {
+    init() {
       this._loading = true;
       this.error = false;
       this.icon = '';
@@ -68,7 +68,6 @@
         this.$.content.style.opacity = 1;
       }
     }
-
   };
 
   Exago.ProjectCardBehavior = [Polymer.NeonAnimationRunnerBehavior, ProjectCardBehaviorImpl];

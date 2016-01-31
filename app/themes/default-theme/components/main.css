@@ -3,12 +3,6 @@
 .Main {
   background: var(--primary-background-color);
 
-  @nest &-header {
-    @nest & iron-icon {
-      color: #fff;
-    }
-  }
-
   @nest &-content {
     @apply(--paper-font-body1);
     color: var(--primary-text-color);

@@ -1,39 +1,97 @@
-window.addEventListener('WebComponentsReady', () => {
-  // Middleware
-  function scrollToTop(ctx, next) {
+// Sets app default base URL
+let baseUrl = '/';
+
+if (window.location.port === '') {  // if production
+  page.base(baseUrl.replace(/\/$/, ''));
+}
+
+let app = document.getElementById('app');
+
+window.addEventListener('upgraded', () => {
+  app.baseUrl = baseUrl;
+});
+
+// Utility function to listen to an event on a node once.
+function once(node, event, fn, args) {
+  var self = this;
+  var listener = function() {
+    fn.apply(self, args);
+    node.removeEventListener(event, listener, false);
+  };
+  node.addEventListener(event, listener, false);
+}
+
+// Middleware
+function scrollToTop(ctx, next) {
+  function setData() {
     app.scrollPageToTop();
-    next();
   }
 
-  function initProject() {
-    let project = document.querySelector('#project');
-    project.registry = app.params.registry;
-    project.username = app.params.username;
-    project.repository = app.params.repository;
-    project.fullName = app.params.registry + '/' + app.params.username + '/' + app.params.repository;
+  // Check if element prototype has not been upgraded yet
+  if (!app.upgraded) {
+    once(app, 'upgraded', setData);
+  } else {
+    setData();
   }
+  next();
+}
 
-  // Routes
-  page('*', scrollToTop, (ctx, next) => {
-    next();
-  });
+function initProject() {
+  let project = document.querySelector('#project');
+  project.registry = app.params.registry;
+  project.username = app.params.username;
+  project.repository = app.params.repository;
+  project.fullName = app.params.registry + '/' + app.params.username + '/' + app.params.repository;
+}
 
-  page('/', () => {
+// Routes
+page('*', scrollToTop, (ctx, next) => {
+  next();
+});
+
+page('/', () => {
+  function setData() {
     app.route = 'home';
-  });
+  }
 
-  page('/about', () => {
+  // Check if element prototype has not been upgraded yet
+  if (!app.upgraded) {
+    once(app, 'upgraded', setData);
+  } else {
+    setData();
+  }
+});
+
+page('/about', () => {
+  function setData() {
     app.route = 'about';
-  });
+  }
 
-  page('/project/:registry/:username/:repository', data => {
+  // Check if element prototype has not been upgraded yet
+  if (!app.upgraded) {
+    once(app, 'upgraded', setData);
+  } else {
+    setData();
+  }
+});
+
+page('/project/:registry/:username/:repository', data => {
+  function setData() {
     app.route = 'project';
     app.params = data.params;
-
     initProject();
-  });
+  }
 
-  page('/project/:registry/:username/:repository/file/*', data => {
+  // Check if element prototype has not been upgraded yet
+  if (!app.upgraded) {
+    once(app, 'upgraded', setData);
+  } else {
+    setData();
+  }
+});
+
+page('/project/:registry/:username/:repository/file/*', data => {
+  function setData() {
     app.route = 'file';
     app.params = data.params;
 
@@ -52,15 +110,21 @@ window.addEventListener('WebComponentsReady', () => {
       editor.style.opacity = 0;
       cd.showContent();
     }
-  });
+  }
 
-  // 404
-  page('*', data => {
-    page.redirect('/');
-  });
+  // Check if element prototype has not been upgraded yet
+  if (!app.upgraded) {
+    once(app, 'upgraded', setData);
+  } else {
+    setData();
+  }
+});
 
-  page({
-    hashbang: false
-  });
+// 404
+page('*', data => {
+  page.redirect('/');
+});
 
+page({
+  hashbang: false
 });

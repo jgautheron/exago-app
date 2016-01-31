@@ -3,8 +3,6 @@
 
   let app = document.querySelector('#app');
 
-  app.scrollPageToTop = () => document.getElementsByTagName('body')[0].scrollTop = 0;
-
   // Constants
   app.SERVICE_HOST = 'http://exago.io:8080';
 

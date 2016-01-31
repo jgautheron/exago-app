@@ -32,6 +32,12 @@
       }
 
       this.set('sortedData', sortedData);
-    }
+    },
+    init() {
+      this._loading = true;
+      this.error = false;
+      this.icon = null;
+      this.sortedData = null;
+    },
   });
 })();

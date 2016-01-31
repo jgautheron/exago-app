@@ -50,51 +50,52 @@
         <iron-icon icon="clear" class="main"></iron-icon>
       </template>
       <help-icon text$="{{help}}"></help-icon>
-      <paper-dialog entry-animation="scale-up-animation">
-        <template is="dom-if" if="{{sortedData}}">
-          <div>
-            <h4>Minimum Criteria</h4>
-            <template is="dom-repeat" items="{{sortedData.minimumCriteria}}">
-              <template is="dom-if-else" if="{{item.passed}}">
-                <if-then>
-                  <iron-icon icon="check"></iron-icon>
-                </if-then>
-                <if-else>
-                  <iron-icon icon="clear"></iron-icon>
-                </if-else>
-              </template>
-              {{item.desc}}<br>
-            </template>
 
-            <h4>Good Citizen</h4>
-            <template is="dom-repeat" items="{{sortedData.goodCitizen}}">
-              <template is="dom-if-else" if="{{item.passed}}">
-                <if-then>
-                  <iron-icon icon="check"></iron-icon>
-                </if-then>
-                <if-else>
-                  <iron-icon icon="clear"></iron-icon>
-                </if-else>
+      <template is="dom-if" if="{{sortedData}}">
+        <paper-dialog entry-animation="scale-up-animation" modal>
+            <div>
+              <h4>Minimum Criteria</h4>
+              <template is="dom-repeat" items="{{sortedData.minimumCriteria}}">
+                <template is="dom-if-else" if="{{item.passed}}">
+                  <if-then>
+                    <iron-icon icon="check"></iron-icon>
+                  </if-then>
+                  <if-else>
+                    <iron-icon icon="clear"></iron-icon>
+                  </if-else>
+                </template>
+                {{item.desc}}<br>
               </template>
-              {{item.desc}}<br>
-            </template>
 
-            <h4>Extra Credit</h4>
-            <template is="dom-repeat" items="{{sortedData.extraCredit}}">
-              <template is="dom-if-else" if="{{item.passed}}">
-                <if-then>
-                  <iron-icon icon="check"></iron-icon>
-                </if-then>
-                <if-else>
-                  <iron-icon icon="clear"></iron-icon>
-                </if-else>
+              <h4>Good Citizen</h4>
+              <template is="dom-repeat" items="{{sortedData.goodCitizen}}">
+                <template is="dom-if-else" if="{{item.passed}}">
+                  <if-then>
+                    <iron-icon icon="check"></iron-icon>
+                  </if-then>
+                  <if-else>
+                    <iron-icon icon="clear"></iron-icon>
+                  </if-else>
+                </template>
+                {{item.desc}}<br>
               </template>
-              {{item.desc}}<br>
-            </template>
-          </div>
-        </template>
-      </paper-dialog>
-      <paper-icon-button icon="zoom-in" on-click="showDialog" id="moobar"></paper-icon-button>
+
+              <h4>Extra Credit</h4>
+              <template is="dom-repeat" items="{{sortedData.extraCredit}}">
+                <template is="dom-if-else" if="{{item.passed}}">
+                  <if-then>
+                    <iron-icon icon="check"></iron-icon>
+                  </if-then>
+                  <if-else>
+                    <iron-icon icon="clear"></iron-icon>
+                  </if-else>
+                </template>
+                {{item.desc}}<br>
+              </template>
+            </div>
+        </paper-dialog>
+        <paper-icon-button icon="zoom-in" on-click="showDialog"></paper-icon-button>
+      </template>
     </div>
   </template>
 
