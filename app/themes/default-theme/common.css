@@ -17,6 +17,10 @@ paper-drawer-panel {
   overflow: auto;
 }
 
+paper-toolbar {
+  color: #fff;
+}
+
 a, a:visited {
   color: var(--default-primary-color);
 }
