@@ -119,7 +119,6 @@
       }
     },
     _onNeonAnimationFinish() {
-      console.log(this._loading, this.$.codeMirror);
       if (!this._loading) {
         this.$.codeMirror.style.opacity = 1;
       }
