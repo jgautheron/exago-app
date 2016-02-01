@@ -14,6 +14,7 @@ dependencies:
     - npm install
     - bower install --production --allow-root --config.interactive=false
     - gulp download:fonts
+    - gulp download:analytics
 
 test:
   pre:
@@ -27,6 +28,7 @@ deployment:
   release:
     branch: master
     commands:
+      - gulp pre-deploy
       - npm dedupe
       - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD -e $REGISTRY_EMAIL
       - docker build -t jgautheron/exago:$TAG .
