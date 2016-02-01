@@ -234,7 +234,9 @@
       }
       for (i = 0; failed = this._rawData.test.checklist.Failed[i++];) {
         switch (failed.Name) {
+          // ignore for now, libraries typically don't build
           case 'projectBuilds':
+            break;
           case 'isFormatted':
             score -= 20;
             break;
