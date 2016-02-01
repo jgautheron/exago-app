@@ -79,11 +79,11 @@
         return;
       }
 
-      let data = req.response.data;
+      let rsp = req.response.data;
       let responseURL = this._parseURL(req.url);
       let [,,,, res] = responseURL.pathname.split('/');
 
-      this['_setUp' + res[0].toUpperCase() + res.slice(1)](data, responseURL);
+      this['_setUp' + res[0].toUpperCase() + res.slice(1)](rsp, responseURL);
     },
     _setUpLoc(data) {
       if (!Object.keys(data).length) {
@@ -301,7 +301,11 @@
       return score;
     },
     _linterIsLoading(progress) {
-      return this._linterProgress !== this.linters.length;
+      // observers are called before ready()
+      if (this.linters) {
+        return this._linterProgress !== this.linters.length;
+      }
+      return true;
     },
     _rawDataChanged(val) {
       if (val.base.hasOwnProperty('imports') &&

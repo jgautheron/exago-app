@@ -35,8 +35,10 @@
       let usedLinter, toggle;
       for (i = 0; usedLinter = usedLinters[i++];) {
         toggle = this.$$('#toggle-' + usedLinter);
-        toggle.disabled = false;
-        toggle.checked = true;
+        if (toggle) {
+          toggle.disabled = false;
+          toggle.checked = true;
+        }
       }
 
       let linter;
