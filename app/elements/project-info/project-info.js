@@ -280,6 +280,9 @@
         score += (this._rawData.loc.LOC * 0.02);
       }
 
+      // fmt is really the basis
+      console.log(this.linterResults);
+
       switch (true) {
         case score >= 80:
           score = 'A';
@@ -371,7 +374,11 @@
         if (el.request.xhr.response && el.request.xhr.response.hasOwnProperty('message')) {
           let msg = el.request.xhr.response.message;
           if (typeof msg === 'object') {
-            this._errorMessage = 'Something went wrong';
+            if (el.request.xhr.status === 404) {
+              this._errorMessage = 'The repository couldn\'t be found.';
+            } else {
+              this._errorMessage = 'Something went wrong';
+            }
           } else {
             this._errorMessage = el.request.xhr.response.message;
           }

@@ -34,10 +34,10 @@
         margin-bottom: 24px;
       }
     </style>
-    <h2>{{title}}</h2>
+    <h2 class="Card-title">{{title}}</h2>
     <paper-spinner active id="loading"></paper-spinner>
     <div id="content" style="opacity: 0">
-      <strong>
+      <strong class="Card-content">
         {{content}}
         <template is="dom-if" if="{{icon}}">
           <iron-icon icon="{{icon}}" id="{{id}}" class="main"></iron-icon>

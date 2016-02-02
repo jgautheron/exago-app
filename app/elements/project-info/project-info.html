@@ -17,21 +17,32 @@
 <dom-module id="project-info">
   <template>
     <style include="shared-styles">
+      @import "breakpoints";
+
       :host {
         position: relative;
         display: block;
       }
-      :host paper-progress {
-        --paper-progress-height: 3px;
+      :host .Project-row {
+        @apply(--layout-horizontal);
+        @media (--sm-viewport) {
+          @apply(--layout-vertical);
+        }
+        @media (max-width: 880px) {
+          @apply(--layout-vertical);
+        }
       }
       :host project-card, :host checklist-card, :host linter-card {
         margin: 15px 16px 0 16px;
         padding: 16px;
-        @apply(--layout-flex);
         text-align: center;
+        @apply(--layout-flex);
       }
       :host linter-card {
         display: none;
+      }
+      :host paper-progress {
+        --paper-progress-height: 3px;
       }
       :host .explore {
         @apply(--layout-horizontal);
@@ -59,14 +70,14 @@
     <template is="dom-if-else" if="{{_repoValid}}">
       <if-then>
         <section class="Project-details">
-          <div class="layout horizontal">
+          <div class="Project-row">
             <project-card title="Total/Average Lines" content="{{_data.loc.totalAvgLoc}}" help="Total lines of code and average lines of code per file" linter="loc"></project-card>
             <project-card title="Ratio LOC/CLOC" content="{{_data.loc.ratioLocCloc}}" help="Ratio between lines of code and lines of comment" linter="loc"></project-card>
             <project-card title="Third Parties" content="{{_data.imports.thirdPartiesCount}}" help="How many third party libraries are used" linter="imports"></project-card>
             <checklist-card title="Checklist Compliance" content="{{_data.test.checklist}}" help="Compliance with a few items from the Go checklist" linter="test" data="{{_rawData.test.checklist}}">
             </checklist-card>
           </div>
-          <div class="layout horizontal">
+          <div class="Project-row">
             <project-card title="Tests" content="{{_data.loc.tests}}" icon="{{_testsIcon}}" icon-tooltip="{{_testsIconTooltip}}" help="How many tests across all packages" linter="loc"></project-card>
             <project-card title="Test Coverage" content="{{_data.test.coverageMean}}" help="Average code coverage across all packages" linter="test"></project-card>
             <project-card title="Test Duration" content="{{_data.test.durationMean}}" help="The time it took to run all tests with the following configuration: i5 - 512MB" linter="test"></project-card>
@@ -100,5 +111,4 @@
   </template>
 
   <script src="project-info.js"></script>
-
 </dom-module>

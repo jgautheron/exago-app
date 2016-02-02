@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   @nest &-mainHeader {
-    background-color: var(--primary-color);
+    background-color: var(--dark-primary-color);
     height: calc(56px * 3);
     left: 0;
     position: relative;

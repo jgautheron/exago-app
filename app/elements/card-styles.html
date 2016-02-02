@@ -13,6 +13,28 @@
         margin: 0 0 20px 0;
       }
 
+      :host .Card-title {
+        @media (max-width: 1000px) {
+          font-size: 22px;
+        }
+      }
+
+      :host .Card-content {
+        @media (max-width: 999px) {
+          font-size: 32px !important;
+        }
+        @media (min-width: 1000px) and (max-width: 1280px) {
+          font-size: 46px !important;
+        }
+      }
+
+      :host .Card-content iron-icon {
+        @media (max-width: 999px) {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
       :host strong {
         @apply(--paper-font-display3);
       }
@@ -21,6 +43,10 @@
         position: absolute;
         top: 10px;
         right: 10px;
+
+        @media (max-width: 1280px) {
+          display: none;
+        }
       }
 
       :host paper-spinner {
