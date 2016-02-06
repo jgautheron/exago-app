@@ -34,13 +34,18 @@ body {
   @import 'typography';
 }
 
-.linter-message {
+.Linter-message {
   padding-left: 10px;
 
   @nest & iron-icon {
     padding-right: 6px;
     width: 16px;
     height: 16px;
+  }
+
+  @nest &--highlight {
+    background: #CDDC39;
+    color: #000;
   }
 }
 

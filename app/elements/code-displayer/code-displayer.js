@@ -103,9 +103,10 @@
         for (i = 0; message = linterResults[linter][i++];) {
           let row = document.createElement('div');
           row.id = 'linterMessage' + i;
-          row.className = 'linter-message';
+          row.className = 'Linter-message';
           row.innerHTML = '<iron-icon icon="warning"></iron-icon>';
           row.innerHTML += linter + ': ' + message.message;
+          row.setAttribute('data-line', message.line);
 
           this.$.codeMirror.getMirror().addLineWidget(message.line - 1, row, {coverGutter: true, above: true});
         }
@@ -113,20 +114,26 @@
 
       if (document.location.hash) {
         let line = document.location.hash.replace('#', '');
-        line = parseInt(line) - 1;
+        line = parseInt(line);
         this._scrollToLine(line);
       }
     },
     _scrollToLine(line) {
-      line -= 1;
-      let lines = document.querySelectorAll('.CodeMirror-linenumber');
+      let lines = [].slice.call(document.querySelectorAll('.CodeMirror-linenumber'));
+      // add an item at the beginning to get real line numbers
+      // yes +1 works also ;)
+      lines.unshift(0);
       if (!lines[line]) {
         return;
       }
 
       let rect = lines[line].getBoundingClientRect();
       // 64 corresponds to the header panel height
-      app.scrollPageTo(rect.top - 64);
+      // 24 to the line height (show the lint message)
+      app.scrollPageTo(rect.top - 64 - 24);
+
+      let linterMsg = document.querySelector('.Linter-message[data-line="' + line + '"]');
+      this.toggleClass('Linter-message--highlight', true, linterMsg);
     },
     _loadingChanged(val) {
       this.$.codeLoading.active = val;
