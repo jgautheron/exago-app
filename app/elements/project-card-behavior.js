@@ -52,7 +52,7 @@
     _loadingChanged(val) {
       this.$.loading.active = val;
       if (val) {
-        this.$.loading.style.display = 'block';
+        this.$.loading.style.display = 'inline-block';
       } else {
         this.$.loading.style.display = 'none';
       }
