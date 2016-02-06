@@ -51,6 +51,11 @@
     },
     _loadingChanged(val) {
       this.$.loading.active = val;
+      if (val) {
+        this.$.loading.style.display = 'block';
+      } else {
+        this.$.loading.style.display = 'none';
+      }
     },
     _errorChanged(gotError) {
       if (gotError) {

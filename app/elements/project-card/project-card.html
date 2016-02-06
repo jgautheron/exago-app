@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
-<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner-lite.html">
 
 <link rel="import" href="../help-icon/help-icon.html">
 <link rel="import" href="../card-styles.html">
@@ -9,6 +9,7 @@
 
 <dom-module id="project-card">
   <template>
+    <style include="shared-styles"></style>
     <style include="card-styles">
       :host {
         min-height: 102px;
@@ -20,7 +21,7 @@
       }
     </style>
     <h2 class="Card-title">{{title}}</h2>
-    <paper-spinner active id="loading"></paper-spinner>
+    <paper-spinner-lite active id="loading"></paper-spinner-lite>
     <div id="content" style="opacity: 0">
       <strong class="Card-content">
         {{content}}

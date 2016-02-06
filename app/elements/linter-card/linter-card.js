@@ -16,7 +16,7 @@
     },
     ready() {
       // all linters are visible by default
-      this.visibleLinters = this.linters;
+      this._visibleLinters = this.linters;
     },
     _dataChanged() {
       this._loading = false;
@@ -76,16 +76,16 @@
       };
     },
     _isLinterVisible(linter) {
-      return this.visibleLinters.indexOf(linter) >= 0;
+      return this._visibleLinters.indexOf(linter) >= 0;
     },
     _toggleLinter(e) {
       let linter = this.$.linters.itemForElement(e.target),
-        index = this.visibleLinters.indexOf(linter);
+        index = this._visibleLinters.indexOf(linter);
 
       if (index > -1) {
-        this.visibleLinters.splice(index, 1);
+        this._visibleLinters.splice(index, 1);
       } else {
-        this.visibleLinters.push(linter);
+        this._visibleLinters.push(linter);
       }
 
       // trigger change event

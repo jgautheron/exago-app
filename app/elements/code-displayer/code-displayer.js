@@ -102,6 +102,7 @@
       for (linter in linterResults) {
         for (i = 0; message = linterResults[linter][i++];) {
           let row = document.createElement('div');
+          row.id = 'linterMessage' + i;
           row.className = 'linter-message';
           row.innerHTML = '<iron-icon icon="warning"></iron-icon>';
           row.innerHTML += linter + ': ' + message.message;
@@ -109,6 +110,23 @@
           this.$.codeMirror.getMirror().addLineWidget(message.line - 1, row, {coverGutter: true, above: true});
         }
       }
+
+      if (document.location.hash) {
+        let line = document.location.hash.replace('#', '');
+        line = parseInt(line) - 1;
+        this._scrollToLine(line);
+      }
+    },
+    _scrollToLine(line) {
+      line -= 1;
+      let lines = document.querySelectorAll('.CodeMirror-linenumber');
+      if (!lines[line]) {
+        return;
+      }
+
+      let rect = lines[line].getBoundingClientRect();
+      // 64 corresponds to the header panel height
+      app.scrollPageTo(rect.top - 64);
     },
     _loadingChanged(val) {
       this.$.codeLoading.active = val;

@@ -19,6 +19,9 @@
     scrollPageToTop() {
       this.$.headerPanelMain.scrollToTop(true);
     },
+    scrollPageTo(y) {
+      this.$.headerPanelMain.scroll(y);
+    },
     // Hide confirmToast after tap on OK button
     onConfirmToastTap() {
       this.$.confirmToast.hide();

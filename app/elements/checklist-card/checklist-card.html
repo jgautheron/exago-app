@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
-<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner-lite.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
@@ -13,6 +13,7 @@
 
 <dom-module id="checklist-card">
   <template>
+    <style include="shared-styles"></style>
     <style include="card-styles">
       :host {
         min-height: 102px;
@@ -33,9 +34,23 @@
       :host paper-dialog > div {
         margin-bottom: 24px;
       }
+      :host paper-dialog .close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+      }
+      :host paper-dialog iron-icon[icon="check"] {
+        color: #4CAF50;
+      }
+      :host paper-dialog iron-icon[icon="clear"] {
+        color: #F44336;
+      }
     </style>
     <h2 class="Card-title">{{title}}</h2>
-    <paper-spinner active id="loading"></paper-spinner>
+    <paper-spinner-lite active id="loading"></paper-spinner-lite>
     <div id="content" style="opacity: 0">
       <strong class="Card-content">
         {{content}}
@@ -52,8 +67,9 @@
       <help-icon text$="{{help}}"></help-icon>
 
       <template is="dom-if" if="{{sortedData}}">
-        <paper-dialog entry-animation="scale-up-animation" modal>
+        <paper-dialog entry-animation="scale-up-animation">
             <div>
+              <iron-icon icon="close" class="close" on-tap="closeDialog"></iron-icon>
               <h4>Minimum Criteria</h4>
               <template is="dom-repeat" items="{{sortedData.minimumCriteria}}">
                 <template is="dom-if-else" if="{{item.passed}}">

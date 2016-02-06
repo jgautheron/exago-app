@@ -12,6 +12,9 @@
     showDialog() {
       this.$$('paper-dialog').open();
     },
+    closeDialog() {
+      this.$$('paper-dialog').close();
+    },
     _dataChanged(data) {
       if (!data || Object.keys(data).length === 0) {
         return;

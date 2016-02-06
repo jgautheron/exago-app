@@ -21,6 +21,10 @@ paper-toolbar {
   color: #fff;
 }
 
+paper-spinner-lite {
+  --paper-spinner-color: var(--default-primary-color);
+}
+
 a, a:visited {
   color: var(--default-primary-color);
 }

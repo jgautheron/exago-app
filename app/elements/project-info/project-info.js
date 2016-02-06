@@ -281,7 +281,7 @@
       }
 
       // fmt is really the basis
-      console.log(this.linterResults);
+      //console.log(this.linterResults);
 
       switch (true) {
         case score >= 80:
