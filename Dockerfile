@@ -1,4 +1,4 @@
 FROM busybox
-ADD dist /app
+ADD deploy /app
 VOLUME ["/app"]
 CMD ["/bin/tail", "/dev/null"]
