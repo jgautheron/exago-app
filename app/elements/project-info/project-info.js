@@ -322,8 +322,8 @@
 
       if (val.base.hasOwnProperty('loc') &&
         val.base.hasOwnProperty('test')) {
-        if (this._data.loc.tests > 0) {
-          this.set('_testsIcon', this._data.test.testPassed ? 'check' : 'clear');
+        if (val.base.loc.tests > 0) {
+          this.set('_testsIcon', val.base.test.testPassed ? 'check' : 'clear');
         }
       }
     },

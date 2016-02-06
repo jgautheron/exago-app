@@ -54,6 +54,7 @@
       if (this._files && this._files.hasOwnProperty(this.path)) {
         this.content = this._files[this.path];
         this.playAnimation('show-code');
+        this._checkHash();
       } else {
         this.requestFile();
       }
@@ -84,20 +85,31 @@
       files[this.path] = this.content;
       this._files = blend(true, false, this._files, files);
 
-      let results;
+      let results, retries = 50;
       let retry = setInterval(() => {
         results = this.$.meta.byKey('linterResults');
-        if (results) {
-          clearInterval(retry);
+        if (Object.keys(results).length > 0) {
           if (results.hasOwnProperty(this.path)) {
             this._setLineWidgets(results[this.path]);
+            clearInterval(retry);
+          } else if (retries > 0) {
+            retries--;
+          } else {
+            clearInterval(retry);
           }
         }
-      }, 50);
+      }, 60);
 
       this.playAnimation('show-code');
     },
     _setLineWidgets(linterResults) {
+      // check if a linter message is already present in the DOM
+      // to avoid displaying twice the same message
+      let msg = document.querySelector('.Linter-message');
+      if (msg) {
+        return;
+      }
+
       let linter, message, i;
       for (linter in linterResults) {
         for (i = 0; message = linterResults[linter][i++];) {
@@ -112,6 +124,9 @@
         }
       }
 
+      this._checkHash();
+    },
+    _checkHash() {
       if (document.location.hash) {
         let line = document.location.hash.replace('#', '');
         line = parseInt(line);
