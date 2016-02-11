@@ -66,6 +66,13 @@
     <iron-meta key="linterResults" value="{{linterResults}}"></iron-meta>
     <iron-ajax id="queryRepoValid" handle-as="json" on-response="_handleRepoValid" on-error="_handleRepoValid"></iron-ajax>
     <iron-ajax id="query" handle-as="json" on-response="_handleLinter" on-error="_handleLinterError"></iron-ajax>
+    <iron-ajax id="rank" handle-as="json" on-response="_handleRank" on-error="_handleRank"></iron-ajax>
+
+    <div class="Project-badges">
+      <template is="dom-if" if="{{_data.rank}}">
+        <img src="{{app.SERVICE_HOST}}/{{repository}}/badge/rank">
+      </template>
+    </div>
 
     <template is="dom-if-else" if="{{_repoValid}}">
       <if-then>
@@ -80,8 +87,8 @@
           <div class="Project-row">
             <project-card title="Tests" content="{{_data.loc.tests}}" icon="{{_testsIcon}}" icon-tooltip="{{_testsIconTooltip}}" help="How many tests across all packages" linter="loc"></project-card>
             <project-card title="Test Coverage" content="{{_data.test.coverageMean}}" help="Average code coverage across all packages" linter="test"></project-card>
-            <project-card title="Test Duration" content="{{_data.test.durationMean}}" help="The time it took to run all tests with the following configuration: i5 - 512MB" linter="test"></project-card>
-            <project-card title="Project Rating" content="{{_data.rating}}" help="Global rating based on the few metrics visible here" linter="test"></project-card>
+            <project-card title="Test Duration" content="{{_data.test.durationMean}}" help="The time it took to run all tests" linter="test"></project-card>
+            <project-card title="Project Rating" content="{{_data.rank}}" help="Rank calculated from the metrics visible here" linter="test"></project-card>
           </div>
 
           <paper-button noink class="explore" on-click="_showResults" disabled>

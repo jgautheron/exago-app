@@ -36,6 +36,8 @@
       if (!this.linters) {
         this.linters = DEFAULT_LINTERS;
       }
+
+      this.app = app;
     },
     requestData() {
       let [registry, username, repository] = this.repository.split('/');
@@ -182,128 +184,20 @@
       });
       this.set('_rawData.test', data);
     },
-    _getAppScore() {
-      let score = 0;
-
-      // third parties
-      switch (true) {
-        case this._rawData.imports.length === 0:
-          score += 20;
-          break;
-        case this._rawData.imports.length<4:
-          score += 15;
-          break;
-        case this._rawData.imports.length<6:
-          score += 10;
-          break;
+    _handleRank(e, req) {
+      if ('success' !== req.response.status) {
+        // handle the error
+        return;
       }
 
-      // ratio loc/cloc
-      switch (true) {
-        case this._data.loc.ratioLocCloc>1.4:
-          score += 12;
-          break;
-        case this._data.loc.ratioLocCloc>1.3:
-          score += 10;
-          break;
-        case this._data.loc.ratioLocCloc>1.2:
-          score += 8;
-          break;
-        case this._data.loc.ratioLocCloc>1.1:
-          score += 6;
-          break;
-      }
-
-      // checklist
-      let i, passed, failed;
-      for (i = 0; passed = this._rawData.test.checklist.Passed[i++];) {
-        switch (passed.Name) {
-          case 'projectBuilds':
-          case 'isFormatted':
-            score += 10;
-            break;
-          case 'hasReadme':
-          case 'isDirMatch':
-            score += 10;
-            break;
-          case 'isLinted':
-          case 'hasBenches':
-            score += 15;
-            break;
-        }
-      }
-      for (i = 0; failed = this._rawData.test.checklist.Failed[i++];) {
-        switch (failed.Name) {
-          // ignore for now, libraries typically don't build
-          case 'projectBuilds':
-            break;
-          case 'isFormatted':
-            score -= 20;
-            break;
-          case 'isLinted':
-          case 'hasReadme':
-          case 'isDirMatch':
-            score -= 10;
-            break;
-        }
-      }
-
-      // test coverage
-      switch (true) {
-        case parseFloat(this._data.test.coverageMean) > 80:
-          score += 20;
-          break;
-        case parseFloat(this._data.test.coverageMean) > 60:
-          score += 15;
-          break;
-        case parseFloat(this._data.test.coverageMean) > 40:
-          score += 10;
-          break;
-        case parseFloat(this._data.test.coverageMean) === 0:
-          score -= 20;
-          break;
-      }
-
-      // test execution time
-      switch (true) {
-        case parseFloat(this._data.test.durationMean) > 10:
-          score -= 15;
-          break;
-        case parseFloat(this._data.test.coverageMean) > 5:
-          score += 10;
-          break;
-      }
-
-      // linter results
-      if (Object.keys(this.linterResults).length === 0) {
-        // this feat is more impressive on large codebases
-        score += (this._rawData.loc.LOC * 0.02);
-      }
-
-      // fmt is really the basis
-      //console.log(this.linterResults);
-
-      switch (true) {
-        case score >= 80:
-          score = 'A';
-          break;
-        case score >= 60:
-          score = 'B';
-          break;
-        case score >= 40:
-          score = 'C';
-          break;
-        case score >= 20:
-          score = 'D';
-          break;
-        case score >= 0:
-          score = 'E';
-          break;
-        default:
-          score = 'F';
-      }
-
-      return score;
+      let rsp = req.response.data;
+      this.set('_data.rank', rsp.score.rank);
+    },
+    _loadRank() {
+      let [registry, username, repository] = this.repository.split('/'),
+        rankURL = '%s/%s/%s/%s/rank';
+      this.$.rank.url = s.sprintf(rankURL, app.SERVICE_HOST, registry, username, repository);
+      this.$.rank.generateRequest();
     },
     _linterIsLoading(progress) {
       // observers are called before ready()
@@ -317,7 +211,7 @@
         val.base.hasOwnProperty('loc') &&
         val.base.hasOwnProperty('test') &&
         val.base.hasOwnProperty('linter')) {
-        this.set('_data.rating', this._getAppScore());
+        this._loadRank();
       }
 
       if (val.base.hasOwnProperty('loc') &&
