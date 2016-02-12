@@ -34,8 +34,8 @@ You have two options:
 1. Leave the endpoint configured to `exago.io`, then you have only one thing to do: [bypass CORS errors](https://blog.nraboy.com/2014/08/bypass-cors-errors-testing-apis-locally/).
 2. [Roll your own](https://github.com/exago/svc).
 
-The backend URL is set [here](), the domain is automatically replaced by `localhost` at build time.  
-If you would like to keep it as it is, comment [this line]().
+The backend URL is set [here](https://github.com/exago/app/blob/master/app/scripts/app.js#L7), the domain is automatically replaced by `localhost` at build time.  
+If you would like to keep it as it is, comment [this line](https://github.com/exago/app/blob/master/tasks/js-babel.js#L22).
 
 ## Contributing
 
