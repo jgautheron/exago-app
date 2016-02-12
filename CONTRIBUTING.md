@@ -6,7 +6,7 @@ Exago's mission extends in many areas, code quality is critical and spotting iss
 
 ### Roadmap
 
-If you would like to contribute but do not necessarily know what you could do, check out our [roadmap](https://trello.com/b/IJ3UQ1nJ/exago-roadmap).
+If you would like to contribute but do not necessarily know what you could do, check out our [roadmap](https://trello.com/b/IJ3UQ1nJ/exago-roadmap).  
 :warning: Before you start working on something, make sure someone is not already doing it!
 
 ### Getting started
