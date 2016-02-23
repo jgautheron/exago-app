@@ -1,0 +1,12 @@
+{
+  "name": "exago-io-app",
+  "description": "code quality tool that inspects your repository and reports on what could be improved",
+  "repository": "https://github.com/exago/app",
+  "keywords": [
+    "react",
+    "isomorphic",
+    "universal",
+    "react-hot-reloader",
+    "redux"
+  ]
+}

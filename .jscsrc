@@ -1,9 +1,0 @@
-{
-  "esnext": true,
-  "preset": "google",
-  "disallowSpacesInAnonymousFunctionExpression": null,
-  "maximumLineLength": 120,
-  "requireArrowFunctions": true,
-  "disallowUnusedParams": false,
-  "excludeFiles": ["node_modules/**"]
-}

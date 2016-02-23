@@ -1,34 +1,17 @@
 machine:
-  timezone:
-    Europe/Warsaw
   node:
-    version: 5.1.0
-  services:
-    - docker
+    version: 4.0
   environment:
-    TAG: latest
+    CONTINUOUS_INTEGRATION: true
 
 dependencies:
+  cache_directories:
+    - node_modules
   override:
-    - npm install -g bower gulp
-    - npm install
-    - bower install --production --allow-root --config.interactive=false
-    - gulp download:fonts
-    - gulp download:analytics
+    - npm prune && npm install
 
 test:
-  pre:
-    - gulp serve:dist:
-          background: true
-    - sleep 25
   override:
-    - curl http://localhost:3000
-
-deployment:
-  release:
-    branch: master
-    commands:
-      - gulp pre-deploy
-      - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD -e $REGISTRY_EMAIL
-      - docker build -t jgautheron/exago:$TAG .
-      - docker push jgautheron/exago:$TAG
+    - npm run lint
+    - npm test
+    - npm run test-node
