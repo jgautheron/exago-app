@@ -8,7 +8,6 @@ import config from '../../config';
 import AppBar from 'material-ui/lib/app-bar';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
-import Icons from 'material-ui/lib/font-icon';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
