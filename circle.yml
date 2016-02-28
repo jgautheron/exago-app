@@ -6,7 +6,7 @@ machine:
   services:
     - docker
   environment:
-    TAG: latest
+    TAG: $CIRCLE_BUILD_NUM
 
 dependencies:
   override:
@@ -30,5 +30,6 @@ deployment:
     commands:
       - gulp pre-deploy
       - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD -e $REGISTRY_EMAIL
-      - docker build -t jgautheron/exago:$TAG .
-      - docker push jgautheron/exago:$TAG
+      - docker build -t exago/app:$TAG .
+      - docker build -t exago/app:latest .
+      - docker push exago/app
