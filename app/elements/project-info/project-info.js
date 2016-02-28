@@ -29,7 +29,7 @@
       }
     },
     observers: [
-      '_rawDataChanged(_rawData.*)',
+      '_dataChanged(_data.*)',
       '_linterIsLoading(_linterProgress)'
     ],
     ready() {
@@ -44,7 +44,7 @@
       this._loading = true;
 
       let urls = [
-        '%s/%s/%s/%s/loc',
+        '%s/%s/%s/%s/codestats',
         '%s/%s/%s/%s/imports',
         '%s/%s/%s/%s/test',
       ];
@@ -87,12 +87,11 @@
 
       this['_setUp' + res[0].toUpperCase() + res.slice(1)](rsp, responseURL);
     },
-    _setUpLoc(data) {
+    _setUpCodestats(data) {
       if (!Object.keys(data).length) {
         return;
       }
 
-      this.set('_rawData.loc', data);
       this.set('_data.loc', {
         totalAvgLoc: data.LOC.toFixed(0)  + ' / ' +  (data.LOC / data.NOF).toFixed(0),
         ratioLocCloc: ((data.LOC / data.NCLOC)).toFixed(3),
@@ -100,7 +99,6 @@
       });
     },
     _setUpImports(data) {
-      this.set('_rawData.imports', data);
       this.set('_data.imports', {
         thirdPartiesCount: data.length
       });
@@ -128,9 +126,6 @@
         raised = false;
         html = 'Awesome! all linters passed <iron-icon icon="check"></iron-icon>';
       }
-
-      // rawData is used for internal -unfiltered- processing
-      this.set('_rawData.linter', this.linterResults);
 
       // update the view
       this.$$('linter-card').data = this.linterResults;
@@ -182,7 +177,6 @@
         durationMean: durationMean.toFixed(3) + 's',
         testPassed: testPassed
       });
-      this.set('_rawData.test', data);
     },
     _handleRank(e, req) {
       if ('success' !== req.response.status) {
@@ -191,7 +185,7 @@
       }
 
       let rsp = req.response.data;
-      this.set('_data.rank', rsp.score.rank);
+      this.set('_data.rank', rsp.rank);
     },
     _loadRank() {
       let [registry, username, repository] = this.repository.split('/'),
@@ -206,11 +200,10 @@
       }
       return true;
     },
-    _rawDataChanged(val) {
+    _dataChanged(val) {
       if (val.base.hasOwnProperty('imports') &&
         val.base.hasOwnProperty('loc') &&
-        val.base.hasOwnProperty('test') &&
-        val.base.hasOwnProperty('linter')) {
+        val.base.hasOwnProperty('test')) {
         this._loadRank();
       }
 
@@ -231,7 +224,6 @@
       this._loading = true;
       this._repoValid = false;
       this._data = {};
-      this._rawData = {};
       this._linterProgress = 0;
       this.linterResults = {};
 
