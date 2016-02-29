@@ -4,7 +4,7 @@
   let app = document.querySelector('#app');
 
   // Constants
-  app.SERVICE_HOST = 'http://exago.io:8080';
+  app.SERVICE_HOST = 'https://api.exago.io';
 
   // Debug mode
   app.debug = true;
