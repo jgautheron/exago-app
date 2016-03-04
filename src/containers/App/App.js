@@ -67,19 +67,20 @@ export default class App extends Component {
     return (
       <div>
         <Helmet {...config.app.head}/>
-          <div className={styles.appContent}>
-            <AppBar
-              style={{'position': 'fixed', 'top': 0}}
-              title="Exago"
-              onLeftIconButtonTouchTap={this.handleToggle} />
+        <div className={styles.appContent}>
+          <AppBar
+            style={{'position': 'fixed', 'top': 0}}
+            title="Exago"
+            onLeftIconButtonTouchTap={this.handleToggle}
+          />
 
-              <LeftNav open={this.props.menu} docked={false} onRequestChange={this.handleToggle}>
-                <MenuItem>Menu Item</MenuItem>
-                <MenuItem>Menu Item 2</MenuItem>
-              </LeftNav>
+            <LeftNav open={this.props.menu} docked={false} onRequestChange={this.handleToggle}>
+              <MenuItem>Home</MenuItem>
+              <MenuItem>About</MenuItem>
+            </LeftNav>
 
-            {this.props.children}
-          </div>
+          {this.props.children}
+        </div>
       </div>
     );
   }
