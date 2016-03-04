@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { open, close } from 'redux/modules/menu';
+import { browserHistory } from 'react-router';
 import { routeActions } from 'react-router-redux';
 import config from '../../config';
 
@@ -73,12 +74,10 @@ export default class App extends Component {
             title="Exago"
             onLeftIconButtonTouchTap={this.handleToggle}
           />
-
-            <LeftNav open={this.props.menu} docked={false} onRequestChange={this.handleToggle}>
-              <MenuItem>Home</MenuItem>
-              <MenuItem>About</MenuItem>
-            </LeftNav>
-
+          <LeftNav open={this.props.menu} docked={false} onRequestChange={this.handleToggle}>
+            <MenuItem onClick={() => browserHistory.push('/')}>Home</MenuItem>
+            <MenuItem onClick={() => browserHistory.push('/about')}>About</MenuItem>
+          </LeftNav>
           {this.props.children}
         </div>
       </div>
