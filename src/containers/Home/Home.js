@@ -4,6 +4,8 @@ import Helmet from 'react-helmet';
 import Paper from 'material-ui/lib/paper';
 import TextField from 'material-ui/lib/text-field';
 
+import { browserHistory } from 'react-router';
+
 const paperStyle = {
   width: '85%',
   margin: '20px auto',
@@ -17,7 +19,8 @@ const textStyle = {
 
 export default class Home extends Component {
   handleSubmit() {
-    console.log(this.myTextInput, arguments);
+    const val = this.searchInput.getValue();
+    browserHistory.push('/project/' + val);
   }
   render() {
     return (
@@ -25,7 +28,7 @@ export default class Home extends Component {
         <Helmet title="Home"/>
           <Paper style={paperStyle} zDepth={1} children={
             <TextField
-              ref={(ref) => this.myTextInput = ref}
+              ref={(ref) => this.searchInput = ref}
               onEnterKeyDown={::this.handleSubmit}
               hintText="Type a repository on GitHub"
               style={textStyle}
