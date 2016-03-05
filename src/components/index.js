@@ -1,7 +1,2 @@
-/**
- *  Point of contact for component modules
- *
- *  ie: import { CounterButton, InfoBar } from 'components';
- *
- */
-// export Foo from './Foo/Foo';
+export SearchInput from './SearchInput/SearchInput';
+export ProjectHeader from './ProjectHeader/ProjectHeader';

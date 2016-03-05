@@ -1,18 +1,23 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
+import {ProjectHeader} from 'components';
+
+@connect(
+  state => ({
+    repository: state.repository.name
+  })
+)
 export default class Project extends Component {
   static propTypes = {
-    params: PropTypes.object.isRequired
+    repository: PropTypes.string.isRequired
   };
-  componentDidMount() {
-  }
   render() {
-    const repository = this.props.params.splat;
     return (
       <div>
-        <Helmet title={`Code Quality Report for ${repository}`}/>
-        <h1>Project</h1>
+        <Helmet title={`Code Quality Report for ${this.props.repository}`}/>
+        <ProjectHeader repository={this.props.repository} />
       </div>
     );
   }
