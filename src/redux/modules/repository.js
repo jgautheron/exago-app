@@ -1,23 +1,73 @@
+import { UPDATE_LOCATION } from 'react-router-redux';
+
+const LOAD = 'exago/repository/LOAD';
+const LOAD_SUCCESS = 'exago/repository/LOAD_SUCCESS';
+const LOAD_FAIL = 'exago/repository/LOAD_FAIL';
+const CACHED_LOAD = 'exago/repository/CACHED_LOAD';
+const CACHED_LOAD_SUCCESS = 'exago/repository/CACHED_LOAD_SUCCESS';
+const CACHED_LOAD_FAIL = 'exago/repository/CACHED_LOAD_FAIL';
 const SET = 'exago/repository/SET';
-const UNSET = 'exago/repository/UNSET';
+const CLEAR = 'exago/repository/CLEAR';
 
 const repositoryState = {
-  // repository name
   name: '',
-  set: false
+  loaded: false,
+  cached: false,
+  loading: true,
+  data: {}
 };
 
 export default function reducer(state = repositoryState, action = {}) {
   switch (action.type) {
+    case UPDATE_LOCATION:
+      const routePrefix = '/project/';
+      let repositoryName = action.payload.pathname;
+      if (repositoryName.indexOf(routePrefix) === 0) {
+        repositoryName = repositoryName.replace(routePrefix, '');
+        return {
+          ...state,
+          name: repositoryName
+        };
+      }
+      return state;
     case SET:
       return {
-        set: true,
         name: action.name
       };
-    case UNSET:
+    case CLEAR:
       return {
-        set: false,
-        name: ''
+        ...state
+      };
+    case LOAD:
+      return {
+        ...state,
+        loading: true
+      };
+    case LOAD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        data: action.result
+      };
+    case LOAD_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.error
+      };
+    case CACHED_LOAD:
+      return state;
+    case CACHED_LOAD_SUCCESS:
+      return {
+        ...state,
+        cached: action.result.data
+      };
+    case CACHED_LOAD_FAIL:
+      return {
+        ...state,
+        error: action.error
       };
     default:
       return state;
@@ -25,12 +75,23 @@ export default function reducer(state = repositoryState, action = {}) {
 }
 
 export function set(name) {
+  return { type: SET, name };
+}
+
+export function clear() {
+  return { type: CLEAR };
+}
+
+export function isCached(state) {
   return {
-    type: SET,
-    name
+    types: [CACHED_LOAD, CACHED_LOAD_SUCCESS, CACHED_LOAD_FAIL],
+    promise: (client) => client.get('/cached/' + state.repository.name)
   };
 }
 
-export function unset() {
-  return { type: UNSET};
+export function load(state) {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get('/project/' + state.repository.name)
+  };
 }

@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 
 import Paper from 'material-ui/lib/paper';
 import { SearchInput } from 'components';
+import { set } from 'redux/modules/repository';
 
 const paperStyle = {
   width: '85%',
@@ -17,25 +18,24 @@ const paperStyle = {
   state => ({
     repository: state.repository.name
   }),
-  {pushState: routeActions.push}
+  {pushState: routeActions.push, setRepository: set}
 )
 export default class Home extends Component {
   static propTypes = {
     repository: PropTypes.string.isRequired,
+    setRepository: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired
   };
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.repository === '') {
-      return;
-    }
-    this.props.pushState('/project/' + nextProps.repository);
+  onRepositorySet(repository) {
+    this.props.pushState('/project/' + repository);
+    this.props.setRepository(repository);
   }
   render() {
     return (
       <div>
         <Helmet title="Home"/>
           <Paper style={paperStyle} zDepth={1} children={
-            <SearchInput repository={this.props.repository}/>
+            <SearchInput onRepositorySet={::this.onRepositorySet} repository={this.props.repository}/>
           }/>
       </div>
     );

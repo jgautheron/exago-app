@@ -1,8 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-
-import { connect } from 'react-redux';
-import { set } from 'redux/modules/repository';
-
 import TextField from 'material-ui/lib/text-field';
 
 const errInvalidRepository = 'The specified repository is invalid';
@@ -14,14 +10,10 @@ const textStyle = {
   width: '30%'
 };
 
-@connect(
-  null,
-  {setRepository: set}
-)
 export default class SearchInput extends Component {
   static propTypes = {
     repository: PropTypes.string.isRequired,
-    setRepository: PropTypes.func.isRequired
+    onRepositorySet: PropTypes.func.isRequired
   };
   state = {
     searchInputError: ''
@@ -48,7 +40,7 @@ export default class SearchInput extends Component {
 
     // if there's a single "/", we assume it's a GitHub repository
     if (sp.length === 2) {
-      this.props.setRepository(githubDomain + '/' + val);
+      this.props.onRepositorySet(githubDomain + '/' + val);
       return;
     }
 
@@ -57,7 +49,7 @@ export default class SearchInput extends Component {
       switch (sp[0]) {
         // only GitHub allowed
         case githubDomain:
-          this.props.setRepository(val);
+          this.props.onRepositorySet(val);
           break;
         default:
           this.showError(errUnsupportedProvider);
