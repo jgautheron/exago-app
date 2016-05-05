@@ -7,7 +7,10 @@ import CardText from 'material-ui/lib/card/card-text';
 export default class ProjectCard extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ])
   };
   render() {
     return (

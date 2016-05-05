@@ -6,6 +6,7 @@ import { isCached, load } from 'redux/modules/repository';
 
 import {ProjectHeader} from 'components';
 import {ProjectCard} from 'components';
+import * as processor from './dataProcessor';
 
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
@@ -27,13 +28,34 @@ export default class Project extends Component {
     repository: PropTypes.object.isRequired,
     loading: PropTypes.bool
   };
-  getAverageLines() {
-    const data = this.props.repository.data.data;
-    let out = data.codestats.LOC;
-    out += ' / ';
-    out += data.codestats.LOC / data.codestats.NOF;
-    return out;
+
+  componentWillMount() {
+    this.prepareData();
   }
+
+  static info = {};
+
+  prepareData() {
+    const res = this.props.repository.results;
+    const {
+      coverageMean,
+      durationMean,
+      testsPassed,
+    } = processor.getTestResults(res);
+
+    this.info = {
+      totalAvgLines: processor.getAverageLines(res),
+      ratioLocCloc: processor.getRatioLines(res),
+      thirdParties: processor.getThirdParties(res),
+      checklistCompliance: processor.getChecklistCompliance(res),
+      tests: processor.getTestsCount(res),
+      testsPassed: testsPassed,
+      testCoverage: coverageMean,
+      testDuration: durationMean,
+      rating: processor.getRank(res)
+    };
+  }
+
   render() {
     const loading = (
       <div>Loading...</div>
@@ -46,14 +68,14 @@ export default class Project extends Component {
           this.props.loading ?
           loading :
           <div>
-            <ProjectCard title="Total/Average Lines" value={this.getAverageLines()} />
-            <ProjectCard title="Ratio LOC/CLOC" value="1.371" />
-            <ProjectCard title="Third Parties" value="1" />
-            <ProjectCard title="Checklist Compliance" value="7 / 11" />
-            <ProjectCard title="Tests" value="24" />
-            <ProjectCard title="Test Coverage" value="24" />
-            <ProjectCard title="Test Duration" value="0.289s" />
-            <ProjectCard title="Project Rating" value="B" />
+            <ProjectCard title="Total/Average Lines" value={this.info.totalAvgLines} />
+            <ProjectCard title="Ratio LOC/CLOC" value={this.info.ratioLocCloc} />
+            <ProjectCard title="Third Parties" value={this.info.thirdParties} />
+            <ProjectCard title="Checklist Compliance" value={this.info.checklistCompliance} />
+            <ProjectCard title="Tests" value={this.info.tests} />
+            <ProjectCard title="Test Coverage" value={this.info.testCoverage} />
+            <ProjectCard title="Test Duration" value={this.info.testDuration} />
+            <ProjectCard title="Project Rating" value={this.info.rating} />
           </div>
         }
       </div>

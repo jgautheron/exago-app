@@ -14,7 +14,7 @@ const repositoryState = {
   loaded: false,
   cached: false,
   loading: true,
-  data: {}
+  results: {}
 };
 
 export default function reducer(state = repositoryState, action = {}) {
@@ -48,7 +48,7 @@ export default function reducer(state = repositoryState, action = {}) {
         ...state,
         loading: false,
         loaded: true,
-        data: action.result
+        results: action.result.data
       };
     case LOAD_FAIL:
       return {

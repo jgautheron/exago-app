@@ -19,7 +19,7 @@ injectTapEventPlugin();
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: colors.indigo400,
+    primary1Color: '#375EAB',
     primary2Color: colors.green700,
     primary3Color: colors.green100,
     accent1Color: colors.pink900,
@@ -64,14 +64,21 @@ export default class App extends Component {
   };
 
   render() {
+    const titleStyle = {
+      lineHeight: '59px',
+      fontSize: '34px',
+      fontWeight: '300',
+      letterSpacing: '-.01em'
+    };
     const styles = require('./App.css');
     return (
       <div>
         <Helmet {...config.app.head}/>
         <div className={styles.appContent}>
           <AppBar
+            titleStyle={titleStyle}
             style={{'position': 'fixed', 'top': 0}}
-            title="Exago"
+            title="exago"
             onLeftIconButtonTouchTap={this.handleToggle}
           />
           <LeftNav open={this.props.menu} docked={false} onRequestChange={this.handleToggle}>

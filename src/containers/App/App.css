@@ -106,9 +106,17 @@
 
 :global(body) {
   margin: 0 auto;
+  font-family: Roboto;
 }
 
 .appContent {
   margin: 0 auto;
   padding-top: 50px;
+}
+
+.logo {
+  line-height: 59px;
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: -.01em;
 }

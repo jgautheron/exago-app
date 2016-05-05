@@ -109,6 +109,6 @@ module.exports = {
     webpackIsomorphicToolsPlugin.development()
   ],
   postcss: [
-    require('autoprefixer')({browsers: 'last 2 versions'})
+    require('postcss-cssnext')
   ]
 };
