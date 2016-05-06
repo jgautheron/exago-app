@@ -1,0 +1,20 @@
+@lost flexbox flex;
+
+.row {
+  lost-flex-container: row;
+  margin-bottom: 20px;
+}
+
+.card {
+  text-align: center;
+  lost-column: 1/4;
+  &:nth-of-type(5), &:nth-of-type(6), &:nth-of-type(7), &:nth-of-type(8) {
+    margin-top: 20px;
+  }
+}
+
+.badge {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+}

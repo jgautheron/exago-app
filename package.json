@@ -89,6 +89,7 @@
     "hoist-non-react-statics": "^1.0.3",
     "http-proxy": "^1.12.0",
     "invariant": "^2.2.0",
+    "lost": "^6.7.2",
     "lru-memoize": "^1.0.0",
     "map-props": "^1.0.0",
     "multireducer": "^2.0.0",

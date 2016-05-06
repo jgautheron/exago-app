@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { asyncConnect } from 'redux-async-connect';
 import { isCached, load } from 'redux/modules/repository';
+import RaisedButton from 'material-ui/lib/raised-button';
+import HardwareKeyboardArrowRight from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-right';
 
 import {ProjectHeader} from 'components';
 import {ProjectCard} from 'components';
 import * as processor from './dataProcessor';
+
+import styles from './Project.css';
 
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
@@ -31,8 +35,19 @@ export default class Project extends Component {
 
   componentWillMount() {
     this.prepareData();
+    this.cards = {
+      'Total/Average Lines': this.info.totalAvgLines,
+      'Ratio LOC/CLOC': this.info.ratioLocCloc,
+      'Third Parties': this.info.thirdParties,
+      'Checklist Compliance': this.info.checklistCompliance,
+      'Tests': this.info.tests,
+      'Test Coverage': this.info.testCoverage,
+      'Test Duration': this.info.testDuration,
+      'Project Rating': this.info.rating,
+    };
   }
 
+  static cards = {};
   static info = {};
 
   prepareData() {
@@ -57,6 +72,16 @@ export default class Project extends Component {
   }
 
   render() {
+    const buttonStyle = {
+      height: '50px'
+    };
+    const labelStyle = {
+      color: '#E0EBF5',
+      fontSize: '20px',
+      fontWeight: 400,
+      letterSpacing: '0.5px',
+      WebkitFontSmoothing: 'antialiased'
+    };
     const loading = (
       <div>Loading...</div>
     );
@@ -68,14 +93,24 @@ export default class Project extends Component {
           this.props.loading ?
           loading :
           <div>
-            <ProjectCard title="Total/Average Lines" value={this.info.totalAvgLines} />
-            <ProjectCard title="Ratio LOC/CLOC" value={this.info.ratioLocCloc} />
-            <ProjectCard title="Third Parties" value={this.info.thirdParties} />
-            <ProjectCard title="Checklist Compliance" value={this.info.checklistCompliance} />
-            <ProjectCard title="Tests" value={this.info.tests} />
-            <ProjectCard title="Test Coverage" value={this.info.testCoverage} />
-            <ProjectCard title="Test Duration" value={this.info.testDuration} />
-            <ProjectCard title="Project Rating" value={this.info.rating} />
+            <div className={styles.badge}>
+              <img src={`https://api.exago.io/${this.props.repository.name}/badge/rank/img.svg`} />
+            </div>
+            <div className={styles.row}>
+              {Object.keys(this.cards).map(key =>
+                <div className={styles.card}>
+                  <ProjectCard title={key} value={this.cards[key]} />
+                </div>
+              )}
+            </div>
+            <RaisedButton
+              label="Explore"
+              backgroundColor="#375EAB"
+              style={buttonStyle}
+              labelStyle={labelStyle}
+              icon={<HardwareKeyboardArrowRight />}
+              primary
+              fullWidth />
           </div>
         }
       </div>
