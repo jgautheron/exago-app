@@ -24,14 +24,14 @@
   ],
   "main": "bin/server.js",
   "scripts": {
-    "start": "concurrent --kill-others \"npm run start-prod\" \"npm run start-prod-api\"",
+    "start": "concurrent --kill-others \"npm run start-prod\"",
     "start-prod": "better-npm-run start-prod",
     "build": "better-npm-run build",
     "postinstall": "npm run build",
     "lint": "eslint -c .eslintrc src",
     "start-dev": "better-npm-run start-dev",
     "watch-client": "better-npm-run watch-client",
-    "dev": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev\" \"npm run start-dev-api\"",
+    "dev": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev\"",
     "test": "karma start"
   },
   "betterScripts": {
@@ -96,6 +96,7 @@
     "pretty-error": "^1.2.0",
     "react": "^0.14.2",
     "react-bootstrap": "^0.28.1",
+    "react-codemirror": "^0.2.6",
     "react-dom": "^0.14.1",
     "react-helmet": "^2.2.0",
     "react-inline-css": "^2.0.0",
@@ -147,6 +148,7 @@
     "node-sass": "^3.4.2",
     "phantomjs": "^1.9.18",
     "phantomjs-polyfill": "0.0.1",
+    "postcss-cssnext": "^2.5.2",
     "postcss-loader": "^0.8.1",
     "react-a11y": "^0.2.6",
     "react-addons-clone-with-props": "^0.14.7",

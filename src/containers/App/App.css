@@ -107,6 +107,7 @@
 :global(body) {
   margin: 0 auto;
   font-family: Roboto;
+  color: #424540;
 }
 
 .appContent {

@@ -85,7 +85,9 @@ export default class App extends Component {
             <MenuItem onClick={() => browserHistory.push('/')}>Home</MenuItem>
             <MenuItem onClick={() => browserHistory.push('/about')}>About</MenuItem>
           </LeftNav>
-          {this.props.children}
+          <div style={{'padding': '0 20px'}}>
+            {this.props.children}
+          </div>
         </div>
       </div>
     );

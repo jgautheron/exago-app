@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import styles from './ProjectHeader.css';
 
 export default class ProjectHeader extends Component {
   static propTypes = {
@@ -6,8 +7,8 @@ export default class ProjectHeader extends Component {
   };
   render() {
     return (
-      <div>
-        <h1>Project {this.props.repository}</h1>
+      <div className={styles.root}>
+        <h1>{this.props.repository}</h1>
       </div>
     );
   }
