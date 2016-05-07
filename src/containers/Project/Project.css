@@ -18,3 +18,16 @@
   top: 80px;
   right: 20px;
 }
+
+.update {
+  position: absolute;
+  top: 67px;
+  right: 100px;
+}
+
+.update__text {
+  position: relative;
+  top: -7px;
+  color: #CACACA;
+  font-size: 12px;
+}

@@ -11,29 +11,13 @@ import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
+import exagoTheme from '../../theme';
+import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import themeDecorator from 'material-ui/lib/styles/theme-decorator';
-import colors from 'material-ui/lib/styles/colors';
 
 injectTapEventPlugin();
 
-const muiTheme = getMuiTheme({
-  palette: {
-    primary1Color: '#375EAB',
-    primary2Color: colors.green700,
-    primary3Color: colors.green100,
-    accent1Color: colors.pink900,
-    accent2Color: colors.grey100,
-    accent3Color: colors.grey500
-  },
-}, {
-  avatar: {
-    borderColor: null,
-  },
-  userAgent: 'all'
-});
-
-@themeDecorator(muiTheme)
+@themeDecorator(ThemeManager.getMuiTheme(exagoTheme))
 @connect(
   state => ({
     menu: state.menu.open

@@ -3,8 +3,13 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { asyncConnect } from 'redux-async-connect';
 import { isCached, load } from 'redux/modules/repository';
+
 import RaisedButton from 'material-ui/lib/raised-button';
+import IconButton from 'material-ui/lib/icon-button';
 import HardwareKeyboardArrowRight from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-right';
+import ActionCached from 'material-ui/lib/svg-icons/action/cached';
+
+import { palette } from '../../theme';
 
 import {ProjectHeader} from 'components';
 import {ProjectCard} from 'components';
@@ -15,9 +20,11 @@ import styles from './Project.css';
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
     if (__SERVER__) {
-      return dispatch(isCached(getState())).then(() =>
-        dispatch(load(getState()))
-      );
+      return dispatch(isCached(getState())).then((res) => {
+        if (res.data === true) {
+          return dispatch(load(getState()));
+        }
+      });
     }
   }
 }])
@@ -76,7 +83,7 @@ export default class Project extends Component {
       height: '50px'
     };
     const labelStyle = {
-      color: '#E0EBF5',
+      color: palette.alternateTextColor,
       fontSize: '20px',
       fontWeight: 400,
       letterSpacing: '0.5px',
@@ -94,7 +101,13 @@ export default class Project extends Component {
           loading :
           <div>
             <div className={styles.badge}>
-              <img src={`https://api.exago.io/${this.props.repository.name}/badge/rank/img.svg`} />
+              <img src={`http://localhost:8080/badge/${this.props.repository.name}`} />
+            </div>
+            <div className={styles.update}>
+              <span className={styles.update__text}>Updated 2 days ago</span>
+              <IconButton tooltip="Refresh Statistics">
+                <ActionCached color={palette.disabledColor} hoverColor={palette.textColor}/>
+              </IconButton>
             </div>
             <div className={styles.row}>
               {Object.keys(this.cards).map(key =>
@@ -105,7 +118,7 @@ export default class Project extends Component {
             </div>
             <RaisedButton
               label="Explore"
-              backgroundColor="#375EAB"
+              backgroundColor={palette.primary1Color}
               style={buttonStyle}
               labelStyle={labelStyle}
               icon={<HardwareKeyboardArrowRight />}

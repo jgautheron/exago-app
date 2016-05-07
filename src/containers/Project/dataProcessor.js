@@ -1,7 +1,7 @@
 export function getAverageLines(data) {
   let out = data.codestats.LOC;
   out += ' / ';
-  out += data.codestats.LOC / data.codestats.NOF;
+  out += (data.codestats.LOC / data.codestats.NOF).toFixed(0);
   return out;
 }
 
