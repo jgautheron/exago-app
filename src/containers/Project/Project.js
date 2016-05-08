@@ -13,7 +13,8 @@ import { palette } from '../../theme';
 
 import {ProjectHeader} from 'components';
 import {ProjectCard} from 'components';
-import * as processor from './dataProcessor';
+import * as formatter from './dataFormatter';
+import * as html from './detailHtml';
 
 import styles from './Project.css';
 
@@ -31,12 +32,14 @@ import styles from './Project.css';
 @connect(
   state => ({
     repository: state.repository,
+    results: state.repository.results,
     loading: state.repository.loading
   })
 )
 export default class Project extends Component {
   static propTypes = {
     repository: PropTypes.object.isRequired,
+    results: PropTypes.object,
     loading: PropTypes.bool
   };
 
@@ -58,23 +61,23 @@ export default class Project extends Component {
   static info = {};
 
   prepareData() {
-    const res = this.props.repository.results;
+    const res = this.props.results;
     const {
       coverageMean,
       durationMean,
       testsPassed,
-    } = processor.getTestResults(res);
+    } = formatter.getTestResults(res);
 
     this.info = {
-      totalAvgLines: processor.getAverageLines(res),
-      ratioLocCloc: processor.getRatioLines(res),
-      thirdParties: processor.getThirdParties(res),
-      checklistCompliance: processor.getChecklistCompliance(res),
-      tests: processor.getTestsCount(res),
+      totalAvgLines: formatter.getAverageLines(res),
+      ratioLocCloc: formatter.getRatioLines(res),
+      thirdParties: formatter.getThirdParties(res),
+      checklistCompliance: formatter.getChecklistCompliance(res),
+      tests: formatter.getTestsCount(res),
       testsPassed: testsPassed,
       testCoverage: coverageMean,
       testDuration: durationMean,
-      rating: processor.getRank(res)
+      rating: formatter.getRank(res)
     };
   }
 
@@ -88,6 +91,9 @@ export default class Project extends Component {
       fontWeight: 400,
       letterSpacing: '0.5px',
       WebkitFontSmoothing: 'antialiased'
+    };
+    const tooltipStyle = {
+      zIndex: 500
     };
     const loading = (
       <div>Loading...</div>
@@ -105,14 +111,25 @@ export default class Project extends Component {
             </div>
             <div className={styles.update}>
               <span className={styles.update__text}>Updated 2 days ago</span>
-              <IconButton tooltip="Refresh Statistics">
+              <IconButton tooltip="Refresh Statistics" tooltipPosition="bottom-center" style={tooltipStyle}>
                 <ActionCached color={palette.disabledColor} hoverColor={palette.textColor}/>
               </IconButton>
             </div>
             <div className={styles.row}>
               {Object.keys(this.cards).map(key =>
                 <div className={styles.card}>
-                  <ProjectCard title={key} value={this.cards[key]} />
+                  <ProjectCard title={key} value={this.cards[key]}>
+                    {(() => {
+                      switch (key) {
+                        case 'Third Parties':
+                          return html.getThirdParties(this.props.results);
+                        case 'Checklist Compliance':
+                          return html.getChecklist(this.props.results);
+                        default:
+                          return '';
+                      }
+                    })()}
+                  </ProjectCard>
                 </div>
               )}
             </div>

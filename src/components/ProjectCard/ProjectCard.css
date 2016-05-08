@@ -1,7 +1,26 @@
+.container {
+  position: relative;
+}
+
 .text {
   font-weight: 400;
   font-size: 56px;
   letter-spacing: -.026em;
   line-height: 60px;
   white-space: nowrap;
+}
+
+.childrenContainer {
+  width: 100%;
+}
+
+.iconContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.popoverContainer {
+  padding: 20px;
+  width: 400px;
 }
