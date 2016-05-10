@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import TimeAgo from 'react-timeago';
 import { asyncConnect } from 'redux-async-connect';
 import { isCached, load } from 'redux/modules/repository';
 
@@ -110,7 +111,7 @@ export default class Project extends Component {
               <img src={`http://localhost:8080/badge/${this.props.repository.name}`} />
             </div>
             <div className={styles.update}>
-              <span className={styles.update__text}>Updated 2 days ago</span>
+              <span className={styles.update__text}>Updated <TimeAgo date={this.props.results.date} /></span>
               <IconButton tooltip="Refresh Statistics" tooltipPosition="bottom-center" style={tooltipStyle}>
                 <ActionCached color={palette.disabledColor} hoverColor={palette.textColor}/>
               </IconButton>
@@ -125,6 +126,10 @@ export default class Project extends Component {
                           return html.getThirdParties(this.props.results);
                         case 'Checklist Compliance':
                           return html.getChecklist(this.props.results);
+                        case 'Test Coverage':
+                          return html.getTestCoverage(this.props.results);
+                        case 'Test Duration':
+                          return html.getTestDuration(this.props.results);
                         default:
                           return '';
                       }
