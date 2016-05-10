@@ -22,5 +22,11 @@
 
 .popoverContainer {
   padding: 20px;
-  width: 400px;
+  width: 500px;
+  & h4 {
+    margin-bottom: 5px;
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
 }
