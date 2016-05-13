@@ -82,16 +82,24 @@ export function clear() {
   return { type: CLEAR };
 }
 
-export function isCached(state) {
+export function isCached(repository) {
   return {
     types: [CACHED_LOAD, CACHED_LOAD_SUCCESS, CACHED_LOAD_FAIL],
-    promise: (client) => client.get('/cached/' + state.repository.name)
+    promise: (client) => client.get('/cached/' + repository.name)
   };
 }
 
-export function load(state) {
+export function load(repository) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/project/' + state.repository.name)
+    promise: (client) => client.get('/project/' + repository.name)
+  };
+}
+
+export function refresh(repository) {
+  console.log('redux refresh');
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get('/refresh/' + repository.name)
   };
 }

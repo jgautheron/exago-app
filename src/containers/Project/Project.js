@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import TimeAgo from 'react-timeago';
 import { asyncConnect } from 'redux-async-connect';
-import { isCached, load } from 'redux/modules/repository';
+import { isCached, load, refresh } from 'redux/modules/repository';
 
 import RaisedButton from 'material-ui/lib/raised-button';
 import IconButton from 'material-ui/lib/icon-button';
@@ -11,20 +11,29 @@ import HardwareKeyboardArrowRight from 'material-ui/lib/svg-icons/hardware/keybo
 import ActionCached from 'material-ui/lib/svg-icons/action/cached';
 
 import { palette } from '../../theme';
+import * as config from '../../config';
 
 import {ProjectHeader} from 'components';
-import {ProjectCard} from 'components';
-import * as formatter from './dataFormatter';
-import * as html from './detailHtml';
+import {ProjectCardList} from 'components';
 
 import styles from './Project.css';
 
+const createHandlers = function handlers(dispatch, repository) {
+  const refreshOnClick = function onClick() {
+    dispatch(refresh(repository));
+  };
+  return {
+    refreshOnClick,
+  };
+};
+
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
+    const repository = getState().repository;
     if (__SERVER__) {
-      return dispatch(isCached(getState())).then((res) => {
+      return dispatch(isCached(repository)).then((res) => {
         if (res.data === true) {
-          return dispatch(load(getState()));
+          return dispatch(load(repository));
         }
       });
     }
@@ -35,8 +44,7 @@ import styles from './Project.css';
     repository: state.repository,
     results: state.repository.results,
     loading: state.repository.loading
-  })
-)
+  }), {refresh})
 export default class Project extends Component {
   static propTypes = {
     repository: PropTypes.object.isRequired,
@@ -44,42 +52,13 @@ export default class Project extends Component {
     loading: PropTypes.bool
   };
 
-  componentWillMount() {
-    this.prepareData();
-    this.cards = {
-      'Total/Average Lines': this.info.totalAvgLines,
-      'Ratio LOC/CLOC': this.info.ratioLocCloc,
-      'Third Parties': this.info.thirdParties,
-      'Checklist Compliance': this.info.checklistCompliance,
-      'Tests': this.info.tests,
-      'Test Coverage': this.info.testCoverage,
-      'Test Duration': this.info.testDuration,
-      'Project Rating': this.info.rating,
-    };
-  }
-
-  static cards = {};
-  static info = {};
-
-  prepareData() {
-    const res = this.props.results;
-    const {
-      coverageMean,
-      durationMean,
-      testsPassed,
-    } = formatter.getTestResults(res);
-
-    this.info = {
-      totalAvgLines: formatter.getAverageLines(res),
-      ratioLocCloc: formatter.getRatioLines(res),
-      thirdParties: formatter.getThirdParties(res),
-      checklistCompliance: formatter.getChecklistCompliance(res),
-      tests: formatter.getTestsCount(res),
-      testsPassed: testsPassed,
-      testCoverage: coverageMean,
-      testDuration: durationMean,
-      rating: formatter.getRank(res)
-    };
+  constructor(props) {
+    super(props);
+    const { dispatch } = this.props; // eslint-disable-line react/prop-types
+    this.handlers = createHandlers(dispatch, this.props.repository);
+    if (!this.props.repository.loaded) {
+      dispatch(load(this.props.repository));
+    }
   }
 
   render() {
@@ -108,36 +87,15 @@ export default class Project extends Component {
           loading :
           <div>
             <div className={styles.badge}>
-              <img src={`http://localhost:8080/badge/${this.props.repository.name}`} />
+              <img src={`http://${config.apiHost}:${config.apiPort}/badge/${this.props.repository.name}`} />
             </div>
             <div className={styles.update}>
               <span className={styles.update__text}>Updated <TimeAgo date={this.props.results.date} /></span>
-              <IconButton tooltip="Refresh Statistics" tooltipPosition="bottom-center" style={tooltipStyle}>
+              <IconButton tooltip="Refresh Statistics" tooltipPosition="bottom-center" style={tooltipStyle} onClick={this.handlers.refreshOnClick}>
                 <ActionCached color={palette.disabledColor} hoverColor={palette.textColor}/>
               </IconButton>
             </div>
-            <div className={styles.row}>
-              {Object.keys(this.cards).map(key =>
-                <div className={styles.card}>
-                  <ProjectCard title={key} value={this.cards[key]}>
-                    {(() => {
-                      switch (key) {
-                        case 'Third Parties':
-                          return html.getThirdParties(this.props.results);
-                        case 'Checklist Compliance':
-                          return html.getChecklist(this.props.results);
-                        case 'Test Coverage':
-                          return html.getTestCoverage(this.props.results);
-                        case 'Test Duration':
-                          return html.getTestDuration(this.props.results);
-                        default:
-                          return '';
-                      }
-                    })()}
-                  </ProjectCard>
-                </div>
-              )}
-            </div>
+            <ProjectCardList data={this.props.results} />
             <RaisedButton
               label="Explore"
               backgroundColor={palette.primary1Color}

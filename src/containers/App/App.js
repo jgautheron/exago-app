@@ -17,7 +17,7 @@ import themeDecorator from 'material-ui/lib/styles/theme-decorator';
 
 injectTapEventPlugin();
 
-@themeDecorator(ThemeManager.getMuiTheme(exagoTheme))
+@themeDecorator(ThemeManager.getMuiTheme(exagoTheme, { userAgent: 'all' }))
 @connect(
   state => ({
     menu: state.menu.open

@@ -6,6 +6,7 @@ import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
 import IconButton from 'material-ui/lib/icon-button';
 import ActionOpenInNew from 'material-ui/lib/svg-icons/action/open-in-new';
+import AlertError from 'material-ui/lib/svg-icons/alert/error';
 import Popover from 'material-ui/lib/popover/popover';
 import PopoverAnimationFromTop from 'material-ui/lib/popover/popover-animation-from-top';
 
@@ -58,6 +59,10 @@ export default class ProjectCard extends Component {
       fontSize: '26px',
       margin: '0 0 20px 0'
     };
+    const errorIconStyle = {
+      width: 48,
+      height: 48
+    };
     return (
       <Card className={styles.container}>
         <CardHeader
@@ -86,7 +91,12 @@ export default class ProjectCard extends Component {
         </div>
         : ''}
         <CardText>
-          <span className={styles.text}>{this.props.value}</span>
+          <span className={styles.text}>
+            { this.props.value ?
+              this.props.value :
+              <AlertError style={errorIconStyle} />
+            }
+          </span>
         </CardText>
       </Card>
     );

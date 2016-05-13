@@ -22,8 +22,8 @@ export function getThirdParties(data) {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-        {data.imports.map(el =>
-          <TableRow>
+        {data.imports.map((el, id) =>
+          <TableRow key={id}>
             <TableRowColumn>{el}</TableRowColumn>
           </TableRow>
         )}
@@ -34,6 +34,10 @@ export function getThirdParties(data) {
 }
 
 export function getChecklist(data) {
+  if (!data.testresults.hasOwnProperty('checklist')) {
+    return '';
+  }
+
   const res = data.testresults.checklist;
   const sortedData = {minimumCriteria: [], goodCitizen: [], extraCredit: []};
 
@@ -62,24 +66,24 @@ export function getChecklist(data) {
   return (
     <div>
       <h4>Minimum Criteria</h4>
-      {sortedData.minimumCriteria.map(el =>
-        <div>
+      {sortedData.minimumCriteria.map((el, id) =>
+        <div key={id}>
           {el.passed ? <ActionCheckCircle style={styles.icon} /> : <AlertError style={styles.icon} />}
           {el.desc}
         </div>
       )}
 
       <h4>Good Citizen</h4>
-      {sortedData.goodCitizen.map(el =>
-        <div>
+      {sortedData.goodCitizen.map((el, id) =>
+        <div key={id}>
           {el.passed ? <ActionCheckCircle style={styles.icon} /> : <AlertError style={styles.icon} />}
           {el.desc}
         </div>
       )}
 
       <h4>Extra Credit</h4>
-      {sortedData.extraCredit.map(el =>
-        <div>
+      {sortedData.extraCredit.map((el, id) =>
+        <div key={id}>
           {el.passed ? <ActionCheckCircle style={styles.icon} /> : <AlertError style={styles.icon} />}
           {el.desc}
         </div>
@@ -89,6 +93,10 @@ export function getChecklist(data) {
 }
 
 export function getTestCoverage(data) {
+  if (!data.testresults.hasOwnProperty('packages')) {
+    return '';
+  }
+
   const pkgs = data.testresults.packages;
   const rowStyle = {
     width: '70px'
@@ -103,8 +111,8 @@ export function getTestCoverage(data) {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-        {pkgs.map(el =>
-          <TableRow>
+        {pkgs.map((el, id) =>
+          <TableRow key={id}>
             <TableRowColumn>{el.name}</TableRowColumn>
             <TableRowColumn style={rowStyle}>{el.coverage}%</TableRowColumn>
           </TableRow>
@@ -116,6 +124,10 @@ export function getTestCoverage(data) {
 }
 
 export function getTestDuration(data) {
+  if (!data.testresults.hasOwnProperty('packages')) {
+    return '';
+  }
+
   const pkgs = data.testresults.packages;
   const rowStyle = {
     width: '70px'
@@ -130,8 +142,8 @@ export function getTestDuration(data) {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-        {pkgs.map(el =>
-          <TableRow>
+        {pkgs.map((el, id) =>
+          <TableRow key={id}>
             <TableRowColumn>{el.name}</TableRowColumn>
             <TableRowColumn style={rowStyle}>{el.execution_time}s</TableRowColumn>
           </TableRow>

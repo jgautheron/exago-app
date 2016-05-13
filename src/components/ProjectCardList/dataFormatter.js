@@ -9,9 +9,13 @@ export function getRatioLines(data) {
   return (data.codestats.LOC / data.codestats.NCLOC).toFixed(3);
 }
 export function getThirdParties(data) {
-  return data.imports.length;
+  return data.imports.length + '';
 }
 export function getChecklistCompliance(data) {
+  if (!data.testresults.hasOwnProperty('checklist')) {
+    return '';
+  }
+
   const results = data.testresults;
   const checklistTotalItems = results.checklist.Passed.length + results.checklist.Failed.length;
   return results.checklist.Passed.length + ' / ' + checklistTotalItems;
@@ -20,6 +24,14 @@ export function getTestsCount(data) {
   return data.codestats.Test;
 }
 export function getTestResults(data) {
+  if (!data.testresults.hasOwnProperty('packages')) {
+    return {
+      coverageMean: '',
+      durationMean: '',
+      testsPassed: false
+    };
+  }
+
   let testsPassed = true;
   const cov = [];
   const duration = [];

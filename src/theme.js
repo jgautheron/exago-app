@@ -7,7 +7,6 @@ export default {
   spacing: Spacing,
   zIndex: zIndex,
   fontFamily: 'Roboto, sans-serif',
-  userAgent: 'all',
   palette: {
     primary1Color: '#375EAB',
     primary2Color: Colors.cyan700,
