@@ -97,7 +97,6 @@ export function load(repository) {
 }
 
 export function refresh(repository) {
-  console.log('redux refresh');
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => client.get('/refresh/' + repository.name)

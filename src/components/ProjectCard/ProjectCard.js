@@ -92,7 +92,7 @@ export default class ProjectCard extends Component {
         : ''}
         <CardText>
           <span className={styles.text}>
-            { this.props.value ?
+            { this.props.value !== '' ?
               this.props.value :
               <AlertError style={errorIconStyle} />
             }

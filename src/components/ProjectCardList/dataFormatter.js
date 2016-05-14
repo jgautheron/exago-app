@@ -9,7 +9,7 @@ export function getRatioLines(data) {
   return (data.codestats.LOC / data.codestats.NCLOC).toFixed(3);
 }
 export function getThirdParties(data) {
-  return data.imports.length + '';
+  return data.imports.length;
 }
 export function getChecklistCompliance(data) {
   if (!data.testresults.hasOwnProperty('checklist')) {

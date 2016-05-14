@@ -13,8 +13,7 @@ import ActionCached from 'material-ui/lib/svg-icons/action/cached';
 import { palette } from '../../theme';
 import * as config from '../../config';
 
-import {ProjectHeader} from 'components';
-import {ProjectCardList} from 'components';
+import { ProjectHeader, ProjectCardList, ProjectLoadingScreen } from 'components';
 
 import styles from './Project.css';
 
@@ -61,6 +60,14 @@ export default class Project extends Component {
     }
   }
 
+  getLoadingDuration() {
+    const executionTime = this.props.results.executionTime;
+    if (!executionTime) {
+      return 0;
+    }
+    return parseInt(executionTime, 10);
+  }
+
   render() {
     const buttonStyle = {
       height: '50px'
@@ -75,16 +82,12 @@ export default class Project extends Component {
     const tooltipStyle = {
       zIndex: 500
     };
-    const loading = (
-      <div>Loading...</div>
-    );
     return (
       <div>
         <Helmet title={`Code Quality Report for ${this.props.repository.name}`}/>
         <ProjectHeader repository={this.props.repository.name} />
-        {
-          this.props.loading ?
-          loading :
+        { this.props.loading ?
+          <ProjectLoadingScreen duration={this.getLoadingDuration()} /> :
           <div>
             <div className={styles.badge}>
               <img src={`http://${config.apiHost}:${config.apiPort}/badge/${this.props.repository.name}`} />
