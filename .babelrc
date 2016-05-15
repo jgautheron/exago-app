@@ -12,6 +12,7 @@
     "development": {
       "plugins": [
         "typecheck",
+        "jsx-control-statements",
         ["react-transform", {
             "transforms": [{
                 "transform": "react-transform-catch-errors",

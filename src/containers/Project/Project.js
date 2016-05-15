@@ -1,3 +1,5 @@
+/*  global Choose, When, Otherwise */
+
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
@@ -7,6 +9,7 @@ import { isCached, load, refresh } from 'redux/modules/repository';
 
 import RaisedButton from 'material-ui/lib/raised-button';
 import IconButton from 'material-ui/lib/icon-button';
+import AlertError from 'material-ui/lib/svg-icons/alert/error';
 import HardwareKeyboardArrowRight from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-right';
 import ActionCached from 'material-ui/lib/svg-icons/action/cached';
 
@@ -82,33 +85,47 @@ export default class Project extends Component {
     const tooltipStyle = {
       zIndex: 500
     };
+    const bigIconStyle = {
+      width: 48,
+      height: 48
+    };
     return (
       <div>
         <Helmet title={`Code Quality Report for ${this.props.repository.name}`}/>
         <ProjectHeader repository={this.props.repository.name} />
-        { this.props.loading ?
-          <ProjectLoadingScreen duration={this.getLoadingDuration()} /> :
-          <div>
-            <div className={styles.badge}>
-              <img src={`http://${config.apiHost}:${config.apiPort}/badge/${this.props.repository.name}`} />
+        <Choose>
+          <When condition={ this.props.loading }>
+            <ProjectLoadingScreen duration={this.getLoadingDuration()} />
+          </When>
+          <When condition={ this.props.repository.error }>
+            <div className={styles.errorMessage}>
+              <AlertError style={bigIconStyle} />
+              <p className={styles.errorMessage__text}>Something went wrong!<br />{this.props.repository.error.message}</p>
             </div>
-            <div className={styles.update}>
-              <span className={styles.update__text}>Updated <TimeAgo date={this.props.results.date} /></span>
-              <IconButton tooltip="Refresh Statistics" tooltipPosition="bottom-center" style={tooltipStyle} onClick={this.handlers.refreshOnClick}>
-                <ActionCached color={palette.disabledColor} hoverColor={palette.textColor}/>
-              </IconButton>
+          </When>
+          <Otherwise>
+            <div>
+              <div className={styles.badge}>
+                <img src={`http://${config.apiHost}:${config.apiPort}/badge/${this.props.repository.name}`} />
+              </div>
+              <div className={styles.update}>
+                <span className={styles.update__text}>Updated <TimeAgo date={this.props.results.date} /></span>
+                <IconButton tooltip="Refresh Statistics" tooltipPosition="bottom-center" style={tooltipStyle} onClick={this.handlers.refreshOnClick}>
+                  <ActionCached color={palette.disabledColor} hoverColor={palette.textColor}/>
+                </IconButton>
+              </div>
+              <ProjectCardList data={this.props.results} />
+              <RaisedButton
+                label="Explore"
+                backgroundColor={palette.primary1Color}
+                style={buttonStyle}
+                labelStyle={labelStyle}
+                icon={<HardwareKeyboardArrowRight />}
+                primary
+                fullWidth />
             </div>
-            <ProjectCardList data={this.props.results} />
-            <RaisedButton
-              label="Explore"
-              backgroundColor={palette.primary1Color}
-              style={buttonStyle}
-              labelStyle={labelStyle}
-              icon={<HardwareKeyboardArrowRight />}
-              primary
-              fullWidth />
-          </div>
-        }
+          </Otherwise>
+        </Choose>
       </div>
     );
   }
