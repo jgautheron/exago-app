@@ -1,0 +1,6 @@
+@lost flexbox flex;
+
+.featuredHolder {
+  lost-flex-container: row;
+  margin-bottom: 20px;
+}

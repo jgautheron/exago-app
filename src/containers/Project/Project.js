@@ -20,15 +20,6 @@ import { ProjectHeader, ProjectCardList, ProjectLoadingScreen } from 'components
 
 import styles from './Project.css';
 
-const createHandlers = function handlers(dispatch, repository) {
-  const refreshOnClick = function onClick() {
-    dispatch(refresh(repository));
-  };
-  return {
-    refreshOnClick,
-  };
-};
-
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
     const repository = getState().repository;
@@ -46,22 +37,25 @@ const createHandlers = function handlers(dispatch, repository) {
     repository: state.repository,
     results: state.repository.results,
     loading: state.repository.loading
-  }), {refresh})
+  }), {
+    load,
+    refresh
+  })
 export default class Project extends Component {
   static propTypes = {
     repository: PropTypes.object.isRequired,
     results: PropTypes.object,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    load: PropTypes.func.isRequired,
+    refresh: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-    const { dispatch } = this.props; // eslint-disable-line react/prop-types
-    this.handlers = createHandlers(dispatch, this.props.repository);
+  componentWillMount = () => {
     if (!this.props.repository.loaded) {
-      dispatch(load(this.props.repository));
+      this.props.load(this.props.repository);
     }
   }
+
 
   getLoadingDuration() {
     const executionTime = this.props.results.executionTime;
@@ -70,6 +64,10 @@ export default class Project extends Component {
     }
     return parseInt(executionTime, 10);
   }
+
+  refreshRepository = () => {
+    this.props.refresh(this.props.repository);
+  };
 
   render() {
     const buttonStyle = {
@@ -89,6 +87,7 @@ export default class Project extends Component {
       width: 48,
       height: 48
     };
+
     return (
       <div>
         <Helmet title={`Code Quality Report for ${this.props.repository.name}`}/>
@@ -110,7 +109,7 @@ export default class Project extends Component {
               </div>
               <div className={styles.update}>
                 <span className={styles.update__text}>Updated <TimeAgo date={this.props.results.date} /></span>
-                <IconButton tooltip="Refresh Statistics" tooltipPosition="bottom-center" style={tooltipStyle} onClick={this.handlers.refreshOnClick}>
+                <IconButton tooltip="Refresh Statistics" tooltipPosition="bottom-center" style={tooltipStyle} onClick={this.refreshRepository}>
                   <ActionCached color={palette.disabledColor} hoverColor={palette.textColor}/>
                 </IconButton>
               </div>

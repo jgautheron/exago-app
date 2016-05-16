@@ -24,7 +24,7 @@ export default class ProjectCardList extends Component {
     const {
       coverageMean,
       durationMean,
-      testsPassed,
+      // testsPassed, for NOW todo
     } = formatter.getTestResults(res);
 
     this.cards = {};

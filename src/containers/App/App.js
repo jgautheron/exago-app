@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { open, close } from 'redux/modules/menu';
-import { browserHistory } from 'react-router';
-import { routeActions } from 'react-router-redux';
 import config from '../../config';
 
 import AppBar from 'material-ui/lib/app-bar';
@@ -22,7 +20,7 @@ injectTapEventPlugin();
   state => ({
     menu: state.menu.open
   }),
-  {open, close, pushState: routeActions.push}
+  {open, close}
 )
 export default class App extends Component {
   static propTypes = {
@@ -30,11 +28,11 @@ export default class App extends Component {
     menu: PropTypes.bool,
     open: PropTypes.func.isRequired,
     close: PropTypes.func.isRequired,
-    pushState: PropTypes.func.isRequired
   };
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
   };
 
   handleToggle = (isOpen) => {
@@ -55,6 +53,7 @@ export default class App extends Component {
       letterSpacing: '-.01em'
     };
     const styles = require('./App.css');
+    const {push} = this.context.router;
     return (
       <div>
         <Helmet {...config.app.head}/>
@@ -66,8 +65,8 @@ export default class App extends Component {
             onLeftIconButtonTouchTap={this.handleToggle}
           />
           <LeftNav open={this.props.menu} docked={false} onRequestChange={this.handleToggle}>
-            <MenuItem onClick={() => browserHistory.push('/')}>Home</MenuItem>
-            <MenuItem onClick={() => browserHistory.push('/about')}>About</MenuItem>
+            <MenuItem onClick={() => push('/')}>Home</MenuItem>
+            <MenuItem onClick={() => push('/about')}>About</MenuItem>
           </LeftNav>
           <div style={{'padding': '0 20px'}}>
             {this.props.children}
