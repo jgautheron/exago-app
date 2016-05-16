@@ -13,6 +13,8 @@ import AlertError from 'material-ui/lib/svg-icons/alert/error';
 import HardwareKeyboardArrowRight from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-right';
 import ActionCached from 'material-ui/lib/svg-icons/action/cached';
 
+import rd3 from 'rd3';
+
 import { palette } from '../../theme';
 import * as config from '../../config';
 
@@ -50,12 +52,15 @@ export default class Project extends Component {
     refresh: PropTypes.func.isRequired
   };
 
+  state = {
+    showCharts: false,
+  };
+
   componentWillMount = () => {
     if (!this.props.repository.loaded) {
       this.props.load(this.props.repository);
     }
   }
-
 
   getLoadingDuration() {
     const executionTime = this.props.results.executionTime;
@@ -69,7 +74,16 @@ export default class Project extends Component {
     this.props.refresh(this.props.repository);
   };
 
+  showCharts = () => {
+    this.setState({
+      showCharts: true
+    });
+  }
+
   render() {
+    const PieChart = rd3.PieChart;
+    const pieData = [{label: 'Margarita', value: 20.0}, {label: 'John', value: 55.0}, {label: 'Tim', value: 25.0 }];
+
     const buttonStyle = {
       height: '50px'
     };
@@ -114,14 +128,28 @@ export default class Project extends Component {
                 </IconButton>
               </div>
               <ProjectCardList data={this.props.results} />
-              <RaisedButton
-                label="Explore"
-                backgroundColor={palette.primary1Color}
-                style={buttonStyle}
-                labelStyle={labelStyle}
-                icon={<HardwareKeyboardArrowRight />}
-                primary
-                fullWidth />
+              <Choose>
+                <When condition={ this.state.showCharts }>
+                  <PieChart
+                    data={pieData}
+                    width={450}
+                    height={400}
+                    radius={110}
+                    innerRadius={20}
+                    sectorBorderColor="white" />
+                </When>
+                <Otherwise>
+                  <RaisedButton
+                    label="Explore"
+                    backgroundColor={palette.primary1Color}
+                    style={buttonStyle}
+                    labelStyle={labelStyle}
+                    icon={<HardwareKeyboardArrowRight />}
+                    primary
+                    fullWidth
+                    onClick={this.showCharts} />
+                </Otherwise>
+              </Choose>
             </div>
           </Otherwise>
         </Choose>
