@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardMedia from 'material-ui/lib/card/card-media';
-import rd3 from 'rd3';
+import ReactHighcharts from 'react-highcharts';
 
 export default class ProjectCharts extends Component {
   static propTypes = {
@@ -10,12 +10,45 @@ export default class ProjectCharts extends Component {
   };
 
   componentWillMount() {
-    // this.prepareData(this.props.data);
+    this.config = {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        style: {
+          display: 'none'
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      xAxis: {
+        type: 'category',
+        categories: []
+      },
+      yAxis: {
+        title: {
+          text: 'Code coverage in %'
+        }
+      },
+      tooltip: {
+        pointFormat: '{point.name} <b>{point.y:.2f}%</b>'
+      },
+      series: [{
+        name: 'Coverage',
+        colorByPoint: true,
+        data: []
+      }]
+    };
+
+    const data = this.props.data.testresults;
+    data.packages.forEach((pkg) => {
+      this.config.xAxis.categories.push(pkg.name);
+      this.config.series[0].data.push(pkg.coverage);
+    });
   }
 
   render() {
-    const BarChart = rd3.BarChart;
-
     const containerStyle = {
       textAlign: 'center'
     };
@@ -25,44 +58,14 @@ export default class ProjectCharts extends Component {
       fontSize: 26
     };
 
-    const barData = [
-      {
-        'name': 'Series A',
-        'values': [
-          { 'x': 1, 'y': 91},
-          { 'x': 2, 'y': 290},
-          { 'x': 3, 'y': -25},
-        ]
-      },
-      {
-        'name': 'Series B',
-        'values': [
-          { 'x': 1, 'y': 9},
-          { 'x': 2, 'y': 49},
-          { 'x': 3, 'y': -20},
-        ]
-      },
-      {
-        'name': 'Series C',
-        'values': [
-          { 'x': 1, 'y': 14},
-          { 'x': 2, 'y': 77},
-          { 'x': 3, 'y': -70},
-        ]
-      }
-    ];
-
     return (
       <Card style={containerStyle}>
         <CardHeader
-          title="Test coverage per package"
+          title="Code coverage per package"
           titleStyle={titleStyle}
         />
         <CardMedia>
-          <BarChart
-            data={barData}
-            width={450}
-            height={400} />
+          <ReactHighcharts config={this.config} />
         </CardMedia>
       </Card>
     );

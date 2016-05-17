@@ -33,7 +33,7 @@ export default class ProjectCardList extends Component {
     this.cards[constants.THIRD_PARTIES] = formatter.getThirdParties(res);
     this.cards[constants.CHECKLIST_COMPLIANCE] = formatter.getChecklistCompliance(res);
     this.cards[constants.TESTS] = formatter.getTestsCount(res);
-    this.cards[constants.TEST_COVERAGE] = coverageMean;
+    this.cards[constants.CODE_COVERAGE] = coverageMean;
     this.cards[constants.TEST_DURATION] = durationMean;
     this.cards[constants.RATING] = formatter.getRank(res);
   }
@@ -50,7 +50,7 @@ export default class ProjectCardList extends Component {
                     return html.getThirdParties(this.props.data);
                   case constants.CHECKLIST_COMPLIANCE:
                     return html.getChecklist(this.props.data);
-                  case constants.TEST_COVERAGE:
+                  case constants.CODE_COVERAGE:
                     return html.getTestCoverage(this.props.data);
                   case constants.TEST_DURATION:
                     return html.getTestDuration(this.props.data);
