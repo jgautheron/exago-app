@@ -5,11 +5,13 @@ import {reducer as reduxAsyncConnect} from 'redux-async-connect';
 import {reducer as form} from 'redux-form';
 import menu from './menu';
 import repository from './repository';
+import homeProjects from './homeProjects';
 
 export default combineReducers({
   routing: routeReducer,
   reduxAsyncConnect,
   form,
   menu,
-  repository
+  repository,
+  homeProjects
 });

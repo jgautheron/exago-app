@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { asyncConnect } from 'redux-async-connect';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
@@ -9,6 +10,7 @@ import Paper from 'material-ui/lib/paper';
 import { SearchInput } from 'components';
 import { ProjectList } from 'containers';
 import { set } from 'redux/modules/repository';
+import { load } from 'redux/modules/homeProjects';
 
 const paperStyle = {
   width: '85%',
@@ -17,16 +19,27 @@ const paperStyle = {
   display: 'block',
 };
 
+@asyncConnect([{
+  promise: ({store: {dispatch}}) => {
+    const promises = [];
+      promises.push(dispatch(load('recent')));
+      promises.push(dispatch(load('popular')));
+      promises.push(dispatch(load('ranked')));
+      return Promise.all(promises);
+  }
+}])
 @connect(
   state => ({
-    repository: state.repository.name
+    repository: state.repository.name,
+    projects: state.homeProjects
   }),
   {setRepository: set}
 )
 export default class Home extends Component {
   static propTypes = {
     repository: PropTypes.string.isRequired,
-    setRepository: PropTypes.func.isRequired
+    setRepository: PropTypes.func.isRequired,
+    projects: PropTypes.object.isRequired
   };
 
   static contextTypes = {
@@ -51,9 +64,9 @@ export default class Home extends Component {
         }/>
 
         <div className={styles.featuredHolder} style={{width: '85%', margin: '0 auto'}}>
-          <ProjectList type="popular"/>
-          <ProjectList type="ranked"/>
-          <ProjectList type="recent"/>
+          <ProjectList type="recent" data={this.props.projects.recent} />
+          <ProjectList type="ranked" data={this.props.projects.ranked} />
+          <ProjectList type="popular" data={this.props.projects.popular} />
         </div>
       </div>
     );

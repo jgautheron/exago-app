@@ -28,8 +28,9 @@ const PROJECT_LISTS = {
 
 export default class ProjectList extends Component {
   static propTypes = {
-    type: PropTypes.string.isRequired
-  }
+    type: PropTypes.string.isRequired,
+    data: PropTypes.array.isRequired
+  };
 
   render() {
     const IconName = PROJECT_LISTS[this.props.type].icon;
@@ -40,16 +41,19 @@ export default class ProjectList extends Component {
             <IconName color="#666"/>
             {PROJECT_LISTS[this.props.type].label}
           </h5>
-          <ListItem onTouchTap={this.checkRepo}
-            primaryText="goprove @karolgorecki"
+          {this.props.data.map( (repo, idx) =>
+
+          <ListItem key={idx} onTouchTap={this.checkRepo}
+            primaryText={repo}
             rightAvatar={
               <Avatar color={blueA200} backgroundColor={transparent} style={{right: 8}}>
                 A
               </Avatar>
             }
             leftAvatar={
-              <Avatar src="https://avatars.githubusercontent.com/karolgorecki" />
+              <Avatar src={'https://avatars.githubusercontent.com/' + repo.split('/')[0]} />
             } />
+          )}
         </List>
       }/>
     );
