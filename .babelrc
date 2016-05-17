@@ -21,6 +21,11 @@
             ]
         }]
       ]
+    },
+    "production": {
+      "plugins": [
+        "jsx-control-statements"
+      ]
     }
   }
 }
