@@ -78,5 +78,9 @@ module.exports = {
     }),
 
     webpackIsomorphicToolsPlugin
+  ],
+  postcss: [
+    require('postcss-cssnext'),
+    require('lost')
   ]
 };

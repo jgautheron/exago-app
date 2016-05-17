@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import {ProjectCard} from 'components';
 import * as formatter from './dataFormatter';
-import * as html from './detailHtml';
+import * as html from './popoverHtml';
 import * as constants from './constants';
 
 import styles from './ProjectCardList.css';
@@ -24,7 +24,7 @@ export default class ProjectCardList extends Component {
     const {
       coverageMean,
       durationMean,
-      testsPassed,
+      testsPassed, // eslint-disable-line no-unused-vars
     } = formatter.getTestResults(res);
 
     this.cards = {};
