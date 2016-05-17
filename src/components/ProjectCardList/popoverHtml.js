@@ -93,7 +93,10 @@ export function getChecklist(data) {
 }
 
 export function getTestCoverage(data) {
-  if (!data.testresults.hasOwnProperty('packages')) {
+  if (
+    !data.testresults.hasOwnProperty('packages') ||
+    data.testresults.packages.length === 0
+  ) {
     return '';
   }
 
@@ -124,7 +127,10 @@ export function getTestCoverage(data) {
 }
 
 export function getTestDuration(data) {
-  if (!data.testresults.hasOwnProperty('packages')) {
+  if (
+    !data.testresults.hasOwnProperty('packages') ||
+    data.testresults.packages.length === 0
+  ) {
     return '';
   }
 

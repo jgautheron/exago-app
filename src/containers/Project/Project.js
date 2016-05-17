@@ -13,12 +13,15 @@ import AlertError from 'material-ui/lib/svg-icons/alert/error';
 import HardwareKeyboardArrowRight from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-right';
 import ActionCached from 'material-ui/lib/svg-icons/action/cached';
 
-import rd3 from 'rd3';
-
 import { palette } from '../../theme';
 import * as config from '../../config';
 
-import { ProjectHeader, ProjectCardList, ProjectLoadingScreen } from 'components';
+import {
+  ProjectHeader,
+  ProjectCardList,
+  ProjectLoadingScreen,
+  ProjectChartList
+} from 'components';
 
 import styles from './Project.css';
 
@@ -81,9 +84,6 @@ export default class Project extends Component {
   }
 
   render() {
-    const PieChart = rd3.PieChart;
-    const pieData = [{label: 'Margarita', value: 20.0}, {label: 'John', value: 55.0}, {label: 'Tim', value: 25.0 }];
-
     const buttonStyle = {
       height: '50px'
     };
@@ -113,7 +113,10 @@ export default class Project extends Component {
           <When condition={ this.props.repository.error }>
             <div className={styles.errorMessage}>
               <AlertError style={bigIconStyle} />
-              <p className={styles.errorMessage__text}>Something went wrong!<br />{this.props.repository.error.message}</p>
+              <p className={styles.errorMessage__text}>
+                Something went wrong!<br />
+                {this.props.repository.error.message}
+              </p>
             </div>
           </When>
           <Otherwise>
@@ -130,13 +133,7 @@ export default class Project extends Component {
               <ProjectCardList data={this.props.results} />
               <Choose>
                 <When condition={ this.state.showCharts }>
-                  <PieChart
-                    data={pieData}
-                    width={450}
-                    height={400}
-                    radius={110}
-                    innerRadius={20}
-                    sectorBorderColor="white" />
+                  <ProjectChartList data={this.props.results} />
                 </When>
                 <Otherwise>
                   <RaisedButton

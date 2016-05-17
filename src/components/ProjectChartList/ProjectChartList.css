@@ -1,0 +1,11 @@
+@lost flexbox flex;
+
+.row {
+  lost-flex-container: row;
+  margin-bottom: 20px;
+}
+
+.card {
+  text-align: center;
+  lost-column: 1/3;
+}
