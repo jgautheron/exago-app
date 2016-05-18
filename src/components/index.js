@@ -4,4 +4,6 @@ export ProjectCard from './ProjectCard/ProjectCard';
 export ProjectCardList from './ProjectCardList/ProjectCardList';
 export ProjectLoadingScreen from './ProjectLoadingScreen/ProjectLoadingScreen';
 export ProjectChartList from './ProjectChartList/ProjectChartList';
-export ProjectChartCoverage from './ProjectChartCoverage/ProjectChartCoverage';
+export ProjectChartCodeCoverage from './ProjectChartCodeCoverage/ProjectChartCodeCoverage';
+export ProjectChartTestDuration from './ProjectChartTestDuration/ProjectChartTestDuration';
+export ProjectChartLinterWarnings from './ProjectChartLinterWarnings/ProjectChartLinterWarnings';

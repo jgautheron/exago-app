@@ -49,17 +49,13 @@ export default class ProjectCharts extends Component {
   }
 
   render() {
-    const containerStyle = {
-      textAlign: 'center'
-    };
-
     const titleStyle = {
       fontWeight: 300,
       fontSize: 26
     };
 
     return (
-      <Card style={containerStyle}>
+      <Card>
         <CardHeader
           title="Code coverage per package"
           titleStyle={titleStyle}
