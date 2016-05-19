@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import TextField from 'material-ui/lib/text-field';
+import TextField from 'material-ui/TextField';
 
 const errInvalidRepository = 'The specified repository is invalid';
 const errUnsupportedProvider = 'For now only GitHub is supported';

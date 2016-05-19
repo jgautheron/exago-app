@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { routeActions } from 'react-router-redux';
 import Helmet from 'react-helmet';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
-import Paper from 'material-ui/lib/paper';
+import Paper from 'material-ui/Paper';
 import { SearchInput } from 'components';
 import { set } from 'redux/modules/repository';
 
@@ -18,7 +18,7 @@ const paperStyle = {
   state => ({
     repository: state.repository.name
   }),
-  {pushState: routeActions.push, setRepository: set}
+  {pushState: push, setRepository: set}
 )
 export default class Home extends Component {
   static propTypes = {

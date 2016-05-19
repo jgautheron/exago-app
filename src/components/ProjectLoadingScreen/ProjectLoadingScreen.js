@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import LinearProgress from 'material-ui/lib/linear-progress';
+import LinearProgress from 'material-ui/LinearProgress';
 
 import { palette } from '../../theme';
 import styles from './ProjectLoadingScreen.css';

@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardMedia from 'material-ui/lib/card/card-media';
+import { Card, CardHeader, CardMedia } from 'material-ui/Card';
 import ReactHighcharts from 'react-highcharts';
 
 export default class ProjectChartLinterWarnings extends Component {
@@ -26,7 +24,7 @@ export default class ProjectChartLinterWarnings extends Component {
         enabled: false
       },
       tooltip: {
-        pointFormat: '{point.name} <b>{point.y}</b> warnings'
+        pointFormat: '<b>{point.y}</b> warnings'
       },
       plotOptions: {
         pie: {
@@ -34,7 +32,7 @@ export default class ProjectChartLinterWarnings extends Component {
           cursor: 'pointer',
           dataLabels: {
             enabled: true,
-            format: '{point.percentage:.1f} %'
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
           }
         }
       },
@@ -47,7 +45,7 @@ export default class ProjectChartLinterWarnings extends Component {
 
     const data = this.props.data.lintmessages;
 
-    // Extract linters and how many reports
+    // Extract linters and the amount of warnings
     const linters = {};
     Object.keys(data).forEach((filename) => {
       Object.keys(data[filename]).forEach((linter) => {

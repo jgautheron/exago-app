@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardMedia from 'material-ui/lib/card/card-media';
+import { Card, CardHeader, CardMedia } from 'material-ui/Card';
 import ReactHighcharts from 'react-highcharts';
 
 export default class ProjectChartTestDuration extends Component {
