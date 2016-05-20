@@ -1,9 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import { ProjectChartCoverage } from 'components';
+import {
+  ProjectChartCodeCoverage,
+  ProjectChartTestDuration,
+  ProjectChartLinterWarnings,
+} from 'components';
 
 import styles from './ProjectChartList.css';
 
-export default class ProjectCharts extends Component {
+export default class ProjectChartList extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired
   };
@@ -11,7 +15,15 @@ export default class ProjectCharts extends Component {
   render() {
     return (
       <div className={styles.row}>
-        <ProjectChartCoverage data={this.props.data} />
+        <div className={styles.card}>
+          <ProjectChartCodeCoverage data={this.props.data} />
+        </div>
+        <div className={styles.card}>
+          <ProjectChartTestDuration data={this.props.data} />
+        </div>
+        <div className={styles.card}>
+          <ProjectChartLinterWarnings data={this.props.data} />
+        </div>
       </div>
     );
   }

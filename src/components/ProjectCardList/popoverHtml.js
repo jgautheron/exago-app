@@ -1,12 +1,14 @@
 import React from 'react';
-import ActionCheckCircle from 'material-ui/lib/svg-icons/action/check-circle';
-import AlertError from 'material-ui/lib/svg-icons/alert/error';
-import Table from 'material-ui/lib/table/table';
-import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
-import TableRow from 'material-ui/lib/table/table-row';
-import TableHeader from 'material-ui/lib/table/table-header';
-import TableRowColumn from 'material-ui/lib/table/table-row-column';
-import TableBody from 'material-ui/lib/table/table-body';
+import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle';
+import AlertError from 'material-ui/svg-icons/alert/error';
+import {
+  Table,
+  TableHeaderColumn,
+  TableHeader,
+  TableRowColumn,
+  TableRow,
+  TableBody,
+} from 'material-ui/Table';
 
 export function getThirdParties(data) {
   if (data.imports.length === 0) {

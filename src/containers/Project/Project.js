@@ -4,14 +4,14 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import TimeAgo from 'react-timeago';
-import { asyncConnect } from 'redux-async-connect';
+import { asyncConnect } from 'redux-connect';
 import { isCached, load, refresh } from 'redux/modules/repository';
 
-import RaisedButton from 'material-ui/lib/raised-button';
-import IconButton from 'material-ui/lib/icon-button';
-import AlertError from 'material-ui/lib/svg-icons/alert/error';
-import HardwareKeyboardArrowRight from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-right';
-import ActionCached from 'material-ui/lib/svg-icons/action/cached';
+import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton';
+import AlertError from 'material-ui/svg-icons/alert/error';
+import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
+import ActionCached from 'material-ui/svg-icons/action/cached';
 
 import { palette } from '../../theme';
 import * as config from '../../config';
@@ -85,13 +85,14 @@ export default class Project extends Component {
 
   render() {
     const buttonStyle = {
-      height: '50px'
+      height: 50,
+      width: '100%'
     };
     const labelStyle = {
       color: palette.alternateTextColor,
-      fontSize: '20px',
+      fontSize: 20,
       fontWeight: 400,
-      letterSpacing: '0.5px',
+      letterSpacing: 0.5,
       WebkitFontSmoothing: 'antialiased'
     };
     const tooltipStyle = {
@@ -143,7 +144,6 @@ export default class Project extends Component {
                     labelStyle={labelStyle}
                     icon={<HardwareKeyboardArrowRight />}
                     primary
-                    fullWidth
                     onClick={this.showCharts} />
                 </Otherwise>
               </Choose>

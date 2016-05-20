@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
+
 import { asyncConnect } from 'redux-async-connect';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import styles from './Home.css';
-
-import Paper from 'material-ui/lib/paper';
+import Paper from 'material-ui/Paper';
 
 import { SearchInput } from 'components';
 import { ProjectList } from 'containers';

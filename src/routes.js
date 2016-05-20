@@ -1,12 +1,12 @@
 import React from 'react';
 import {IndexRoute, Route} from 'react-router';
 import {
-    App,
-    Home,
-    Project,
-    About,
-    NotFound,
-  } from 'containers';
+  App,
+  Home,
+  Project,
+  About,
+  NotFound,
+} from 'containers';
 
 export default () => {
   /**

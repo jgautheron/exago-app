@@ -1,4 +1,4 @@
-import { UPDATE_LOCATION } from 'react-router-redux';
+import { LOCATION_CHANGE } from 'react-router-redux';
 
 const LOAD = 'exago/repository/LOAD';
 const LOAD_SUCCESS = 'exago/repository/LOAD_SUCCESS';
@@ -19,7 +19,7 @@ const repositoryState = {
 
 export default function reducer(state = repositoryState, action = {}) {
   switch (action.type) {
-    case UPDATE_LOCATION:
+    case LOCATION_CHANGE:
       const routePrefix = '/project/';
       let repositoryName = action.payload.pathname;
       if (repositoryName.indexOf(routePrefix) === 0) {

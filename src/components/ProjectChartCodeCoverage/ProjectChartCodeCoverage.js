@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardMedia from 'material-ui/lib/card/card-media';
+import { Card, CardHeader, CardMedia } from 'material-ui/Card';
 import ReactHighcharts from 'react-highcharts';
 
 export default class ProjectCharts extends Component {
@@ -49,17 +47,13 @@ export default class ProjectCharts extends Component {
   }
 
   render() {
-    const containerStyle = {
-      textAlign: 'center'
-    };
-
     const titleStyle = {
       fontWeight: 300,
       fontSize: 26
     };
 
     return (
-      <Card style={containerStyle}>
+      <Card>
         <CardHeader
           title="Code coverage per package"
           titleStyle={titleStyle}

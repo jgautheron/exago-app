@@ -1,14 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './ProjectCard.css';
 
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardText from 'material-ui/lib/card/card-text';
-import IconButton from 'material-ui/lib/icon-button';
-import ActionOpenInNew from 'material-ui/lib/svg-icons/action/open-in-new';
-import AlertError from 'material-ui/lib/svg-icons/alert/error';
-import Popover from 'material-ui/lib/popover/popover';
-import PopoverAnimationFromTop from 'material-ui/lib/popover/popover-animation-from-top';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
+import IconButton from 'material-ui/IconButton';
+import ActionOpenInNew from 'material-ui/svg-icons/action/open-in-new';
+import AlertError from 'material-ui/svg-icons/alert/error';
+import { Popover, PopoverAnimationFromTop } from 'material-ui/Popover';
 
 import { palette } from '../../theme';
 
@@ -56,7 +53,7 @@ export default class ProjectCard extends Component {
   render() {
     const titleStyle = {
       fontWeight: 300,
-      fontSize: '26px',
+      fontSize: 26,
       margin: '0 0 20px 0'
     };
     const errorIconStyle = {
@@ -65,10 +62,9 @@ export default class ProjectCard extends Component {
     };
     return (
       <Card className={styles.container}>
-        <CardHeader
+        <CardTitle
           title={this.props.title}
-          titleStyle={titleStyle}
-        />
+          titleStyle={titleStyle} />
         {this.props.children ?
         <div className={styles.childrenContainer}>
           <Popover
