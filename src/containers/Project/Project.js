@@ -20,7 +20,8 @@ import {
   ProjectHeader,
   ProjectCardList,
   ProjectLoadingScreen,
-  ProjectChartList
+  ProjectChartList,
+  ProjectFileList
 } from 'components';
 
 import styles from './Project.css';
@@ -57,6 +58,7 @@ export default class Project extends Component {
 
   state = {
     showCharts: false,
+    showLinterMessages: false
   };
 
   componentWillMount = () => {
@@ -80,6 +82,13 @@ export default class Project extends Component {
   showCharts = () => {
     this.setState({
       showCharts: true
+    });
+  }
+
+  showLinterMessages = () => {
+    this.setState({
+      showLinterMessages: true,
+      showCharts: false
     });
   }
 
@@ -135,6 +144,17 @@ export default class Project extends Component {
               <Choose>
                 <When condition={ this.state.showCharts }>
                   <ProjectChartList data={this.props.results} />
+                  <RaisedButton
+                    label="Show lint results"
+                    backgroundColor={palette.primary1Color}
+                    style={buttonStyle}
+                    labelStyle={labelStyle}
+                    icon={<HardwareKeyboardArrowRight />}
+                    primary
+                    onClick={this.showLinterMessages} />
+                </When>
+                <When condition={ this.state.showLinterMessages }>
+                  <ProjectFileList data={this.props.results} />
                 </When>
                 <Otherwise>
                   <RaisedButton

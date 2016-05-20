@@ -7,3 +7,4 @@ export ProjectChartList from './ProjectChartList/ProjectChartList';
 export ProjectChartCodeCoverage from './ProjectChartCodeCoverage/ProjectChartCodeCoverage';
 export ProjectChartTestDuration from './ProjectChartTestDuration/ProjectChartTestDuration';
 export ProjectChartLinterWarnings from './ProjectChartLinterWarnings/ProjectChartLinterWarnings';
+export ProjectFileList from './ProjectFileList/ProjectFileList';

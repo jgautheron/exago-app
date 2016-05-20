@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import { push } from 'react-router-redux';
 import { open, close } from 'redux/modules/menu';
 
 import config from '../../config';
@@ -50,6 +49,7 @@ export default class App extends Component {
   };
 
   render() {
+    const {push} = this.context.router;
     const titleStyle = {
       lineHeight: '59px',
       fontSize: '34px',

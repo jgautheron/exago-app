@@ -42,7 +42,6 @@ export default function reducer(state = repositoryState, action = {}) {
     case LOAD:
       return {
         ...state,
-        loaded: false,
         loading: true
       };
     case LOAD_SUCCESS:

@@ -54,6 +54,8 @@ export default class ProjectCardList extends Component {
                     return html.getTestCoverage(this.props.data);
                   case constants.TEST_DURATION:
                     return html.getTestDuration(this.props.data);
+                  case constants.RATING:
+                    return html.getScoreDetails(this.props.data);
                   default:
                     return '';
                 }

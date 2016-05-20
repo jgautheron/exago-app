@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
 import { asyncConnect } from 'redux-async-connect';
-import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 
 import styles from './Home.css';
 import Paper from 'material-ui/Paper';
@@ -24,10 +22,10 @@ const paperStyle = {
 @asyncConnect([{
   promise: ({store: {dispatch}}) => {
     const promises = [];
-      promises.push(dispatch(load('recent')));
-      promises.push(dispatch(load('popular')));
-      promises.push(dispatch(load('ranked')));
-      return Promise.all(promises);
+    promises.push(dispatch(load('recent')));
+    promises.push(dispatch(load('popular')));
+    promises.push(dispatch(load('ranked')));
+    return Promise.all(promises);
   }
 }])
 @connect(

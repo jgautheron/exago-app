@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Card, CardHeader, CardMedia } from 'material-ui/Card';
+import { Card, CardTitle, CardMedia } from 'material-ui/Card';
 import ReactHighcharts from 'react-highcharts';
 
 export default class ProjectChartTestDuration extends Component {
@@ -54,7 +54,7 @@ export default class ProjectChartTestDuration extends Component {
 
     return (
       <Card>
-        <CardHeader
+        <CardTitle
           title="Test duration per package"
           titleStyle={titleStyle}
         />

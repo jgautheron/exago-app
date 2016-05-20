@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 
-import Paper from 'material-ui/lib/paper';
-import Avatar from 'material-ui/lib/avatar';
-import IconPopular from 'material-ui/lib/svg-icons/social/whatshot';
-import IconRanked from 'material-ui/lib/svg-icons/action/grade';
-import IconRecent from 'material-ui/lib/svg-icons/action/restore';
+import Paper from 'material-ui/Paper';
+import Avatar from 'material-ui/Avatar';
+import IconPopular from 'material-ui/svg-icons/social/whatshot';
+import IconRanked from 'material-ui/svg-icons/action/grade';
+import IconRecent from 'material-ui/svg-icons/action/restore';
 
 import styles from './ProjectList.css';
 
-import { List, ListItem } from 'material-ui/lib/lists';
-import { blueA200, transparent } from 'material-ui/lib/styles/colors';
+import { List, ListItem } from 'material-ui/List';
+import { blueA200, transparent } from 'material-ui/styles/colors';
 
 const PROJECT_LISTS = {
   popular: {
