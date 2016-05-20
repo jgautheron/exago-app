@@ -1,0 +1,9 @@
+.iconContainer {
+  width: 60px;
+}
+
+.iconWarningText {
+  position: relative;
+  top: -6px;
+  left: 2px;
+}

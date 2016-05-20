@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Card, CardHeader, CardMedia } from 'material-ui/Card';
+import { Card, CardTitle, CardMedia } from 'material-ui/Card';
 import ReactHighcharts from 'react-highcharts';
 
 export default class ProjectChartLinterWarnings extends Component {
@@ -72,7 +72,7 @@ export default class ProjectChartLinterWarnings extends Component {
 
     return (
       <Card>
-        <CardHeader
+        <CardTitle
           title="Most warnings per linter"
           titleStyle={titleStyle}
         />

@@ -10,6 +10,32 @@ import {
   TableBody,
 } from 'material-ui/Table';
 
+export function getScoreDetails(data) {
+  const rowStyle = {
+    width: '70px'
+  };
+  return (
+    <div>
+      <Table>
+        <TableHeader displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn>Description</TableHeaderColumn>
+            <TableHeaderColumn style={rowStyle}>Points</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+        {data.score.details.map((el, id) =>
+          <TableRow key={id}>
+            <TableRowColumn>{el.split(':')[1].trim()}</TableRowColumn>
+            <TableRowColumn style={rowStyle}>{el.split(':')[0]}</TableRowColumn>
+          </TableRow>
+        )}
+        </TableBody>
+      </Table>
+    </div>
+  );
+}
+
 export function getThirdParties(data) {
   if (data.imports.length === 0) {
     return '';

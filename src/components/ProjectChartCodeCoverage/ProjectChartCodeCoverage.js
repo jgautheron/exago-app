@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Card, CardHeader, CardMedia } from 'material-ui/Card';
+import { Card, CardTitle, CardMedia } from 'material-ui/Card';
 import ReactHighcharts from 'react-highcharts';
 
 export default class ProjectCharts extends Component {
@@ -54,7 +54,7 @@ export default class ProjectCharts extends Component {
 
     return (
       <Card>
-        <CardHeader
+        <CardTitle
           title="Code coverage per package"
           titleStyle={titleStyle}
         />
