@@ -52,9 +52,9 @@ export default class ProjectFileList extends Component {
         />
         <CardMedia>
           <List>
-            {this.data.map((item, id) =>
+            {this.data.map((item, itemId) =>
             <ListItem
-              key={id}
+              key={itemId}
               primaryText={item.fileName}
               leftAvatar={
                 <Avatar
@@ -64,9 +64,9 @@ export default class ProjectFileList extends Component {
                   {item.count}
                 </Avatar>
               }
-              nestedItems={Object.keys(item.messages).map((linter, idd) =>
+              nestedItems={Object.keys(item.messages).map((linter, linterId) =>
                 <ListItem
-                  key={idd}
+                  key={linterId}
                   primaryText={linter}
                   leftAvatar={
                     <Avatar
@@ -76,9 +76,9 @@ export default class ProjectFileList extends Component {
                       {item.messages[linter].length}
                     </Avatar>
                   }
-                  nestedItems={item.messages[linter].map((message, iddd) =>
+                  nestedItems={item.messages[linter].map((message, messageId) =>
                     <ListItem
-                      key={iddd}
+                      key={messageId}
                       primaryText={`${message.line}: ${message.message}`}
                       leftIcon={<ActionTrendingFlat />}
                       />

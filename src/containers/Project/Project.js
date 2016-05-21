@@ -57,8 +57,7 @@ export default class Project extends Component {
   };
 
   state = {
-    showCharts: false,
-    showLinterMessages: false
+    showDetails: false,
   };
 
   componentWillMount = () => {
@@ -79,16 +78,9 @@ export default class Project extends Component {
     this.props.refresh(this.props.repository);
   };
 
-  showCharts = () => {
+  showDetails = () => {
     this.setState({
-      showCharts: true
-    });
-  }
-
-  showLinterMessages = () => {
-    this.setState({
-      showLinterMessages: true,
-      showCharts: false
+      showDetails: true
     });
   }
 
@@ -142,18 +134,8 @@ export default class Project extends Component {
               </div>
               <ProjectCardList data={this.props.results} />
               <Choose>
-                <When condition={ this.state.showCharts }>
+                <When condition={ this.state.showDetails }>
                   <ProjectChartList data={this.props.results} />
-                  <RaisedButton
-                    label="Show lint results"
-                    backgroundColor={palette.primary1Color}
-                    style={buttonStyle}
-                    labelStyle={labelStyle}
-                    icon={<HardwareKeyboardArrowRight />}
-                    primary
-                    onClick={this.showLinterMessages} />
-                </When>
-                <When condition={ this.state.showLinterMessages }>
                   <ProjectFileList data={this.props.results} />
                 </When>
                 <Otherwise>
@@ -164,7 +146,7 @@ export default class Project extends Component {
                     labelStyle={labelStyle}
                     icon={<HardwareKeyboardArrowRight />}
                     primary
-                    onClick={this.showCharts} />
+                    onClick={this.showDetails} />
                 </Otherwise>
               </Choose>
             </div>
