@@ -21,6 +21,7 @@ export default class ProjectCard extends Component {
       PropTypes.object
     ])
   };
+
   constructor(props) {
     super(props);
 
