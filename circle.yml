@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 4.0
+    version: 5.0
   environment:
     CONTINUOUS_INTEGRATION: true
 
@@ -8,10 +8,19 @@ dependencies:
   cache_directories:
     - node_modules
   override:
-    - npm prune && npm install
+    - npm install
 
 test:
   override:
     - npm run lint
     - npm test
-    - npm run test-node
+
+deployment:
+  release:
+    branch: master
+    commands:
+      - npm run build
+      - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD -e $REGISTRY_EMAIL
+      - docker build -t exago/app:$TAG .
+      - docker build -t exago/app:latest .
+      - docker push exago/app
