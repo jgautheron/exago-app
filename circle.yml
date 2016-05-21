@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 5.0
+    version: 5.7
   environment:
     CONTINUOUS_INTEGRATION: true
 
