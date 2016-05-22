@@ -144,7 +144,7 @@ export default class Project extends Component {
               <Choose>
                 <When condition={this.state.showDetails}>
                   <ProjectChartList data={this.props.results} />
-                  <ProjectFileList data={this.props.results} />
+                  <ProjectFileList data={this.props.results} repository={this.props.repository.name} />
                 </When>
                 <Otherwise>
                   <RaisedButton

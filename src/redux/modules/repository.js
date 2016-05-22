@@ -104,3 +104,10 @@ export function refresh(repository) {
     promise: (client) => client.get(`/refresh/${repository.name}`)
   };
 }
+
+export function loadFile(path) {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get(`/contents/${path}`)
+  };
+}

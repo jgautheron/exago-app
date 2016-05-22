@@ -9,7 +9,8 @@ import ActionTrendingFlat from 'material-ui/svg-icons/action/trending-flat';
 
 export default class ProjectFileList extends Component {
   static propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    repository: PropTypes.string.isRequired
   };
 
   componentWillMount() {
@@ -55,7 +56,9 @@ export default class ProjectFileList extends Component {
             {this.data.map((item, itemId) =>
               <ListItem
                 key={itemId}
-                primaryText={item.fileName}
+                primaryText={
+                  <a href={`/file/${this.props.repository}/${item.fileName}`}>{item.fileName}</a>
+                }
                 leftAvatar={
                   <Avatar
                     color={palette.primary1Color} backgroundColor={transparent}

@@ -1,0 +1,8 @@
+.errorMessage {
+  lost-flex-container: row;
+}
+
+.errorMessage__text {
+  margin-top: 5px;
+  margin-left: 10px;
+}
