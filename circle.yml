@@ -1,8 +1,13 @@
 machine:
+  timezone:
+    Europe/Warsaw
   node:
     version: 5.7
   environment:
     CONTINUOUS_INTEGRATION: true
+    TAG: $CIRCLE_BUILD_NUM
+  services:
+    - docker
 
 dependencies:
   cache_directories:
