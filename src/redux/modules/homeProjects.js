@@ -41,6 +41,6 @@ export default function reducer(state = homeProjects, action = {}) {
 export function load(type) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/projects/' + type)
+    promise: (client) => client.get(`/projects/${type}`)
   };
 }

@@ -67,7 +67,7 @@ export function getChecklist(data) {
   }
 
   const res = data.testresults.checklist;
-  const sortedData = {minimumCriteria: [], goodCitizen: [], extraCredit: []};
+  const sortedData = { minimumCriteria: [], goodCitizen: [], extraCredit: [] };
 
   let cnt;
   let item;

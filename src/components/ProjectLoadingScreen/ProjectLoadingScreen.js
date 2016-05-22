@@ -32,9 +32,9 @@ export default class ProjectLoadingScreen extends Component {
 
   progress(completed) {
     if (completed > this.duration) {
-      this.setState({completed: this.duration});
+      this.setState({ completed: this.duration });
     } else {
-      this.setState({completed});
+      this.setState({ completed });
       this.timer = setTimeout(() => this.progress(completed + 1), 1000);
     }
   }
@@ -46,10 +46,12 @@ export default class ProjectLoadingScreen extends Component {
     };
     return (
       <div>
-        { this.props.duration ?
+        {this.props.duration ?
           <div>
             <LinearProgress mode="determinate" value={this.state.completed} max={this.duration} style={progressBarStyles} />
-            <p className={styles.text}>Please wait while we’re crunching the data, this should take approximately <b>{this.duration}s</b></p>
+            <p className={styles.text}>
+              Please wait while we’re crunching the data, this should take approximately <b>{this.duration}s</b>
+            </p>
           </div>
           :
           <div>

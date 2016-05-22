@@ -23,7 +23,7 @@ injectTapEventPlugin();
   state => ({
     menu: state.menu.open
   }),
-  {open, close}
+  { open, close }
 )
 export default class App extends Component {
   static propTypes = {
@@ -49,7 +49,7 @@ export default class App extends Component {
   };
 
   render() {
-    const {push} = this.context.router;
+    const { push } = this.context.router;
     const titleStyle = {
       lineHeight: '59px',
       fontSize: '34px',
@@ -64,7 +64,7 @@ export default class App extends Component {
             <AppBar
               className={styles.appBar}
               titleStyle={titleStyle}
-              style={{'position': 'fixed', 'top': 0}}
+              style={{ position: 'fixed', top: 0 }}
               title="exago"
               onLeftIconButtonTouchTap={this.handleToggle}
             />
@@ -72,7 +72,7 @@ export default class App extends Component {
               <MenuItem onClick={() => push('/')}>Home</MenuItem>
               <MenuItem onClick={() => push('/about')}>About</MenuItem>
             </Drawer>
-            <div style={{'padding': '0 20px'}}>
+            <div style={{ padding: '0 20px' }}>
               {this.props.children}
             </div>
           </div>

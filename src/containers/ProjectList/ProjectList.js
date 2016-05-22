@@ -35,27 +35,33 @@ export default class ProjectList extends Component {
   render() {
     const IconName = PROJECT_LISTS[this.props.type].icon;
     return (
-      <Paper className={styles.recentHolder} zDepth={1} children={
-        <List>
-          <h5>
-            <IconName color="#666"/>
-            {PROJECT_LISTS[this.props.type].label}
-          </h5>
-          {this.props.data.map( (repo, idx) =>
-
-          <ListItem key={idx} onTouchTap={this.checkRepo}
-            primaryText={repo}
-            rightAvatar={
-              <Avatar color={blueA200} backgroundColor={transparent} style={{right: 8}}>
-                A
-              </Avatar>
-            }
-            leftAvatar={
-              <Avatar src={'https://avatars.githubusercontent.com/' + repo.split('/')[0]} />
-            } />
-          )}
-        </List>
-      }/>
+      <Paper
+        className={styles.recentHolder}
+        zDepth={1}
+        children={
+          <List>
+            <h5>
+              <IconName color="#666" />
+              {PROJECT_LISTS[this.props.type].label}
+            </h5>
+            {this.props.data.map((repo, idx) =>
+              <ListItem
+                key={idx}
+                onTouchTap={this.checkRepo}
+                primaryText={repo}
+                rightAvatar={
+                  <Avatar color={blueA200} backgroundColor={transparent} style={{ right: 8 }}>
+                    A
+                  </Avatar>
+                }
+                leftAvatar={
+                  <Avatar src={`https://avatars.githubusercontent.com/${repo.split('/')[0]}`} />
+                }
+              />
+            )}
+          </List>
+        }
+      />
     );
   }
 }

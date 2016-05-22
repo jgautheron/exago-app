@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import {ProjectCard} from 'components';
+import { ProjectCard } from 'components';
 import * as formatter from './dataFormatter';
 import * as html from './popoverHtml';
 import * as constants from './constants';

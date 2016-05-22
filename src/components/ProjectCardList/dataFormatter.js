@@ -18,7 +18,7 @@ export function getChecklistCompliance(data) {
 
   const results = data.testresults;
   const checklistTotalItems = results.checklist.Passed.length + results.checklist.Failed.length;
-  return results.checklist.Passed.length + ' / ' + checklistTotalItems;
+  return `${results.checklist.Passed.length} / ${checklistTotalItems}`;
 }
 export function getTestsCount(data) {
   return data.codestats.Test;
@@ -50,7 +50,7 @@ export function getTestResults(data) {
 
   let covMean = 0;
   if (cov.length > 0) {
-    cov.forEach(function incr(val) {
+    cov.forEach((val) => {
       covMean += val;
     });
     covMean /= cov.length;
@@ -58,16 +58,16 @@ export function getTestResults(data) {
 
   let durationMean = 0;
   if (duration.length > 0) {
-    duration.forEach(function incr(val) {
+    duration.forEach((val) => {
       durationMean += val;
     });
     durationMean /= duration.length;
   }
 
   return {
-    coverageMean: covMean.toFixed(2) + '%',
-    durationMean: durationMean.toFixed(3) + 's',
-    testsPassed: testsPassed
+    coverageMean: `${covMean.toFixed(2)} %`,
+    durationMean: `${durationMean.toFixed(3)}s`,
+    testsPassed
   };
 }
 export function getRank(res) {

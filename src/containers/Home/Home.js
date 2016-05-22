@@ -20,7 +20,8 @@ const paperStyle = {
 };
 
 @asyncConnect([{
-  promise: ({store: {dispatch}}) => {
+  // eslint-disable-next-line react/prop-types
+  promise: ({ store: { dispatch } }) => {
     const promises = [];
     promises.push(dispatch(load('recent')));
     promises.push(dispatch(load('popular')));
@@ -33,7 +34,7 @@ const paperStyle = {
     repository: state.repository.name,
     projects: state.homeProjects
   }),
-  {setRepository: set}
+  { setRepository: set }
 )
 export default class Home extends Component {
   static propTypes = {
@@ -47,23 +48,27 @@ export default class Home extends Component {
   };
 
   onRepositorySet = (repository) => {
-    const {push} = this.context.router;
-    push('/project/' + repository);
+    const { push } = this.context.router;
+    push(`/project/${repository}`);
     this.props.setRepository(repository);
   };
 
   render() {
     return (
       <div>
-        <Helmet title="Home"/>
-        <Paper style={paperStyle} zDepth={1} children={
-          <div>
-            <h1>Check your Golang project quality</h1>
-            <SearchInput onRepositorySet={this.onRepositorySet} repository={this.props.repository}/>
-          </div>
-        }/>
+        <Helmet title="Home" />
+        <Paper
+          style={paperStyle}
+          zDepth={1}
+          children={
+            <div>
+              <h1>Check your Golang project quality</h1>
+              <SearchInput onRepositorySet={this.onRepositorySet} repository={this.props.repository} />
+            </div>
+          }
+        />
 
-        <div className={styles.featuredHolder} style={{width: '85%', margin: '0 auto'}}>
+        <div className={styles.featuredHolder} style={{ width: '85%', margin: '0 auto' }}>
           <ProjectList type="recent" data={this.props.projects.recent} />
           <ProjectList type="ranked" data={this.props.projects.ranked} />
           <ProjectList type="popular" data={this.props.projects.popular} />

@@ -22,9 +22,9 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function open() {
-  return { type: OPEN};
+  return { type: OPEN };
 }
 
 export function close() {
-  return { type: CLOSE};
+  return { type: CLOSE };
 }

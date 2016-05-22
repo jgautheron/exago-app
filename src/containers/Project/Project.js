@@ -27,15 +27,18 @@ import {
 import styles from './Project.css';
 
 @asyncConnect([{
-  promise: ({store: {dispatch, getState}}) => {
+  // eslint-disable-next-line react/prop-types
+  promise: ({ store: { dispatch, getState } }) => {
     const repository = getState().repository;
     if (__SERVER__) {
       return dispatch(isCached(repository)).then((res) => {
         if (res.data === true) {
           return dispatch(load(repository));
         }
+        return false;
       });
     }
+    return false;
   }
 }])
 @connect(
@@ -106,13 +109,13 @@ export default class Project extends Component {
 
     return (
       <div>
-        <Helmet title={`Code Quality Report for ${this.props.repository.name}`}/>
+        <Helmet title={`Code Quality Report for ${this.props.repository.name}`} />
         <ProjectHeader repository={this.props.repository.name} />
         <Choose>
-          <When condition={ this.props.loading }>
+          <When condition={this.props.loading}>
             <ProjectLoadingScreen duration={this.getLoadingDuration()} />
           </When>
-          <When condition={ this.props.repository.error }>
+          <When condition={this.props.repository.error}>
             <div className={styles.errorMessage}>
               <AlertError style={bigIconStyle} />
               <p className={styles.errorMessage__text}>
@@ -124,17 +127,22 @@ export default class Project extends Component {
           <Otherwise>
             <div>
               <div className={styles.badge}>
-                <img src={`http://${config.apiHost}:${config.apiPort}/badge/${this.props.repository.name}`} />
+                <img src={`http://${config.apiHost}:${config.apiPort}/badge/${this.props.repository.name}`} alt="Badge" />
               </div>
               <div className={styles.update}>
                 <span className={styles.update__text}>Updated <TimeAgo date={this.props.results.date} /></span>
-                <IconButton tooltip="Refresh Statistics" tooltipPosition="bottom-center" style={tooltipStyle} onClick={this.refreshRepository}>
-                  <ActionCached color={palette.disabledColor} hoverColor={palette.textColor}/>
+                <IconButton
+                  tooltip="Refresh Statistics"
+                  tooltipPosition="bottom-center"
+                  style={tooltipStyle}
+                  onClick={this.refreshRepository}
+                >
+                  <ActionCached color={palette.disabledColor} hoverColor={palette.textColor} />
                 </IconButton>
               </div>
               <ProjectCardList data={this.props.results} />
               <Choose>
-                <When condition={ this.state.showDetails }>
+                <When condition={this.state.showDetails}>
                   <ProjectChartList data={this.props.results} />
                   <ProjectFileList data={this.props.results} />
                 </When>
@@ -146,7 +154,8 @@ export default class Project extends Component {
                     labelStyle={labelStyle}
                     icon={<HardwareKeyboardArrowRight />}
                     primary
-                    onClick={this.showDetails} />
+                    onClick={this.showDetails}
+                  />
                 </Otherwise>
               </Choose>
             </div>

@@ -65,32 +65,32 @@ export default class ProjectCard extends Component {
       <Card className={styles.container}>
         <CardTitle
           title={this.props.title}
-          titleStyle={titleStyle} />
+          titleStyle={titleStyle}
+        />
         {this.props.children ?
-        <div className={styles.childrenContainer}>
-          <Popover
-            open={this.state.open}
-            anchorEl={this.state.anchorEl}
-            anchorOrigin={this.state.anchorOrigin}
-            targetOrigin={this.state.targetOrigin}
-            onRequestClose={this.handleRequestClose}
-            animation={PopoverAnimationFromTop}
-          >
-            <div className={styles.popoverContainer}>
-              {this.props.children}
+          <div className={styles.childrenContainer}>
+            <Popover
+              open={this.state.open}
+              anchorEl={this.state.anchorEl}
+              anchorOrigin={this.state.anchorOrigin}
+              targetOrigin={this.state.targetOrigin}
+              onRequestClose={this.handleRequestClose}
+              animation={PopoverAnimationFromTop}
+            >
+              <div className={styles.popoverContainer}>
+                {this.props.children}
+              </div>
+            </Popover>
+            <div className={styles.iconContainer}>
+              <IconButton tooltip="See details" tooltipPosition="bottom-left" onTouchTap={this.handleTouchTap}>
+                <ActionOpenInNew color={palette.disabledColor} hoverColor={palette.textColor} />
+              </IconButton>
             </div>
-          </Popover>
-          <div className={styles.iconContainer}>
-            <IconButton tooltip="See details" tooltipPosition="bottom-left" onTouchTap={this.handleTouchTap}>
-              <ActionOpenInNew color={palette.disabledColor} hoverColor={palette.textColor} />
-            </IconButton>
           </div>
-        </div>
         : ''}
         <CardText>
           <span className={styles.text}>
-            { this.props.value !== '' ?
-              this.props.value :
+            {this.props.value !== '' ? this.props.value :
               <AlertError style={errorIconStyle} />
             }
           </span>

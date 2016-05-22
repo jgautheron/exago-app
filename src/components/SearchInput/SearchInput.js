@@ -6,23 +6,39 @@ const errUnsupportedProvider = 'For now only GitHub is supported';
 
 const githubDomain = 'github.com';
 
-const textStyle = {
-  width: '30%'
-};
-
 export default class SearchInput extends Component {
   static propTypes = {
     repository: PropTypes.string.isRequired,
     onRepositorySet: PropTypes.func.isRequired
   };
-  state = {
-    searchInputError: ''
-  };
-  showError(message) {
-    this.setState({searchInputError: message});
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchInputError: '',
+      value: '',
+    };
   }
-  handleSubmit() {
-    let val = this.searchInput.getValue().trim();
+
+  showError(message) {
+    this.setState({
+      searchInputError: message
+    });
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      value: event.target.value,
+    });
+  };
+
+  handleSubmit = (event) => {
+    if (event.key !== 'Enter') {
+      return;
+    }
+
+    let val = this.state.value.trim();
     val = val.replace(/https?:\/\/(www\.)?/, '');
 
     // empty value
@@ -40,7 +56,7 @@ export default class SearchInput extends Component {
 
     // if there's a single "/", we assume it's a GitHub repository
     if (sp.length === 2) {
-      this.props.onRepositorySet(githubDomain + '/' + val);
+      this.props.onRepositorySet(`${githubDomain}/${val}`);
       return;
     }
 
@@ -57,13 +73,16 @@ export default class SearchInput extends Component {
     }
   }
   render() {
+    const textStyle = {
+      width: '30%'
+    };
     return (
       <TextField
-        ref={(ref) => this.searchInput = ref}
-        onEnterKeyDown={::this.handleSubmit}
+        onChange={this.handleChange}
+        onKeyDown={this.handleSubmit}
         hintText="Type a repository on GitHub"
         errorText={this.state.searchInputError}
-        defaultValue={this.props.repository}
+        value={this.state.value}
         style={textStyle}
       />
     );

@@ -6,7 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect } from 'redux-connect';
@@ -14,15 +14,18 @@ import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import getRoutes from './routes';
 
 const client = new ApiClient();
-const _browserHistory = useScroll(() => browserHistory)();
+const bh = useScroll(() => browserHistory)();
 const dest = document.getElementById('content');
-const store = createStore(_browserHistory, client, window.__data);
-const history = syncHistoryWithStore(_browserHistory, store);
+// eslint-disable-next-line no-underscore-dangle
+const store = createStore(bh, client, window.__data);
+const history = syncHistoryWithStore(bh, store);
 
 const component = (
-  <Router render={(props) =>
-        <ReduxAsyncConnect {...props} helpers={{client}} filter={item => !item.deferred} />
-      } history={history}>
+  <Router
+    render={(props) =>
+      <ReduxAsyncConnect { ...props } helpers={{ client }} filter={item => !item.deferred} />
+    } history={history}
+  >
     {getRoutes(store)}
   </Router>
 );
@@ -43,6 +46,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 if (__DEVTOOLS__ && !window.devToolsExtension) {
+  // eslint-disable-next-line global-require
   const DevTools = require('./containers/DevTools/DevTools');
   ReactDOM.render(
     <Provider store={store} key="provider">

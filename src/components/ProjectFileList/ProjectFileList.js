@@ -53,39 +53,39 @@ export default class ProjectFileList extends Component {
         <CardMedia>
           <List>
             {this.data.map((item, itemId) =>
-            <ListItem
-              key={itemId}
-              primaryText={item.fileName}
-              leftAvatar={
-                <Avatar
-                  color={palette.primary1Color} backgroundColor={transparent}
-                  style={{left: 8}}
-                >
-                  {item.count}
-                </Avatar>
-              }
-              nestedItems={Object.keys(item.messages).map((linter, linterId) =>
-                <ListItem
-                  key={linterId}
-                  primaryText={linter}
-                  leftAvatar={
-                    <Avatar
-                      color={palette.primary1Color} backgroundColor={transparent}
-                      style={{left: 8}}
-                    >
-                      {item.messages[linter].length}
-                    </Avatar>
-                  }
-                  nestedItems={item.messages[linter].map((message, messageId) =>
-                    <ListItem
-                      key={messageId}
-                      primaryText={`${message.line}: ${message.message}`}
-                      leftIcon={<ActionTrendingFlat />}
+              <ListItem
+                key={itemId}
+                primaryText={item.fileName}
+                leftAvatar={
+                  <Avatar
+                    color={palette.primary1Color} backgroundColor={transparent}
+                    style={{ left: 8 }}
+                  >
+                    {item.count}
+                  </Avatar>
+                }
+                nestedItems={Object.keys(item.messages).map((linter, linterId) =>
+                  <ListItem
+                    key={linterId}
+                    primaryText={linter}
+                    leftAvatar={
+                      <Avatar
+                        color={palette.primary1Color} backgroundColor={transparent}
+                        style={{ left: 8 }}
+                      >
+                        {item.messages[linter].length}
+                      </Avatar>
+                    }
+                    nestedItems={item.messages[linter].map((message, messageId) =>
+                      <ListItem
+                        key={messageId}
+                        primaryText={`${message.line}: ${message.message}`}
+                        leftIcon={<ActionTrendingFlat />}
                       />
-                  )}
-                />,
+                    )}
+                  />,
               )}
-            />
+              />
             )}
           </List>
         </CardMedia>

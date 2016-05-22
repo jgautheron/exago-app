@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom/server';
 import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
@@ -20,7 +20,7 @@ export default class Html extends Component {
   };
 
   render() {
-    const {assets, component, store} = this.props;
+    const { assets, component, store } = this.props;
     const content = component ? ReactDOM.renderToString(component) : '';
     const head = Helmet.rewind();
 
@@ -37,22 +37,31 @@ export default class Html extends Component {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           {/* styles (will be present only in production with webpack extract text plugin) */}
           {Object.keys(assets.styles).map((style, key) =>
-            <link href={assets.styles[style]} key={key} media="screen, projection"
-                  rel="stylesheet" type="text/css" charSet="UTF-8"/>
+            <link
+              href={assets.styles[style]}
+              key={key}
+              media="screen, projection"
+              rel="stylesheet"
+              type="text/css"
+              charSet="UTF-8"
+            />
           )}
 
           {/* (development mode only) */}
           {/* Outputs a <style/> tag that will hide everything to prevent a flash of unstyled content (fouc). */}
           {/* The conditional script tag at the bottom of the document unhides the content. */}
-          { Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={{__html: '#content{display:none}'}}/> : null }
+          {Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={{ __html: '#content{display:none}' }} /> : null}
         </head>
         <body>
-          <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
-          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
-          <script src={assets.javascript.main} charSet="UTF-8"/>
+          <div id="content" dangerouslySetInnerHTML={{ __html: content }} />
+          <script dangerouslySetInnerHTML={{ __html: `window.__data=${serialize(store.getState())};` }} charSet="UTF-8" />
+          <script src={assets.javascript.main} charSet="UTF-8" />
           {/* (development mode only)*/}
           {/* Will unhide content hidden in the head */}
-          { Object.keys(assets.styles).length === 0 ? <script dangerouslySetInnerHTML={{__html: 'document.getElementById("content").style.display="block";'}}/> : null }
+          {Object.keys(assets.styles).length === 0 ?
+            <script dangerouslySetInnerHTML={{ __html: 'document.getElementById("content").style.display="block";' }} />
+            : null
+          }
         </body>
       </html>
     );

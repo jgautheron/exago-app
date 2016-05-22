@@ -15,7 +15,7 @@ import { match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-connect';
 import createHistory from 'react-router/lib/createMemoryHistory';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import getRoutes from './routes';
 
 const pretty = new PrettyError();
@@ -39,8 +39,8 @@ app.use((req, res) => {
   const history = syncHistoryWithStore(memoryHistory, store);
 
   function hydrateOnClient() {
-    res.send('<!doctype html>\n' +
-      ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>));
+    const html = ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store} />);
+    res.send(`<!doctype html>\n${html}`);
   }
 
   if (__DISABLE_SSR__) {
@@ -56,7 +56,7 @@ app.use((req, res) => {
       res.status(500);
       hydrateOnClient();
     } else if (renderProps) {
-      loadOnServer({...renderProps, store, helpers: {client}}).then(() => {
+      loadOnServer({ ...renderProps, store, helpers: { client } }).then(() => {
         const component = (
           <Provider store={store} key="provider">
             <ReduxAsyncConnect {...renderProps} />
@@ -65,10 +65,10 @@ app.use((req, res) => {
 
         res.status(200);
 
-        global.navigator = {userAgent: req.headers['user-agent']};
+        global.navigator = { userAgent: req.headers['user-agent'] };
 
-        res.send('<!doctype html>\n' +
-          ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
+        const html = ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />);
+        res.send(`<!doctype html>\n${html}`);
       });
     } else {
       res.status(404).send('Not found');

@@ -19,7 +19,7 @@ const repositoryState = {
 
 export default function reducer(state = repositoryState, action = {}) {
   switch (action.type) {
-    case LOCATION_CHANGE:
+    case LOCATION_CHANGE: {
       const routePrefix = '/project/';
       let repositoryName = action.payload.pathname;
       if (repositoryName.indexOf(routePrefix) === 0) {
@@ -30,6 +30,7 @@ export default function reducer(state = repositoryState, action = {}) {
         };
       }
       return state;
+    }
     case SET:
       return {
         ...state,
@@ -86,20 +87,20 @@ export function clear() {
 export function isCached(repository) {
   return {
     types: [CACHED_LOAD, CACHED_LOAD_SUCCESS, CACHED_LOAD_FAIL],
-    promise: (client) => client.get('/cached/' + repository.name)
+    promise: (client) => client.get(`/cached/${repository.name}`)
   };
 }
 
 export function load(repository) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/project/' + repository.name)
+    promise: (client) => client.get(`/project/${repository.name}`)
   };
 }
 
 export function refresh(repository) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/refresh/' + repository.name)
+    promise: (client) => client.get(`/refresh/${repository.name}`)
   };
 }
