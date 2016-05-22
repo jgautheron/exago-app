@@ -24,7 +24,9 @@
     },
     "production": {
       "plugins": [
-        "jsx-control-statements"
+        "jsx-control-statements",
+        "transform-react-remove-prop-types",
+        "transform-react-constant-elements"
       ]
     }
   }
