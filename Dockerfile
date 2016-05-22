@@ -1,3 +1,3 @@
 FROM tianon/true
-ADD dist /app
+ADD static /app
 VOLUME ["/app"]
