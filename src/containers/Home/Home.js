@@ -14,9 +14,10 @@ import { load } from 'redux/modules/homeProjects';
 
 const paperStyle = {
   width: '85%',
-  margin: '20px auto',
+  margin: '40px auto',
   textAlign: 'center',
   display: 'block',
+  padding: 20
 };
 
 @asyncConnect([{
@@ -68,7 +69,7 @@ export default class Home extends Component {
           }
         />
 
-        <div className={styles.featuredHolder} style={{ width: '85%', margin: '0 auto' }}>
+        <div className={styles.featuredHolder}>
           <ProjectList type="recent" data={this.props.projects.recent} />
           <ProjectList type="ranked" data={this.props.projects.ranked} />
           <ProjectList type="popular" data={this.props.projects.popular} />

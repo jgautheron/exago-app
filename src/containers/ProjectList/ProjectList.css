@@ -2,6 +2,16 @@
   lost-column: 1/3;
 }
 
+@media (max-width: 1000px) {
+  .recentHolder {
+    lost-column: 1;
+  }
+
+  .recentHolder + .recentHolder {
+    margin-top: 20px;
+  }
+}
+
 .icon {
   position: relative;
   top: 6px;
