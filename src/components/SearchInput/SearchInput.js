@@ -12,14 +12,10 @@ export default class SearchInput extends Component {
     onRepositorySet: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      searchInputError: '',
-      value: '',
-    };
-  }
+  state = {
+    searchInputError: '',
+    value: ''
+  };
 
   showError(message) {
     this.setState({
@@ -78,6 +74,7 @@ export default class SearchInput extends Component {
     };
     return (
       <TextField
+        id="repoSearch"
         onChange={this.handleChange}
         onKeyDown={this.handleSubmit}
         hintText="Type a repository on GitHub"

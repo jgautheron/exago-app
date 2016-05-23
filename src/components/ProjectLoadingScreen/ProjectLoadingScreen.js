@@ -9,13 +9,12 @@ export default class ProjectLoadingScreen extends Component {
     duration: PropTypes.number.isRequired
   };
 
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      completed: 0,
-    };
+  state = {
+    completed: 0,
+  };
 
+  componentWillMount() {
     // Consider a 20% error margin
     if (this.props.duration) {
       this.duration = parseInt(this.props.duration * 1.20, 10);

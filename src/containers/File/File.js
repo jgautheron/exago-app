@@ -24,15 +24,12 @@ export default class Project extends Component {
     repository: PropTypes.object.isRequired,
     loading: PropTypes.bool,
     loadFile: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      code: ''
-    };
-  }
+  state = {
+    code: ''
+  };
 
   componentWillMount = () => {
     const url = this.props.params.splat;

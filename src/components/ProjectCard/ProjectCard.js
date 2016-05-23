@@ -22,21 +22,17 @@ export default class ProjectCard extends Component {
     ])
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      open: false,
-      anchorOrigin: {
-        horizontal: 'right',
-        vertical: 'bottom',
-      },
-      targetOrigin: {
-        horizontal: 'right',
-        vertical: 'center',
-      },
-    };
-  }
+  state = {
+    open: false,
+    anchorOrigin: {
+      horizontal: 'right',
+      vertical: 'bottom',
+    },
+    targetOrigin: {
+      horizontal: 'right',
+      vertical: 'center',
+    },
+  };
 
   handleTouchTap = (event) => {
     this.setState({
