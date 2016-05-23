@@ -35,10 +35,10 @@ import styles from './Project.css';
         if (res.data === true) {
           return dispatch(load(repository));
         }
-        return false;
+        return Promise.reject();
       });
     }
-    return false;
+    return Promise.reject();
   }
 }])
 @connect(
@@ -63,7 +63,7 @@ export default class Project extends Component {
     showDetails: false,
   };
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     if (!this.props.repository.loaded) {
       this.props.load(this.props.repository);
     }

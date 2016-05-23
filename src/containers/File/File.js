@@ -3,10 +3,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import CodeMirror from 'react-codemirror';
 
 import { ProjectHeader } from 'components';
 import AlertError from 'material-ui/svg-icons/alert/error';
+
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { github } from 'react-syntax-highlighter/dist/styles';
 
 import { loadFile } from 'redux/modules/repository';
 
@@ -28,13 +30,15 @@ export default class Project extends Component {
   };
 
   state = {
-    code: ''
+    code: '',
   };
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     const url = this.props.params.splat;
     this.props.loadFile(url).then((res) => {
-      this.state.code = res.data;
+      this.setState({
+        code: res.data
+      });
     });
   }
 
@@ -42,9 +46,6 @@ export default class Project extends Component {
     const bigIconStyle = {
       width: 48,
       height: 48
-    };
-    const options = {
-      readOnly: true
     };
     return (
       <div>
@@ -65,7 +66,7 @@ export default class Project extends Component {
           </When>
           <Otherwise>
             <div>
-              <CodeMirror value={this.state.code} options={options} />
+              <SyntaxHighlighter language="go" style={github}>{this.state.code}</SyntaxHighlighter>
             </div>
           </Otherwise>
         </Choose>
