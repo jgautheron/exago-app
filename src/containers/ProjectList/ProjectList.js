@@ -5,6 +5,7 @@ import Avatar from 'material-ui/Avatar';
 import IconPopular from 'material-ui/svg-icons/social/whatshot';
 import IconRanked from 'material-ui/svg-icons/action/grade';
 import IconRecent from 'material-ui/svg-icons/action/restore';
+import Subheader from 'material-ui/Subheader';
 
 import styles from './ProjectList.css';
 
@@ -32,23 +33,31 @@ export default class ProjectList extends Component {
     data: PropTypes.array.isRequired
   };
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+
   render() {
     const IconName = PROJECT_LISTS[this.props.type].icon;
+    const { push } = this.context.router;
     return (
       <Paper
         className={styles.recentHolder}
         zDepth={1}
         children={
           <List>
-            <h5>
-              <IconName color="#666" />
+            <Subheader>
+              <IconName className={styles.icon} color="#888" />
               {PROJECT_LISTS[this.props.type].label}
-            </h5>
+            </Subheader>
+
             {this.props.data.map((repo, idx) =>
               <ListItem
                 key={idx}
-                onTouchTap={this.checkRepo}
+                onTouchTap={() => push(`/project/github.com/${repo}`)}
                 primaryText={repo}
+                secondaryTextLines={2}
+                secondaryText="Some description about the amazing project!"
                 rightAvatar={
                   <Avatar color={blueA200} backgroundColor={transparent} style={{ right: 8 }}>
                     A
