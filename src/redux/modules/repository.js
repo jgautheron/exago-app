@@ -38,7 +38,7 @@ export default function reducer(state = repositoryState, action = {}) {
       };
     case CLEAR:
       return {
-        ...state
+        ...repositoryState
       };
     case LOAD:
       return {

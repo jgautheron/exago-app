@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { List, ListItem } from 'material-ui/List';
+import { Link } from 'react-router';
 import { Card, CardTitle, CardMedia } from 'material-ui/Card';
 // import AlertWarning from 'material-ui/svg-icons/alert/warning';
 import Avatar from 'material-ui/Avatar';
@@ -56,8 +57,9 @@ export default class ProjectFileList extends Component {
             {this.data.map((item, itemId) =>
               <ListItem
                 key={itemId}
+                primaryTogglesNestedList
                 primaryText={
-                  <a href={`/file/${this.props.repository}/${item.fileName}`}>{item.fileName}</a>
+                  <Link to={`/file/${this.props.repository}/${item.fileName}`}>{item.fileName}</Link>
                 }
                 leftAvatar={
                   <Avatar
