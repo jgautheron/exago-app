@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { List, ListItem } from 'material-ui/List';
+import { Link } from 'react-router';
 import { Card, CardTitle, CardMedia } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import { transparent } from 'material-ui/styles/colors';
@@ -56,6 +57,7 @@ export default class ProjectFileList extends Component {
             {this.data.map((item, itemId) =>
               <ListItem
                 key={itemId}
+                primaryTogglesNestedList
                 primaryText={
                   <Link to={`/file/${this.props.repository}${item.fileName}`}>{item.fileName}</Link>
                 }

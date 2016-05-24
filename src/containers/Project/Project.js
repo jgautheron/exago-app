@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import TimeAgo from 'react-timeago';
 import { asyncConnect } from 'redux-connect';
-import { isCached, load, refresh } from 'redux/modules/repository';
+import { isCached, load, refresh, clear } from 'redux/modules/repository';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
@@ -48,7 +48,8 @@ import styles from './Project.css';
     loading: state.repository.loading
   }), {
     load,
-    refresh
+    refresh,
+    clear
   })
 export default class Project extends Component {
   static propTypes = {

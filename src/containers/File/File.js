@@ -10,7 +10,7 @@ import AlertError from 'material-ui/svg-icons/alert/error';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { github } from 'react-syntax-highlighter/dist/styles';
 
-import { loadFile } from 'redux/modules/repository';
+import { loadFile, clear } from 'redux/modules/repository';
 
 import styles from './File.css';
 
@@ -19,27 +19,29 @@ import styles from './File.css';
     repository: state.repository,
     loading: state.repository.loading
   }), {
-    loadFile
+    loadFile,
+    clear
   })
 export default class Project extends Component {
   static propTypes = {
     repository: PropTypes.object.isRequired,
     loading: PropTypes.bool,
     loadFile: PropTypes.func.isRequired,
+    clear: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired
   };
 
   state = {
-    code: '',
+    code: ''
   };
 
-  componentDidMount = () => {
+  componentWillMount() {
     const url = this.props.params.splat;
-    this.props.loadFile(url).then((res) => {
-      this.setState({
-        code: res.data
-      });
-    });
+    this.props.loadFile(url);
+  }
+
+  componentWillUnmount() {
+    this.props.clear();
   }
 
   render() {
@@ -66,7 +68,7 @@ export default class Project extends Component {
           </When>
           <Otherwise>
             <div>
-              <SyntaxHighlighter language="go" style={github}>{this.state.code}</SyntaxHighlighter>
+              <SyntaxHighlighter language="go" style={github}>{this.props.repository.results}</SyntaxHighlighter>
             </div>
           </Otherwise>
         </Choose>
