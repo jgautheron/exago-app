@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import styles from './Home.css';
 import Paper from 'material-ui/Paper';
 
-import { SearchInput } from 'components';
-import { ProjectList } from 'containers';
+import { SearchInput, ProjectList } from 'components';
 import { set } from 'redux/modules/repository';
 import { load } from 'redux/modules/homeProjects';
 

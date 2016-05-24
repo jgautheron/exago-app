@@ -2,6 +2,7 @@ export SearchInput from './SearchInput/SearchInput';
 export ProjectHeader from './ProjectHeader/ProjectHeader';
 export ProjectCard from './ProjectCard/ProjectCard';
 export ProjectCardList from './ProjectCardList/ProjectCardList';
+export ProjectsList from './ProjectsList/ProjectsList';
 export ProjectLoadingScreen from './ProjectLoadingScreen/ProjectLoadingScreen';
 export ProjectChartList from './ProjectChartList/ProjectChartList';
 export ProjectChartCodeCoverage from './ProjectChartCodeCoverage/ProjectChartCodeCoverage';

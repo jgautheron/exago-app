@@ -7,12 +7,12 @@ import IconRanked from 'material-ui/svg-icons/action/grade';
 import IconRecent from 'material-ui/svg-icons/action/restore';
 import Subheader from 'material-ui/Subheader';
 
-import styles from './ProjectList.css';
+import styles from './ProjectsList.css';
 
 import { List, ListItem } from 'material-ui/List';
 import { blueA200, transparent } from 'material-ui/styles/colors';
 
-const PROJECT_LISTS = {
+const PROJECTS_LISTS = {
   popular: {
     label: 'Popular projects',
     icon: IconPopular
@@ -27,7 +27,7 @@ const PROJECT_LISTS = {
   }
 };
 
-export default class ProjectList extends Component {
+export default class ProjectsList extends Component {
   static propTypes = {
     type: PropTypes.string.isRequired,
     data: PropTypes.array.isRequired
@@ -38,7 +38,7 @@ export default class ProjectList extends Component {
   };
 
   render() {
-    const IconName = PROJECT_LISTS[this.props.type].icon;
+    const IconName = PROJECTS_LISTS[this.props.type].icon;
     const { push } = this.context.router;
     return (
       <Paper
@@ -48,7 +48,7 @@ export default class ProjectList extends Component {
           <List>
             <Subheader>
               <IconName className={styles.icon} color="#888" />
-              {PROJECT_LISTS[this.props.type].label}
+              {PROJECTS_LISTS[this.props.type].label}
             </Subheader>
 
             {this.props.data.map((repo, idx) =>
