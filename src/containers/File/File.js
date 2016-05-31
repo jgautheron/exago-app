@@ -2,6 +2,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 
 import { ProjectHeader } from 'components';
@@ -14,6 +15,16 @@ import { load, clear } from 'redux/modules/file';
 
 import styles from './File.css';
 
+@asyncConnect([{
+  // eslint-disable-next-line react/prop-types
+  promise: ({ store: { dispatch, getState } }) => {
+    const file = getState().file;
+    if (__SERVER__) {
+      return dispatch(load(file));
+    }
+    return Promise.reject();
+  }
+}])
 @connect(
   state => ({
     file: state.file,
@@ -68,7 +79,7 @@ export default class Project extends Component {
           </When>
           <Otherwise>
             <div>
-              <SyntaxHighlighter language="go" style={github}>{this.props.file.results}</SyntaxHighlighter>
+              <SyntaxHighlighter language="go" style={github}>{this.props.file.contents}</SyntaxHighlighter>
             </div>
           </Otherwise>
         </Choose>
