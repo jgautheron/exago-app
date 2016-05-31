@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { List, ListItem } from 'material-ui/List';
-import { Link } from 'react-router';
 import { Card, CardTitle, CardMedia } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import { transparent } from 'material-ui/styles/colors';

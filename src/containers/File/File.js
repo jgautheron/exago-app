@@ -10,34 +10,34 @@ import AlertError from 'material-ui/svg-icons/alert/error';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { github } from 'react-syntax-highlighter/dist/styles';
 
-import { loadFile, clear } from 'redux/modules/repository';
+import { load, clear } from 'redux/modules/file';
 
 import styles from './File.css';
 
 @connect(
   state => ({
-    repository: state.repository,
-    loading: state.repository.loading
+    file: state.file,
+    repository: state.file.repository,
+    contents: state.file.contents,
+    loading: state.file.loading
   }), {
-    loadFile,
-    clear
+    load, clear
   })
 export default class Project extends Component {
   static propTypes = {
-    repository: PropTypes.object.isRequired,
+    file: PropTypes.object.isRequired,
+    repository: PropTypes.string.isRequired,
+    contents: PropTypes.string.isRequired,
     loading: PropTypes.bool,
-    loadFile: PropTypes.func.isRequired,
+    load: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired
   };
 
-  state = {
-    code: ''
-  };
-
-  componentWillMount() {
-    const url = this.props.params.splat;
-    this.props.loadFile(url);
+  componentDidMount() {
+    if (!this.props.file.loaded) {
+      this.props.load(this.props.file);
+    }
   }
 
   componentWillUnmount() {
@@ -51,24 +51,24 @@ export default class Project extends Component {
     };
     return (
       <div>
-        <Helmet title={`See the linter warnings for ${this.props.repository.name}`} />
-        <ProjectHeader repository={this.props.repository.name} />
+        <Helmet title={`See the linter warnings for ${this.props.repository}`} />
+        <ProjectHeader repository={this.props.repository} />
         <Choose>
           <When condition={this.props.loading}>
             Loading...
           </When>
-          <When condition={this.props.repository.error}>
+          <When condition={this.props.file.error}>
             <div className={styles.errorMessage}>
               <AlertError style={bigIconStyle} />
               <p className={styles.errorMessage__text}>
                 Something went wrong!<br />
-                {this.props.repository.error.message}
+                {this.props.file.error.message}
               </p>
             </div>
           </When>
           <Otherwise>
             <div>
-              <SyntaxHighlighter language="go" style={github}>{this.props.repository.results}</SyntaxHighlighter>
+              <SyntaxHighlighter language="go" style={github}>{this.props.file.results}</SyntaxHighlighter>
             </div>
           </Otherwise>
         </Choose>
