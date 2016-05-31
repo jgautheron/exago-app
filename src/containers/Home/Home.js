@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import styles from './Home.css';
 import Paper from 'material-ui/Paper';
 
-import { SearchInput } from 'components';
-import { ProjectList } from 'containers';
+import { SearchInput, ProjectsList } from 'components';
 import { set } from 'redux/modules/repository';
 import { load } from 'redux/modules/homeProjects';
 
@@ -70,9 +69,9 @@ export default class Home extends Component {
         />
 
         <div className={styles.featuredHolder}>
-          <ProjectList type="recent" data={this.props.projects.recent} />
-          <ProjectList type="ranked" data={this.props.projects.ranked} />
-          <ProjectList type="popular" data={this.props.projects.popular} />
+          <ProjectsList type="recent" data={this.props.projects.recent} />
+          <ProjectsList type="ranked" data={this.props.projects.ranked} />
+          <ProjectsList type="popular" data={this.props.projects.popular} />
         </div>
       </div>
     );
