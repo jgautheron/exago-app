@@ -41,7 +41,7 @@ export default class Project extends Component {
   }
 
   componentWillUnmount() {
-    this.props.clear();
+    // this.props.clear();
   }
 
   render() {

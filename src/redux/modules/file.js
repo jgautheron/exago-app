@@ -17,12 +17,14 @@ export default function reducer(state = fileState, action = {}) {
   switch (action.type) {
     case LOCATION_CHANGE: {
       const routePrefix = '/file/';
-      let repositoryName = action.payload.pathname;
-      if (repositoryName.indexOf(routePrefix) === 0) {
-        repositoryName = repositoryName.replace(routePrefix, '');
+      let uri = action.payload.pathname;
+      if (uri.indexOf(routePrefix) === 0) {
+        uri = uri.replace(routePrefix, '');
+        const [provider, owner, repo, ...path] = uri.split('/');
         return {
           ...state,
-          name: repositoryName
+          repository: `${provider}/${owner}/${repo}`,
+          path: path.join('/')
         };
       }
       return state;
