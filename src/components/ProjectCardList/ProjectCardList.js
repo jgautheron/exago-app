@@ -50,6 +50,8 @@ export default class ProjectCardList extends Component {
                     return html.getThirdParties(this.props.data);
                   case constants.CHECKLIST_COMPLIANCE:
                     return html.getChecklist(this.props.data);
+                  case constants.TESTS:
+                    return html.getTestList(this.props.data);
                   case constants.CODE_COVERAGE:
                     return html.getTestCoverage(this.props.data);
                   case constants.TEST_DURATION:

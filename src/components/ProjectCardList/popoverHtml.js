@@ -10,6 +10,42 @@ import {
   TableBody,
 } from 'material-ui/Table';
 
+export function getTestList(data) {
+  if (
+    !data.testresults.hasOwnProperty('packages') ||
+    data.testresults.packages.length === 0
+  ) {
+    return '';
+  }
+
+  const pkgs = data.testresults.packages;
+  const rowStyle = {
+    width: '45px'
+  };
+  return (
+    <div>
+      <Table>
+        <TableHeader displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn>Test</TableHeaderColumn>
+            <TableHeaderColumn style={rowStyle}>Duration</TableHeaderColumn>
+            <TableHeaderColumn style={rowStyle}>Passed</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+        {pkgs.map((pkg) => pkg.tests.map((test, id) =>
+          <TableRow key={id}>
+            <TableRowColumn>{test.name}</TableRowColumn>
+            <TableRowColumn style={rowStyle}>{test.execution_time}s</TableRowColumn>
+            <TableRowColumn style={rowStyle}>{test.passed ? <ActionCheckCircle /> : <AlertError />}</TableRowColumn>
+          </TableRow>
+        ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+}
+
 export function getScoreDetails(data) {
   const rowStyle = {
     width: '70px'
