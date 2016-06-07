@@ -36,7 +36,7 @@ match({ history, routes }, (error, redirectLocation, renderProps) => {
 
   ReactDOM.render(
     <Provider store={store} key="provider">
-      {component}
+      <div>{component}</div>
     </Provider>,
     dest
   );

@@ -59,7 +59,7 @@ app.use((req, res) => {
       loadOnServer({ ...renderProps, store, helpers: { client } }).then(() => {
         const component = (
           <Provider store={store} key="provider">
-            <ReduxAsyncConnect {...renderProps} />
+            <div><ReduxAsyncConnect {...renderProps} /></div>
           </Provider>
         );
 
