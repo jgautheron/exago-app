@@ -1,5 +1,9 @@
 @lost flexbox flex;
 
+.heroWrapper {
+  background: url(http://steveperkins.com/wp-content/uploads/2014/02/gopher-head.png) center left no-repeat;
+}
+
 .featuredHolder {
   lost-flex-container: row;
   margin: 0 auto;

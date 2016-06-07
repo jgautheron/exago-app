@@ -77,7 +77,7 @@ export default class SearchInput extends Component {
         id="repoSearch"
         onChange={this.handleChange}
         onKeyDown={this.handleSubmit}
-        hintText="Type a repository on GitHub"
+        hintText="go-gettable GitHub repository"
         errorText={this.state.searchInputError}
         value={this.state.value}
         style={textStyle}

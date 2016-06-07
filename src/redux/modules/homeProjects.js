@@ -21,7 +21,7 @@ export default function reducer(state = homeProjects, action = {}) {
     case LOAD_SUCCESS:
       return {
         ...state,
-        [action.result.data.type]: action.result.data.repos,
+        [action.result.data.type]: action.result.data.repositories,
         loading: false,
         loaded: true
       };

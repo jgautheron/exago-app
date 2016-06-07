@@ -57,17 +57,22 @@ export default class Project extends Component {
     results: PropTypes.object,
     loading: PropTypes.bool,
     load: PropTypes.func.isRequired,
-    refresh: PropTypes.func.isRequired
+    refresh: PropTypes.func.isRequired,
+    clear: PropTypes.func.isRequired,
   };
 
   state = {
     showDetails: false,
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     if (!this.props.repository.loaded) {
       this.props.load(this.props.repository);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clear();
   }
 
   getLoadingDuration() {

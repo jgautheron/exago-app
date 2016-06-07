@@ -48,8 +48,7 @@ export default class Home extends Component {
   };
 
   onRepositorySet = (repository) => {
-    const { push } = this.context.router;
-    push(`/project/${repository}`);
+    this.context.router.push(`/project/${repository}`);
     this.props.setRepository(repository);
   };
 
@@ -61,8 +60,9 @@ export default class Home extends Component {
           style={paperStyle}
           zDepth={1}
           children={
-            <div>
-              <h1>Check your Golang project quality</h1>
+            <div className={styles.heroWrapper}>
+              <h1>Check All The Things</h1>
+              <h5>Only Go repositories for now</h5>
               <SearchInput onRepositorySet={this.onRepositorySet} repository={this.props.repository} />
             </div>
           }

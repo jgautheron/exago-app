@@ -14,15 +14,15 @@ import { blueA200, transparent } from 'material-ui/styles/colors';
 
 const PROJECTS_LISTS = {
   popular: {
-    label: 'Popular projects',
+    label: 'Popular',
     icon: IconPopular
   },
   ranked: {
-    label: 'A ranked projects',
+    label: 'A-Ranked',
     icon: IconRanked
   },
   recent: {
-    label: 'Recently added projects',
+    label: 'Recently added',
     icon: IconRecent
   }
 };
@@ -40,6 +40,13 @@ export default class ProjectsList extends Component {
   render() {
     const IconName = PROJECTS_LISTS[this.props.type].icon;
     const { push } = this.context.router;
+    const style = {
+      primaryText: {
+        width: 242,
+        textOverflow: 'ellipsis',
+        overflow: 'hidden'
+      }
+    };
     return (
       <Paper
         className={styles.recentHolder}
@@ -54,17 +61,17 @@ export default class ProjectsList extends Component {
             {this.props.data.map((repo, idx) =>
               <ListItem
                 key={idx}
-                onTouchTap={() => push(`/project/github.com/${repo}`)}
-                primaryText={repo}
+                onTouchTap={() => push(`/project/${repo.name}`)}
+                primaryText={<div style={style.primaryText}>{repo.name}</div>}
                 secondaryTextLines={2}
-                secondaryText="Some description about the amazing project!"
+                secondaryText={repo.description}
                 rightAvatar={
                   <Avatar color={blueA200} backgroundColor={transparent} style={{ right: 8 }}>
-                    A
+                    {repo.rank}
                   </Avatar>
                 }
                 leftAvatar={
-                  <Avatar src={`https://avatars.githubusercontent.com/${repo.split('/')[0]}`} />
+                  <Avatar src={repo.avatar} />
                 }
               />
             )}
