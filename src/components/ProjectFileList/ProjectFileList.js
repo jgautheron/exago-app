@@ -71,6 +71,7 @@ export default class ProjectFileList extends Component {
                 nestedItems={Object.keys(item.messages).map((linter, linterId) =>
                   <ListItem
                     key={linterId}
+                    primaryTogglesNestedList
                     primaryText={linter}
                     leftAvatar={
                       <Avatar

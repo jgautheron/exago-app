@@ -16,6 +16,7 @@ const paperStyle = {
   margin: '40px auto',
   textAlign: 'center',
   display: 'block',
+  background: 'url(http://steveperkins.com/wp-content/uploads/2014/02/gopher-head.png) 5% 100% no-repeat',
   padding: 20
 };
 
@@ -60,7 +61,7 @@ export default class Home extends Component {
           style={paperStyle}
           zDepth={1}
           children={
-            <div className={styles.heroWrapper}>
+            <div>
               <h1>Check All The Things</h1>
               <h5>Only Go repositories for now</h5>
               <SearchInput onRepositorySet={this.onRepositorySet} repository={this.props.repository} />

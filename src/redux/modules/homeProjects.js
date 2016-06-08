@@ -21,7 +21,7 @@ export default function reducer(state = homeProjects, action = {}) {
     case LOAD_SUCCESS:
       return {
         ...state,
-        [action.result.data.type]: action.result.data.repositories,
+        [action.boxType]: action.result.data,
         loading: false,
         loaded: true
       };
@@ -41,6 +41,7 @@ export default function reducer(state = homeProjects, action = {}) {
 export function load(type) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    boxType: type,
     promise: (client) => client.get(`/projects/${type}`)
   };
 }
