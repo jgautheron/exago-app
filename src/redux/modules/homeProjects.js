@@ -4,7 +4,7 @@ const LOAD_FAIL = 'exago/homeProjects/LOAD_FAIL';
 
 const homeProjects = {
   recent: [],
-  ranked: [],
+  top: [],
   popular: [],
   loaded: false,
   loading: false
@@ -37,7 +37,7 @@ export default function reducer(state = homeProjects, action = {}) {
   }
 }
 
-// Type can be = 'recent', 'ranked', 'popular'
+// Type can be = 'recent', 'top', 'popular'
 export function load(type) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],

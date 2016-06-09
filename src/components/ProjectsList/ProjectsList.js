@@ -17,7 +17,7 @@ const PROJECTS_LISTS = {
     label: 'Popular',
     icon: IconPopular
   },
-  ranked: {
+  top: {
     label: 'A-Ranked',
     icon: IconRanked
   },
@@ -62,7 +62,7 @@ export default class ProjectsList extends Component {
               <ListItem
                 key={idx}
                 onTouchTap={() => push(`/project/${repo.name}`)}
-                primaryText={<div style={style.primaryText}>{repo.name}</div>}
+                primaryText={<div style={style.primaryText}>{repo.name.replace('github.com/', '')}</div>}
                 secondaryTextLines={2}
                 secondaryText={repo.description}
                 rightAvatar={

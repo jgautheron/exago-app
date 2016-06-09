@@ -25,7 +25,7 @@ const paperStyle = {
     const promises = [];
     promises.push(dispatch(load('recent')));
     promises.push(dispatch(load('popular')));
-    promises.push(dispatch(load('ranked')));
+    promises.push(dispatch(load('top')));
     return Promise.all(promises);
   }
 }])
@@ -70,7 +70,7 @@ export default class Home extends Component {
 
         <div className={styles.featuredHolder}>
           <ProjectsList type="recent" data={this.props.projects.recent} />
-          <ProjectsList type="ranked" data={this.props.projects.ranked} />
+          <ProjectsList type="top" data={this.props.projects.top} />
           <ProjectsList type="popular" data={this.props.projects.popular} />
         </div>
       </div>
