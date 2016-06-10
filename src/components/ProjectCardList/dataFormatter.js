@@ -8,9 +8,11 @@ export function getAverageLines(data) {
 export function getRatioLines(data) {
   return (data.codestats.LOC / data.codestats.NCLOC).toFixed(3);
 }
+
 export function getThirdParties(data) {
   return data.imports.length;
 }
+
 export function getChecklistCompliance(data) {
   if (!data.testresults.hasOwnProperty('checklist')) {
     return '';
@@ -20,11 +22,22 @@ export function getChecklistCompliance(data) {
   const checklistTotalItems = results.checklist.Passed.length + results.checklist.Failed.length;
   return `${results.checklist.Passed.length} / ${checklistTotalItems}`;
 }
+
 export function getTestsCount(data) {
   return data.codestats.Test;
 }
+
 export function getTestResults(data) {
   if (!data.testresults.hasOwnProperty('packages')) {
+    return {
+      coverageMean: '',
+      durationMean: '',
+      testsPassed: false
+    };
+  }
+
+  // There were tests but we couldn't run them
+  if (data.codestats.Test > 0 && data.testresults.packages.length === 0) {
     return {
       coverageMean: '',
       durationMean: '',
@@ -39,7 +52,6 @@ export function getTestResults(data) {
   data.testresults.packages.forEach((pkg) => {
     if (!pkg.success) {
       testsPassed = false;
-      return;
     }
 
     if (pkg.hasOwnProperty('coverage')) {
@@ -70,6 +82,7 @@ export function getTestResults(data) {
     testsPassed
   };
 }
+
 export function getRank(res) {
   return res.score.rank;
 }
