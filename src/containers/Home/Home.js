@@ -70,9 +70,9 @@ export default class Home extends Component {
         />
 
         <div className={styles.featuredHolder}>
-          <ProjectsList type="recent" data={this.props.projects.recent} />
-          <ProjectsList type="top" data={this.props.projects.top} />
-          <ProjectsList type="popular" data={this.props.projects.popular} />
+          <ProjectsList type="recent" data={this.props.projects.recent.repositories} />
+          <ProjectsList type="top" data={this.props.projects.top.repositories} />
+          <ProjectsList type="popular" data={this.props.projects.popular.repositories} />
         </div>
       </div>
     );
