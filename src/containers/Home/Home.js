@@ -14,10 +14,9 @@ import { load } from 'redux/modules/homeProjects';
 const paperStyle = {
   width: '85%',
   margin: '40px auto',
-  textAlign: 'center',
   display: 'block',
-  background: 'url(http://steveperkins.com/wp-content/uploads/2014/02/gopher-head.png) 5% 100% no-repeat',
-  padding: 20
+  background: 'url(http://steveperkins.com/wp-content/uploads/2014/02/gopher-head.png) 87% 100% no-repeat',
+  padding: '30px 20px 50px 90px'
 };
 
 @asyncConnect([{
