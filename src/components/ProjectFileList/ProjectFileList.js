@@ -58,7 +58,7 @@ export default class ProjectFileList extends Component {
                 key={itemId}
                 primaryTogglesNestedList
                 primaryText={
-                  <Link to={`/file/${this.props.repository}${item.fileName}`}>{item.fileName}</Link>
+                  <Link to={`/file/${this.props.repository}/${item.fileName}`}>{item.fileName}</Link>
                 }
                 leftAvatar={
                   <Avatar
