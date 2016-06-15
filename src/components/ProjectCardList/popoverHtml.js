@@ -47,6 +47,10 @@ export function getTestList(data) {
 }
 
 export function getScoreDetails(data) {
+  if (!data.score.details) {
+    return '';
+  }
+
   const rowStyle = {
     width: '70px'
   };
