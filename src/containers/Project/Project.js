@@ -21,7 +21,8 @@ import {
   ProjectCardList,
   ProjectLoadingScreen,
   ProjectChartList,
-  ProjectFileList
+  ProjectFileList,
+  ProjectError,
 } from 'components';
 
 import styles from './Project.css';
@@ -76,7 +77,7 @@ export default class Project extends Component {
   }
 
   getLoadingDuration() {
-    const executionTime = this.props.results.executionTime;
+    const executionTime = this.props.results.execution_time;
     if (!executionTime) {
       return 0;
     }
@@ -85,7 +86,7 @@ export default class Project extends Component {
 
   refreshRepository = () => {
     this.props.refresh(this.props.repository);
-  };
+  }
 
   showDetails = () => {
     this.setState({
@@ -131,6 +132,11 @@ export default class Project extends Component {
             </div>
           </When>
           <Otherwise>
+            <Choose>
+              <When condition={this.props.results.testresults.error}>
+                <ProjectError {...this.props.results.testresults} />
+              </When>
+            </Choose>
             <div>
               <div className={styles.badge}>
                 <img src={`http://${config.apiHost}:${config.apiPort}/badge/${this.props.repository.name}`} alt="Badge" />

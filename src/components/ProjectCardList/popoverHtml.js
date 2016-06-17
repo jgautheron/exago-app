@@ -123,39 +123,64 @@ export function getChecklist(data) {
       passed: false
     });
   }
-  const styles = {
-    icon: {
-      paddingRight: 6,
-      position: 'relative',
-      top: 5
-    }
+
+  const rowStyle = {
+    width: '70px'
   };
 
   return (
     <div>
-      <h4>Minimum Criteria</h4>
-      {sortedData.minimumCriteria.map((el, id) =>
-        <div key={id}>
-          {el.passed ? <ActionCheckCircle style={styles.icon} /> : <AlertError style={styles.icon} />}
-          {el.desc}
-        </div>
-      )}
-
-      <h4>Good Citizen</h4>
-      {sortedData.goodCitizen.map((el, id) =>
-        <div key={id}>
-          {el.passed ? <ActionCheckCircle style={styles.icon} /> : <AlertError style={styles.icon} />}
-          {el.desc}
-        </div>
-      )}
-
-      <h4>Extra Credit</h4>
-      {sortedData.extraCredit.map((el, id) =>
-        <div key={id}>
-          {el.passed ? <ActionCheckCircle style={styles.icon} /> : <AlertError style={styles.icon} />}
-          {el.desc}
-        </div>
-      )}
+      <Table>
+        <TableHeader displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn colSpan="2">Minimum Criteria</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+        {sortedData.minimumCriteria.map((el, id) =>
+          <TableRow key={id}>
+            <TableRowColumn>{el.desc}</TableRowColumn>
+            <TableRowColumn style={rowStyle}>
+              {el.passed ? <ActionCheckCircle /> : <AlertError />}
+            </TableRowColumn>
+          </TableRow>
+        )}
+        </TableBody>
+      </Table>
+      <Table>
+        <TableHeader displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn colSpan="2">Good Citizen</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+        {sortedData.goodCitizen.map((el, id) =>
+          <TableRow key={id}>
+            <TableRowColumn>{el.desc}</TableRowColumn>
+            <TableRowColumn style={rowStyle}>
+              {el.passed ? <ActionCheckCircle /> : <AlertError />}
+            </TableRowColumn>
+          </TableRow>
+        )}
+        </TableBody>
+      </Table>
+      <Table>
+        <TableHeader displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn colSpan="2">Extra Credit</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+        {sortedData.extraCredit.map((el, id) =>
+          <TableRow key={id}>
+            <TableRowColumn>{el.desc}</TableRowColumn>
+            <TableRowColumn style={rowStyle}>
+              {el.passed ? <ActionCheckCircle /> : <AlertError />}
+            </TableRowColumn>
+          </TableRow>
+        )}
+        </TableBody>
+      </Table>
     </div>
   );
 }
