@@ -10,3 +10,4 @@ export ProjectChartTestDuration from './ProjectChartTestDuration/ProjectChartTes
 export ProjectChartLinterWarnings from './ProjectChartLinterWarnings/ProjectChartLinterWarnings';
 export ProjectFileList from './ProjectFileList/ProjectFileList';
 export ProjectError from './ProjectError/ProjectError';
+export ProjectBadge from './ProjectBadge/ProjectBadge';

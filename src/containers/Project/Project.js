@@ -14,7 +14,6 @@ import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-
 import ActionCached from 'material-ui/svg-icons/action/cached';
 
 import { palette } from '../../theme';
-import * as config from '../../config';
 
 import {
   ProjectHeader,
@@ -22,6 +21,7 @@ import {
   ProjectLoadingScreen,
   ProjectChartList,
   ProjectFileList,
+  ProjectBadge,
   ProjectError,
 } from 'components';
 
@@ -64,6 +64,7 @@ export default class Project extends Component {
 
   state = {
     showDetails: false,
+    showBadges: false,
   };
 
   componentDidMount() {
@@ -139,7 +140,7 @@ export default class Project extends Component {
             </Choose>
             <div>
               <div className={styles.badge}>
-                <img src={`http://${config.apiHost}:${config.apiPort}/badge/${this.props.repository.name}`} alt="Badge" />
+                <ProjectBadge repository={this.props.repository.name} />
               </div>
               <div className={styles.update}>
                 <span className={styles.update__text}>Updated <TimeAgo date={this.props.results.date} /></span>
