@@ -51,17 +51,8 @@ import styles from './File.css';
 @connect(
   state => ({
     file: state.file,
-    // repository: state.file.repository,
-    // contents: state.file.contents,
-    // loading: state.file.loading,
-    // lints: state.repository.results.lintmessages,
     repository: state.repository
-    // repoLoaded: state.repository.loaded,
-    // repoLoading: state.repository.loading,
-    // results: state.repository.results,
-  }), {
-    load, loadRepo, clear, clearRepo
-  }
+  }), { load, loadRepo, clear, clearRepo }
 )
 export default class Project extends Component {
   static propTypes = {
