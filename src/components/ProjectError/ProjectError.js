@@ -22,7 +22,8 @@ export default class ProjectError extends Component {
   render() {
     return (
       <Dialog
-        title="Could not run tests"
+        title="Could not run Exago"
+        autoScrollBodyContent
         actions={
           <FlatButton
             label="Discard"

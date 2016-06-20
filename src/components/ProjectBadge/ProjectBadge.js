@@ -89,6 +89,7 @@ export default class ProjectBadge extends Component {
         />
         <Dialog
           title="Badges"
+          autoScrollBodyContent
           actions={
             <FlatButton
               label="Close"
