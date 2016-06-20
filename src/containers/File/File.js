@@ -5,22 +5,45 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 
-import { ProjectHeader } from 'components';
+import { ProjectHeader, ProjectLoadingScreen, ProjectCode } from 'components';
 import AlertError from 'material-ui/svg-icons/alert/error';
 
-import SyntaxHighlighter from 'react-syntax-highlighter';
 import { github } from 'react-syntax-highlighter/dist/styles';
 
-import { load, clear } from 'redux/modules/file';
+import { load, clear, set } from 'redux/modules/file';
+import { isCached, load as loadRepo, clear as clearRepo, set as setRepo } from 'redux/modules/repository';
 
 import styles from './File.css';
 
 @asyncConnect([{
   // eslint-disable-next-line react/prop-types
-  promise: ({ store: { dispatch, getState } }) => {
+  promise: ({ params, store: { dispatch, getState } }) => {
+    const promises = [];
+    const filePath = params.splat;
+    const [provider, owner, repo] = filePath.split('/');
+    const repoPath = `${provider}/${owner}/${repo}`;
+    const repository = getState().repository;
     const file = getState().file;
+
+    if (filePath !== file.filePath) {
+      dispatch(clear());
+      dispatch(set(filePath));
+    }
+
+    if (repoPath !== repository.name) {
+      dispatch(clearRepo());
+      dispatch(setRepo(repoPath));
+    }
+
     if (__SERVER__) {
-      return dispatch(load(file));
+      return dispatch(isCached(repoPath)).then((res) => {
+        if (res.data === true) {
+          promises.push(dispatch(load(filePath)));
+          promises.push(dispatch(loadRepo(repoPath)));
+          return Promise.all(promises);
+        }
+        return Promise.reject();
+      });
     }
     return Promise.reject();
   }
@@ -28,31 +51,49 @@ import styles from './File.css';
 @connect(
   state => ({
     file: state.file,
-    repository: state.file.repository,
-    contents: state.file.contents,
-    loading: state.file.loading
+    // repository: state.file.repository,
+    // contents: state.file.contents,
+    // loading: state.file.loading,
+    // lints: state.repository.results.lintmessages,
+    repository: state.repository
+    // repoLoaded: state.repository.loaded,
+    // repoLoading: state.repository.loading,
+    // results: state.repository.results,
   }), {
-    load, clear
-  })
+    load, loadRepo, clear, clearRepo
+  }
+)
 export default class Project extends Component {
   static propTypes = {
+    params: PropTypes.object.isRequired,
     file: PropTypes.object.isRequired,
-    repository: PropTypes.string.isRequired,
-    contents: PropTypes.string.isRequired,
-    loading: PropTypes.bool,
+    repository: PropTypes.object.isRequired,
     load: PropTypes.func.isRequired,
+    loadRepo: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired
+    clearRepo: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    if (!this.props.file.loaded) {
-      this.props.load(this.props.file);
+    const {
+      repository: { loaded: repoLoaded },
+      file: { loaded: fileLoaded, repository, filePath }
+    } = this.props;
+
+    if (!repoLoaded) {
+      this.props.loadRepo(repository);
+    }
+    if (!fileLoaded) {
+      this.props.load(filePath);
     }
   }
 
-  componentWillUnmount() {
-    this.props.clear();
+  getLoadingDuration() {
+    const executionTime = this.props.repository.results.executionTime;
+    if (!executionTime) {
+      return 0;
+    }
+    return parseInt(executionTime, 10);
   }
 
   render() {
@@ -62,10 +103,13 @@ export default class Project extends Component {
     };
     return (
       <div>
-        <Helmet title={`See the linter warnings for ${this.props.repository}`} />
-        <ProjectHeader repository={this.props.repository} />
+        <Helmet title={`See the linter warnings for ${this.props.file.repository}`} />
+        <ProjectHeader repository={this.props.file.repository} />
         <Choose>
-          <When condition={this.props.loading}>
+          <When condition={this.props.repository.loading}>
+            <ProjectLoadingScreen duration={this.getLoadingDuration()} />
+          </When>
+          <When condition={this.props.file.loading}>
             Loading...
           </When>
           <When condition={this.props.file.error}>
@@ -79,7 +123,12 @@ export default class Project extends Component {
           </When>
           <Otherwise>
             <div>
-              <SyntaxHighlighter language="go" style={github}>{this.props.file.contents}</SyntaxHighlighter>
+              <ProjectCode
+                language="go"
+                style={github}
+                issues={this.props.repository.results.lintmessages[this.props.file.path]}
+                source={this.props.file.contents}
+              />
             </div>
           </Otherwise>
         </Choose>

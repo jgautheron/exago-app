@@ -8,7 +8,6 @@ import styles from './Home.css';
 import Paper from 'material-ui/Paper';
 
 import { SearchInput, ProjectsList } from 'components';
-import { set } from 'redux/modules/repository';
 import { load } from 'redux/modules/homeProjects';
 
 const paperStyle = {
@@ -33,13 +32,11 @@ const paperStyle = {
   state => ({
     repository: state.repository.name,
     projects: state.homeProjects
-  }),
-  { setRepository: set }
+  })
 )
 export default class Home extends Component {
   static propTypes = {
     repository: PropTypes.string.isRequired,
-    setRepository: PropTypes.func.isRequired,
     projects: PropTypes.object.isRequired
   };
 
@@ -49,7 +46,6 @@ export default class Home extends Component {
 
   onRepositorySet = (repository) => {
     this.context.router.push(`/project/${repository}`);
-    this.props.setRepository(repository);
   };
 
   render() {
