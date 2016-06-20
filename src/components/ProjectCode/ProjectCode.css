@@ -1,0 +1,34 @@
+.wrapper {
+  overflow: hidden;
+  position: relative;
+  background-color: #f8f8f8;
+}
+
+.linesContainer {
+  float: left;
+  width: 5%;
+  min-width: 20px;
+}
+
+.linesContainer > pre {
+  padding: .5em;
+  text-align: right;
+}
+
+.code {
+  float: left;
+  width: 90%;
+}
+
+.lineNumber {
+  display: block;
+  position: relative;
+  top: 2px;
+  color: #ccc;
+}
+
+.lineNumberWithIssue {
+  composes: lineNumber;
+  color: #b00;
+  font-weight: bold;
+}

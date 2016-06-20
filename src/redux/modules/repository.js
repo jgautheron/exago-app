@@ -1,5 +1,3 @@
-import { LOCATION_CHANGE } from 'react-router-redux';
-
 const LOAD = 'exago/repository/LOAD';
 const LOAD_SUCCESS = 'exago/repository/LOAD_SUCCESS';
 const LOAD_FAIL = 'exago/repository/LOAD_FAIL';
@@ -19,18 +17,6 @@ const repositoryState = {
 
 export default function reducer(state = repositoryState, action = {}) {
   switch (action.type) {
-    case LOCATION_CHANGE: {
-      const routePrefix = '/project/';
-      let repositoryName = action.payload.pathname;
-      if (repositoryName.indexOf(routePrefix) === 0) {
-        repositoryName = repositoryName.replace(routePrefix, '');
-        return {
-          ...state,
-          name: repositoryName
-        };
-      }
-      return state;
-    }
     case SET:
       return {
         ...state,
@@ -43,11 +29,13 @@ export default function reducer(state = repositoryState, action = {}) {
     case LOAD:
       return {
         ...state,
+        name: action.name,
         loading: true
       };
     case LOAD_SUCCESS:
       return {
         ...state,
+        name: action.name,
         loading: false,
         loaded: true,
         results: action.result.data
@@ -55,6 +43,7 @@ export default function reducer(state = repositoryState, action = {}) {
     case LOAD_FAIL:
       return {
         ...state,
+        name: action.name,
         loading: false,
         loaded: false,
         error: action.error
@@ -84,23 +73,24 @@ export function clear() {
   return { type: CLEAR };
 }
 
-export function isCached(repository) {
+export function isCached(repositoryName) {
   return {
     types: [CACHED_LOAD, CACHED_LOAD_SUCCESS, CACHED_LOAD_FAIL],
-    promise: (client) => client.get(`/cached/${repository.name}`)
+    promise: (client) => client.get(`/cached/${repositoryName}`)
   };
 }
 
-export function load(repository) {
+export function load(repositoryName) {
   return {
+    name: repositoryName,
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/project/${repository.name}`)
+    promise: (client) => client.get(`/project/${repositoryName}`)
   };
 }
 
-export function refresh(repository) {
+export function refresh(repositoryName) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/refresh/${repository.name}`)
+    promise: (client) => client.get(`/refresh/${repositoryName}`)
   };
 }

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import TimeAgo from 'react-timeago';
 import { asyncConnect } from 'redux-connect';
-import { isCached, load, refresh, clear } from 'redux/modules/repository';
+import { set, isCached, load, refresh, clear } from 'redux/modules/repository';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
@@ -22,19 +22,27 @@ import {
   ProjectChartList,
   ProjectFileList,
   ProjectBadge,
-  ProjectError,
+  ProjectError
 } from 'components';
 
 import styles from './Project.css';
 
 @asyncConnect([{
   // eslint-disable-next-line react/prop-types
-  promise: ({ store: { dispatch, getState } }) => {
+  promise: ({ params, store: { dispatch, getState } }) => {
+    const repositoryName = params.splat;
     const repository = getState().repository;
+
+    // If the repository is not the current one (what we want)
+    if (repositoryName !== repository.name) {
+      dispatch(clear());
+      dispatch(set(repositoryName));
+    }
+
     if (__SERVER__) {
-      return dispatch(isCached(repository)).then((res) => {
+      return dispatch(isCached(repositoryName)).then((res) => {
         if (res.data === true) {
-          return dispatch(load(repository));
+          return dispatch(load(repositoryName));
         }
         return Promise.reject();
       });
@@ -44,19 +52,13 @@ import styles from './Project.css';
 }])
 @connect(
   state => ({
-    repository: state.repository,
-    results: state.repository.results,
-    loading: state.repository.loading
-  }), {
-    load,
-    refresh,
-    clear
-  })
+    repository: state.repository
+  }),
+  { load, refresh, clear }
+)
 export default class Project extends Component {
   static propTypes = {
     repository: PropTypes.object.isRequired,
-    results: PropTypes.object,
-    loading: PropTypes.bool,
     load: PropTypes.func.isRequired,
     refresh: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
@@ -64,21 +66,17 @@ export default class Project extends Component {
 
   state = {
     showDetails: false,
-    showBadges: false,
+    showBadges: false
   };
 
   componentDidMount() {
     if (!this.props.repository.loaded) {
-      this.props.load(this.props.repository);
+      this.props.load(this.props.repository.name);
     }
   }
 
-  componentWillUnmount() {
-    this.props.clear();
-  }
-
   getLoadingDuration() {
-    const executionTime = this.props.results.execution_time;
+    const executionTime = this.props.repository.results.execution_time;
     if (!executionTime) {
       return 0;
     }
@@ -86,7 +84,7 @@ export default class Project extends Component {
   }
 
   refreshRepository = () => {
-    this.props.refresh(this.props.repository);
+    this.props.refresh(this.props.repository.name);
   }
 
   showDetails = () => {
@@ -120,7 +118,7 @@ export default class Project extends Component {
         <Helmet title={`Code Quality Report for ${this.props.repository.name}`} />
         <ProjectHeader repository={this.props.repository.name} />
         <Choose>
-          <When condition={this.props.loading}>
+          <When condition={this.props.repository.loading}>
             <ProjectLoadingScreen duration={this.getLoadingDuration()} />
           </When>
           <When condition={this.props.repository.error}>
@@ -134,8 +132,8 @@ export default class Project extends Component {
           </When>
           <Otherwise>
             <Choose>
-              <When condition={this.props.results.testresults.error}>
-                <ProjectError {...this.props.results.testresults} />
+              <When condition={this.props.repository.results.testresults.error}>
+                <ProjectError {...this.props.repository.results.testresults} />
               </When>
             </Choose>
             <div>
@@ -143,7 +141,7 @@ export default class Project extends Component {
                 <ProjectBadge repository={this.props.repository.name} />
               </div>
               <div className={styles.update}>
-                <span className={styles.update__text}>Updated <TimeAgo date={this.props.results.date} /></span>
+                <span className={styles.update__text}>Updated <TimeAgo date={this.props.repository.results.date} /></span>
                 <IconButton
                   tooltip="Refresh Statistics"
                   tooltipPosition="bottom-center"
@@ -153,11 +151,11 @@ export default class Project extends Component {
                   <ActionCached color={palette.disabledColor} hoverColor={palette.textColor} />
                 </IconButton>
               </div>
-              <ProjectCardList data={this.props.results} />
+              <ProjectCardList data={this.props.repository.results} />
               <Choose>
                 <When condition={this.state.showDetails}>
-                  <ProjectChartList data={this.props.results} />
-                  <ProjectFileList data={this.props.results} repository={this.props.repository.name} />
+                  <ProjectChartList data={this.props.repository.results} />
+                  <ProjectFileList data={this.props.repository.results} repository={this.props.repository.name} />
                 </When>
                 <Otherwise>
                   <RaisedButton

@@ -1,33 +1,29 @@
-import { LOCATION_CHANGE } from 'react-router-redux';
-
+const SET = 'exago/file/SET';
 const CLEAR = 'exago/file/CLEAR';
 const LOAD = 'exago/file/LOAD';
 const LOAD_SUCCESS = 'exago/file/LOAD_SUCCESS';
 const LOAD_FAIL = 'exago/file/LOAD_FAIL';
 
 const fileState = {
+  filePath: '',
   repository: '',
   path: '',
   contents: '',
   loaded: false,
-  loading: true,
+  loading: false
 };
 
 export default function reducer(state = fileState, action = {}) {
   switch (action.type) {
-    case LOCATION_CHANGE: {
-      const routePrefix = '/file/';
-      let uri = action.payload.pathname;
-      if (uri.indexOf(routePrefix) === 0) {
-        uri = uri.replace(routePrefix, '');
-        const [provider, owner, repo, ...path] = uri.split('/');
-        return {
-          ...state,
-          repository: `${provider}/${owner}/${repo}`,
-          path: path.join('/')
-        };
-      }
-      return state;
+    case SET: {
+      const filePath = action.filePath;
+      const [provider, owner, repo, ...path] = filePath.split('/');
+      return {
+        ...state,
+        filePath,
+        repository: `${provider}/${owner}/${repo}`,
+        path: path.join('/')
+      };
     }
     case CLEAR:
       return {
@@ -63,9 +59,13 @@ export function clear() {
   return { type: CLEAR };
 }
 
-export function load(file) {
+export function set(filePath) {
+  return { type: SET, filePath };
+}
+
+export function load(filePath) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/contents/${file.repository}/${file.path}`)
+    promise: (client) => client.get(`/contents/${filePath}`)
   };
 }
