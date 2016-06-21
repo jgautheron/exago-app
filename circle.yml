@@ -2,7 +2,7 @@ machine:
   timezone:
     Europe/Warsaw
   node:
-    version: 5.7
+    version: 6
   environment:
     CONTINUOUS_INTEGRATION: true
     TAG: $CIRCLE_BUILD_NUM
@@ -25,6 +25,7 @@ deployment:
     branch: master
     commands:
       - npm run build
+      - npm dedupe
       - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD -e $REGISTRY_EMAIL
       - docker build -t exago/app:$TAG .
       - docker build -t exago/app:latest .

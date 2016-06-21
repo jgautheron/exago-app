@@ -1,0 +1,13 @@
+*.log
+*.tmp
+*.bak
+*.bck
+Dockerfile
+.git
+.dockerignore
+.editorconfig
+.eslintignore
+.eslintrc
+.gitattributes
+.gitignore
+*.md
