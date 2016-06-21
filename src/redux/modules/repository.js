@@ -9,6 +9,7 @@ const CLEAR = 'exago/repository/CLEAR';
 
 const repositoryState = {
   name: '',
+  accept: '',
   loaded: false,
   cached: false,
   loading: true,
@@ -20,7 +21,8 @@ export default function reducer(state = repositoryState, action = {}) {
     case SET:
       return {
         ...state,
-        name: action.name
+        name: action.name,
+        accept: action.name
       };
     case CLEAR:
       return {
@@ -33,6 +35,7 @@ export default function reducer(state = repositoryState, action = {}) {
         loading: true
       };
     case LOAD_SUCCESS:
+      if (action.name !== state.accept) return state;
       return {
         ...state,
         name: action.name,
