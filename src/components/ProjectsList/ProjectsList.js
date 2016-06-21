@@ -1,3 +1,5 @@
+/*  global Choose, When, Otherwise */
+
 import React, { Component, PropTypes } from 'react';
 
 import Paper from 'material-ui/Paper';
@@ -47,6 +49,7 @@ export default class ProjectsList extends Component {
         overflow: 'hidden'
       }
     };
+
     return (
       <Paper
         className={styles.recentHolder}
@@ -57,24 +60,30 @@ export default class ProjectsList extends Component {
               <IconName className={styles.icon} color="#888" />
               {PROJECTS_LISTS[this.props.type].label}
             </Subheader>
-
-            {this.props.data.map((repo, idx) =>
-              <ListItem
-                key={idx}
-                onTouchTap={() => push(`/project/${repo.name}`)}
-                primaryText={<div style={style.primaryText}>{repo.name.replace('github.com/', '')}</div>}
-                secondaryTextLines={2}
-                secondaryText={repo.description}
-                rightAvatar={
-                  <Avatar color={blueA200} backgroundColor={transparent} style={{ right: 8 }}>
-                    {repo.rank}
-                  </Avatar>
-                }
-                leftAvatar={
-                  <Avatar src={repo.image} />
-                }
-              />
-            )}
+            <Choose>
+              <When condition={this.props.data && this.props.data.length}>
+                {this.props.data.map((repo, idx) =>
+                  <ListItem
+                    key={idx}
+                    onTouchTap={() => push(`/project/${repo.name}`)}
+                    primaryText={<div style={style.primaryText}>{repo.name.replace('github.com/', '')}</div>}
+                    secondaryTextLines={2}
+                    secondaryText={repo.description}
+                    rightAvatar={
+                      <Avatar color={blueA200} backgroundColor={transparent} style={{ right: 8 }}>
+                        {repo.rank}
+                      </Avatar>
+                    }
+                    leftAvatar={
+                      <Avatar src={repo.image} />
+                    }
+                  />
+                )}
+              </When>
+              <Otherwise>
+                <p style={{ textAlign: 'center' }}>Sorry, no project found</p>
+              </Otherwise>
+            </Choose>
           </List>
         }
       />
