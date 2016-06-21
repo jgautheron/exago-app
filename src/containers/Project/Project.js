@@ -10,6 +10,7 @@ import { set, isCached, load, refresh, clear } from 'redux/modules/repository';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import AlertError from 'material-ui/svg-icons/alert/error';
+import AlertErrorOutline from 'material-ui/svg-icons/alert/error-outline';
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import ActionCached from 'material-ui/svg-icons/action/cached';
 
@@ -83,6 +84,14 @@ export default class Project extends Component {
     return parseInt(executionTime, 10);
   }
 
+  hasProcessingError() {
+    if (this.props.repository.results.testresults.hasOwnProperty('error')) {
+      return true;
+    }
+
+    return false;
+  }
+
   refreshRepository = () => {
     this.props.refresh(this.props.repository.name);
   }
@@ -132,7 +141,7 @@ export default class Project extends Component {
           </When>
           <Otherwise>
             <Choose>
-              <When condition={this.props.repository.results.testresults.error}>
+              <When condition={this.hasProcessingError()}>
                 <ProjectError {...this.props.repository.results.testresults} />
               </When>
             </Choose>
@@ -141,7 +150,7 @@ export default class Project extends Component {
                 <ProjectBadge repository={this.props.repository.name} />
               </div>
               <div className={styles.update}>
-                <span className={styles.update__text}>Updated <TimeAgo date={this.props.repository.results.date} /></span>
+                <span className={styles.update__text}>Updated <TimeAgo date={this.props.repository.results.last_update} /></span>
                 <IconButton
                   tooltip="Refresh Statistics"
                   tooltipPosition="bottom-center"
@@ -158,15 +167,30 @@ export default class Project extends Component {
                   <ProjectFileList data={this.props.repository.results} repository={this.props.repository.name} />
                 </When>
                 <Otherwise>
-                  <RaisedButton
-                    label="Explore"
-                    backgroundColor={palette.primary1Color}
-                    style={buttonStyle}
-                    labelStyle={labelStyle}
-                    icon={<HardwareKeyboardArrowRight />}
-                    primary
-                    onClick={this.showDetails}
-                  />
+                  <Choose>
+                    <When condition={this.hasProcessingError()}>
+                      <RaisedButton
+                        label="Oops, something went wrong"
+                        style={buttonStyle}
+                        labelStyle={labelStyle}
+                        icon={<AlertErrorOutline />}
+                        className={styles.buttonIcon}
+                        primary
+                        disabled
+                      />
+                    </When>
+                    <Otherwise>
+                      <RaisedButton
+                        label="Explore"
+                        backgroundColor={palette.primary1Color}
+                        style={buttonStyle}
+                        labelStyle={labelStyle}
+                        icon={<HardwareKeyboardArrowRight />}
+                        primary
+                        onClick={this.showDetails}
+                      />
+                    </Otherwise>
+                  </Choose>
                 </Otherwise>
               </Choose>
             </div>

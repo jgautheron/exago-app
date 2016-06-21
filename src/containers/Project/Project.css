@@ -27,3 +27,8 @@
   margin-top: 5px;
   margin-left: 10px;
 }
+
+.buttonIcon svg {
+  position: relative;
+  top: -2px;
+}
