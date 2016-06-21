@@ -11,13 +11,19 @@
 }
 
 .linesContainer > pre {
-  padding: .5em;
+  padding: .5em 0;
   text-align: right;
 }
 
 .code {
   float: left;
   width: 90%;
+  position: relative;
+  z-index: 10;
+}
+
+.code > pre {
+  background: none !important;
 }
 
 .lineNumber {
@@ -25,6 +31,14 @@
   position: relative;
   top: 2px;
   color: #ccc;
+}
+
+.lineNumberComment {
+  composes: lineNumber;
+  background: #f00;
+  width: 100%;
+  position: relative;
+  border-right: 9999px solid #fdd;
 }
 
 .lineNumberWithIssue {

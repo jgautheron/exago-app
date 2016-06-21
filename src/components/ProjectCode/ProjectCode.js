@@ -25,7 +25,7 @@ export default class ProjectCode extends Component {
         if (typeof issuesByLine[zeroBasedLine] === 'undefined') {
           issuesByLine[zeroBasedLine] = [];
         }
-        const message = `// [EXAGO] ${key} line:${issue.line} column:${issue.col} - ${issue.message}`;
+        const message = `[ ${key.toUpperCase()} ] line:${issue.line} column:${issue.col} - "${issue.message}"`;
         issuesByLine[zeroBasedLine].push(message);
       });
     });
@@ -35,7 +35,7 @@ export default class ProjectCode extends Component {
       if (issuesByLine[idx]) {
         issuesByLine[idx].forEach((issue, issueIdx) => {
           sourceWitIssues[idx] = `${issue}\n${sourceWitIssues[idx]}`;
-          codeLines.push(<span className={styles.lineNumber} key={`issue-${idx}-${issueIdx}`}>{' '}</span>);
+          codeLines.push(<span className={styles.lineNumberComment} key={`issue-${idx}-${issueIdx}`}>{' '}</span>);
         });
         codeLines.push(<span className={styles.lineNumberWithIssue} key={`ln-${idx}`}>{idx + 1}</span>);
       } else {
