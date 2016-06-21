@@ -71,7 +71,7 @@ export default class ProjectsList extends Component {
                   </Avatar>
                 }
                 leftAvatar={
-                  <Avatar src={repo.avatar} />
+                  <Avatar src={repo.image} />
                 }
               />
             )}

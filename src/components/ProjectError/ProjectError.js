@@ -35,14 +35,16 @@ export default class ProjectError extends Component {
         open={this.state.showDialog}
         onRequestClose={this.closeDialog}
       >
-        An error occurred while we were running {this.props.type}: <b>{this.props.error}</b><br />
-        Here’s the verbose output:
-        <pre>{this.props.output}</pre>
-        A few reasons why we might have this issue:
-        <ol>
-          <li>The project is using CGO</li>
-          <li>The projet is not go-gettable</li>
-        </ol>
+        <p style={{ paddingTop: 10 }}>
+          An error occurred while we were running {this.props.type}: <b>{this.props.error}</b><br />
+          Here’s the verbose output:
+          <pre>{this.props.output}</pre>
+          A few reasons why we might have this issue:
+          <ol>
+            <li>The project is using CGO</li>
+            <li>The projet is not go-gettable</li>
+          </ol>
+        </p>
       </Dialog>
     );
   }
