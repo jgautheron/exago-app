@@ -90,6 +90,7 @@ export function load(repositoryName) {
 
 export function refresh(repositoryName) {
   return {
+    name: repositoryName,
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => client.get(`/refresh/${repositoryName}`)
   };
