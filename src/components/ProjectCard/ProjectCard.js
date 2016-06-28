@@ -5,7 +5,8 @@ import { Card, CardTitle, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import ActionOpenInNew from 'material-ui/svg-icons/action/open-in-new';
 import AlertError from 'material-ui/svg-icons/alert/error';
-import { Popover, PopoverAnimationFromTop } from 'material-ui/Popover';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 import { palette } from '../../theme';
 
@@ -41,7 +42,7 @@ export default class ProjectCard extends Component {
     });
   }
 
-  handleRequestClose = () => {
+  closeDialog = () => {
     this.setState({
       open: false,
     });
@@ -65,18 +66,22 @@ export default class ProjectCard extends Component {
         />
         {this.props.children ?
           <div className={styles.childrenContainer}>
-            <Popover
+            <Dialog
+              title={this.props.title}
+              autoScrollBodyContent
+              actions={
+                <FlatButton
+                  label="Discard"
+                  primary
+                  onTouchTap={this.closeDialog}
+                />
+              }
+              modal={false}
               open={this.state.open}
-              anchorEl={this.state.anchorEl}
-              anchorOrigin={this.state.anchorOrigin}
-              targetOrigin={this.state.targetOrigin}
-              onRequestClose={this.handleRequestClose}
-              animation={PopoverAnimationFromTop}
+              onRequestClose={this.closeDialog}
             >
-              <div className={styles.popoverContainer}>
-                {this.props.children}
-              </div>
-            </Popover>
+              {this.props.children}
+            </Dialog>
             <div className={styles.iconContainer}>
               <IconButton tooltip="See details" tooltipPosition="bottom-left" onTouchTap={this.handleTouchTap}>
                 <ActionOpenInNew color={palette.disabledColor} hoverColor={palette.textColor} />

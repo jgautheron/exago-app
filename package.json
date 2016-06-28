@@ -94,7 +94,7 @@
     "lost": "^6.7.2",
     "lru-memoize": "^1.0.0",
     "map-props": "^1.0.0",
-    "material-ui": "^0.15.0",
+    "material-ui": "^0.15.1",
     "multireducer": "^2.0.0",
     "piping": "^0.3.0",
     "pretty-error": "^1.2.0",

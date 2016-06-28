@@ -23,26 +23,24 @@ export function getTestList(data) {
     width: '45px'
   };
   return (
-    <div>
-      <Table>
-        <TableHeader displaySelectAll={false}>
-          <TableRow>
-            <TableHeaderColumn>Test</TableHeaderColumn>
-            <TableHeaderColumn style={rowStyle}>Duration</TableHeaderColumn>
-            <TableHeaderColumn style={rowStyle}>Passed</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-        {pkgs.map((pkg) => pkg.tests.map((test, id) =>
-          <TableRow key={id}>
-            <TableRowColumn>{test.name}</TableRowColumn>
-            <TableRowColumn style={rowStyle}>{test.execution_time}s</TableRowColumn>
-            <TableRowColumn style={rowStyle}>{test.passed ? <ActionCheckCircle /> : <AlertError />}</TableRowColumn>
-          </TableRow>
-        ))}
-        </TableBody>
-      </Table>
-    </div>
+    <Table>
+      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+        <TableRow>
+          <TableHeaderColumn>Test</TableHeaderColumn>
+          <TableHeaderColumn style={rowStyle}>Duration</TableHeaderColumn>
+          <TableHeaderColumn style={rowStyle}>Passed</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+      <TableBody displayRowCheckbox={false}>
+      {pkgs.map((pkg) => pkg.tests.map((test, id) =>
+        <TableRow key={id}>
+          <TableRowColumn>{test.name}</TableRowColumn>
+          <TableRowColumn style={rowStyle}>{test.execution_time}s</TableRowColumn>
+          <TableRowColumn style={rowStyle}>{test.passed ? <ActionCheckCircle /> : <AlertError />}</TableRowColumn>
+        </TableRow>
+      ))}
+      </TableBody>
+    </Table>
   );
 }
 
@@ -50,29 +48,27 @@ export function getScoreDetails(data) {
   if (!data.score.details) {
     return '';
   }
-
-  const rowStyle = {
-    width: '70px'
-  };
   return (
-    <div>
-      <Table>
-        <TableHeader displaySelectAll={false}>
-          <TableRow>
-            <TableHeaderColumn>Description</TableHeaderColumn>
-            <TableHeaderColumn style={rowStyle}>Points</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-        {data.score.details.map((el, id) =>
-          <TableRow key={id}>
-            <TableRowColumn>{el.split(':')[1].trim()}</TableRowColumn>
-            <TableRowColumn style={rowStyle}>{el.split(':')[0]}</TableRowColumn>
-          </TableRow>
-        )}
-        </TableBody>
-      </Table>
-    </div>
+    <Table>
+      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+        <TableRow>
+          <TableHeaderColumn style={{ width: 60 }}>Category</TableHeaderColumn>
+          <TableHeaderColumn>Description</TableHeaderColumn>
+          <TableHeaderColumn>Message</TableHeaderColumn>
+          <TableHeaderColumn style={{ width: 30 }}>Score</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+      <TableBody displayRowCheckbox={false}>
+      {data.score.details.map((el, id) =>
+        <TableRow key={id}>
+          <TableRowColumn style={{ width: 60 }}>{el.name}</TableRowColumn>
+          <TableRowColumn>{el.desc}</TableRowColumn>
+          <TableRowColumn>{el.msg}</TableRowColumn>
+          <TableRowColumn style={{ width: 30 }}>{el.score}</TableRowColumn>
+        </TableRow>
+      )}
+      </TableBody>
+    </Table>
   );
 }
 
@@ -82,22 +78,20 @@ export function getThirdParties(data) {
   }
 
   return (
-    <div>
-      <Table>
-        <TableHeader displaySelectAll={false}>
-          <TableRow>
-            <TableHeaderColumn>Package</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-        {data.imports.map((el, id) =>
-          <TableRow key={id}>
-            <TableRowColumn>{el}</TableRowColumn>
-          </TableRow>
-        )}
-        </TableBody>
-      </Table>
-    </div>
+    <Table>
+      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+        <TableRow>
+          <TableHeaderColumn>Package</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+      <TableBody displayRowCheckbox={false}>
+      {data.imports.map((el, id) =>
+        <TableRow key={id}>
+          <TableRowColumn>{el}</TableRowColumn>
+        </TableRow>
+      )}
+      </TableBody>
+    </Table>
   );
 }
 
@@ -131,7 +125,7 @@ export function getChecklist(data) {
   return (
     <div>
       <Table>
-        <TableHeader displaySelectAll={false}>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             <TableHeaderColumn colSpan="2">Minimum Criteria</TableHeaderColumn>
           </TableRow>
@@ -148,7 +142,7 @@ export function getChecklist(data) {
         </TableBody>
       </Table>
       <Table>
-        <TableHeader displaySelectAll={false}>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             <TableHeaderColumn colSpan="2">Good Citizen</TableHeaderColumn>
           </TableRow>
@@ -165,7 +159,7 @@ export function getChecklist(data) {
         </TableBody>
       </Table>
       <Table>
-        <TableHeader displaySelectAll={false}>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             <TableHeaderColumn colSpan="2">Extra Credit</TableHeaderColumn>
           </TableRow>
@@ -198,24 +192,22 @@ export function getTestCoverage(data) {
     width: '70px'
   };
   return (
-    <div>
-      <Table>
-        <TableHeader displaySelectAll={false}>
-          <TableRow>
-            <TableHeaderColumn>Package</TableHeaderColumn>
-            <TableHeaderColumn style={rowStyle}>Coverage</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-        {pkgs.map((el, id) =>
-          <TableRow key={id}>
-            <TableRowColumn>{el.name}</TableRowColumn>
-            <TableRowColumn style={rowStyle}>{el.coverage}%</TableRowColumn>
-          </TableRow>
-        )}
-        </TableBody>
-      </Table>
-    </div>
+    <Table>
+      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+        <TableRow>
+          <TableHeaderColumn>Package</TableHeaderColumn>
+          <TableHeaderColumn style={rowStyle}>Coverage</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+      <TableBody displayRowCheckbox={false}>
+      {pkgs.map((el, id) =>
+        <TableRow key={id}>
+          <TableRowColumn>{el.name}</TableRowColumn>
+          <TableRowColumn style={rowStyle}>{el.coverage}%</TableRowColumn>
+        </TableRow>
+      )}
+      </TableBody>
+    </Table>
   );
 }
 
@@ -232,23 +224,21 @@ export function getTestDuration(data) {
     width: '70px'
   };
   return (
-    <div>
-      <Table>
-        <TableHeader displaySelectAll={false}>
-          <TableRow>
-            <TableHeaderColumn>Package</TableHeaderColumn>
-            <TableHeaderColumn style={rowStyle}>Duration</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-        {pkgs.map((el, id) =>
-          <TableRow key={id}>
-            <TableRowColumn>{el.name}</TableRowColumn>
-            <TableRowColumn style={rowStyle}>{el.execution_time}s</TableRowColumn>
-          </TableRow>
-        )}
-        </TableBody>
-      </Table>
-    </div>
+    <Table>
+      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+        <TableRow>
+          <TableHeaderColumn>Package</TableHeaderColumn>
+          <TableHeaderColumn style={rowStyle}>Duration</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+      <TableBody displayRowCheckbox={false}>
+      {pkgs.map((el, id) =>
+        <TableRow key={id}>
+          <TableRowColumn>{el.name}</TableRowColumn>
+          <TableRowColumn style={rowStyle}>{el.execution_time}s</TableRowColumn>
+        </TableRow>
+      )}
+      </TableBody>
+    </Table>
   );
 }
