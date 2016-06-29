@@ -12,3 +12,4 @@ export ProjectChartLinterWarnings from './ProjectChartLinterWarnings/ProjectChar
 export ProjectFileList from './ProjectFileList/ProjectFileList';
 export ProjectError from './ProjectError/ProjectError';
 export ProjectBadge from './ProjectBadge/ProjectBadge';
+export ProjectShare from './ProjectShare/ProjectShare';

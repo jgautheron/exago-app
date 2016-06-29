@@ -6,10 +6,16 @@
   right: 20px;
 }
 
+.share {
+  position: absolute;
+  top: 67px;
+  right: 105px;
+}
+
 .update {
   position: absolute;
   top: 67px;
-  right: 110px;
+  right: 155px;
 }
 
 .update__text {

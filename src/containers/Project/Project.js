@@ -14,6 +14,7 @@ import AlertErrorOutline from 'material-ui/svg-icons/alert/error-outline';
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import ActionCached from 'material-ui/svg-icons/action/cached';
 
+
 import { palette } from '../../theme';
 
 import {
@@ -23,7 +24,8 @@ import {
   ProjectChartList,
   ProjectFileList,
   ProjectBadge,
-  ProjectError
+  ProjectError,
+  ProjectShare
 } from 'components';
 
 import styles from './Project.css';
@@ -107,6 +109,7 @@ export default class Project extends Component {
       height: 50,
       width: '100%'
     };
+
     const labelStyle = {
       color: palette.alternateTextColor,
       fontSize: 20,
@@ -114,9 +117,11 @@ export default class Project extends Component {
       letterSpacing: 0.5,
       WebkitFontSmoothing: 'antialiased'
     };
+
     const tooltipStyle = {
       zIndex: 500
     };
+
     const bigIconStyle = {
       width: 48,
       height: 48
@@ -146,6 +151,12 @@ export default class Project extends Component {
               </When>
             </Choose>
             <div>
+              <div className={styles.share}>
+                <ProjectShare
+                  repository={this.props.repository.name}
+                  rank={this.props.repository.results.score.rank}
+                />
+              </div>
               <div className={styles.badge}>
                 <ProjectBadge repository={this.props.repository.name} />
               </div>
