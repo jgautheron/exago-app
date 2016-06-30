@@ -79,6 +79,7 @@ export default class ProjectCard extends Component {
               modal={false}
               open={this.state.open}
               onRequestClose={this.closeDialog}
+              bodyStyle={{ margin: '1px 0' }}
             >
               {this.props.children}
             </Dialog>
