@@ -38,71 +38,48 @@ export default class ProjectCardList extends Component {
     this.cards[constants.RATING] = formatter.getRank(res);
   }
 
+
   render() {
     const rawTestOutput = this.props.data.testresults.raw_output.gotest;
+
+    const SPECIFIC_PROPS = {
+      [constants.TESTS]: {
+        extra: rawTestOutput === '' ? null : <pre>{rawTestOutput}</pre>,
+        extraTitle: 'See raw output',
+        extraTooltip: 'Raw tests output'
+      }
+    };
 
     return (
       <div className={styles.row}>
         {Object.keys(this.cards).map((key, id) =>
           <div className={styles.card} key={id}>
-            {(() => {
-              switch (key) {
-                case constants.THIRD_PARTIES:
-                  return (
-                    <ProjectCard title={key} value={this.cards[key]}>
-                      {html.getThirdParties(this.props.data)}
-                    </ProjectCard>
-                  );
+            <ProjectCard title={key} value={this.cards[key]} {...SPECIFIC_PROPS[key]}>
+              {(() => {
+                switch (key) {
+                  case constants.THIRD_PARTIES:
+                    return html.getThirdParties(this.props.data);
 
-                case constants.CHECKLIST_COMPLIANCE:
-                  return (
-                    <ProjectCard title={key} value={this.cards[key]}>
-                      {html.getChecklist(this.props.data)}
-                    </ProjectCard>
-                  );
+                  case constants.CHECKLIST_COMPLIANCE:
+                    return html.getChecklist(this.props.data);
 
-                case constants.TESTS:
-                  return (
-                    <ProjectCard
-                      title={key}
-                      value={this.cards[key]}
-                      extra={rawTestOutput === '' ? null : <pre>{rawTestOutput}</pre>}
-                      extraTitle={'See raw output'}
-                      extraTooltip={'Raw tests output'}
-                    >
-                      {html.getTestList(this.props.data)}
-                    </ProjectCard>
-                  );
+                  case constants.TESTS:
+                    return html.getTestList(this.props.data);
 
-                case constants.CODE_COVERAGE:
-                  return (
-                    <ProjectCard title={key} value={this.cards[key]}>
-                      {html.getTestCoverage(this.props.data)}
-                    </ProjectCard>
-                  );
+                  case constants.CODE_COVERAGE:
+                    return html.getTestCoverage(this.props.data);
 
-                case constants.TEST_DURATION:
-                  return (
-                    <ProjectCard title={key} value={this.cards[key]}>
-                      {html.getTestDuration(this.props.data)}
-                    </ProjectCard>
-                  );
+                  case constants.TEST_DURATION:
+                    return html.getTestDuration(this.props.data);
 
-                case constants.RATING:
-                  return (
-                    <ProjectCard title={key} value={this.cards[key]}>
-                      {html.getScoreDetails(this.props.data)}
-                    </ProjectCard>
-                  );
+                  case constants.RATING:
+                    return html.getScoreDetails(this.props.data);
 
-                default:
-                  return (
-                    <ProjectCard title={key} value={this.cards[key]}>
-                    {''}
-                    </ProjectCard>
-                  );
-              }
-            })()}
+                  default:
+                    return '';
+                }
+              })()}
+            </ProjectCard>
           </div>
         )}
       </div>

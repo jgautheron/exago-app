@@ -15,8 +15,6 @@ import { palette } from '../../theme';
 export default class ProjectCard extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    extraTitle: PropTypes.string,
-    extraTooltip: PropTypes.string,
     value: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -25,15 +23,14 @@ export default class ProjectCard extends Component {
       PropTypes.string,
       PropTypes.object
     ]),
-    extra: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object
-    ])
+    extra: PropTypes.object,
+    extraTooltip: PropTypes.string,
+    extraTitle: PropTypes.string
   };
 
   state = {
-    open: false,
-    openExtra: false,
+    primaryModal: false,
+    secondaryModal: false,
     anchorOrigin: {
       horizontal: 'right',
       vertical: 'bottom',
@@ -44,31 +41,18 @@ export default class ProjectCard extends Component {
     },
   };
 
-  handleTouchTap = (event) => {
+  open = (which) => (event => {
     this.setState({
-      open: true,
+      [which]: true,
       anchorEl: event.currentTarget,
     });
-  }
+  })
 
-  handleExtraTouchTap = (event) => {
+  close = (which) => (() => {
     this.setState({
-      openExtra: true,
-      anchorEl: event.currentTarget,
+      [which]: false,
     });
-  }
-
-  closeDialog = () => {
-    this.setState({
-      open: false,
-    });
-  }
-
-  closeExtraDialog = () => {
-    this.setState({
-      openExtra: false,
-    });
-  }
+  })
 
   render() {
     const titleStyle = {
@@ -97,12 +81,12 @@ export default class ProjectCard extends Component {
                   <FlatButton
                     label="Discard"
                     primary
-                    onTouchTap={this.closeDialog}
+                    onTouchTap={this.close('primaryModal')}
                   />
                 }
                 modal={false}
-                open={this.state.open}
-                onRequestClose={this.closeDialog}
+                open={this.state.primaryModal}
+                onRequestClose={this.close('primaryModal')}
                 bodyStyle={{ margin: '1px 0' }}
               >
                 {this.props.children}
@@ -117,22 +101,22 @@ export default class ProjectCard extends Component {
                         <FlatButton
                           label="Discard"
                           primary
-                          onTouchTap={this.closeExtraDialog}
+                          onTouchTap={this.close('secondaryModal')}
                         />
                       }
                       modal={false}
-                      open={this.state.openExtra}
-                      onRequestClose={this.closeExtraDialog}
+                      open={this.state.secondaryModal}
+                      onRequestClose={this.close('secondaryModal')}
                       bodyStyle={{ margin: '1px 0' }}
                     >
                       {this.props.extra}
                     </Dialog>
-                    <IconButton tooltip={this.props.extraTooltip} tooltipPosition="bottom-left" onTouchTap={this.handleExtraTouchTap}>
+                    <IconButton tooltip={this.props.extraTooltip} tooltipPosition="bottom-left" onTouchTap={this.open('secondaryModal')}>
                       <ActionOpenInNew color={palette.disabledColor} hoverColor={palette.textColor} />
                     </IconButton>
                   </When>
                 </Choose>
-                <IconButton tooltip="See details" tooltipPosition="bottom-left" onTouchTap={this.handleTouchTap}>
+                <IconButton tooltip="See details" tooltipPosition="bottom-left" onTouchTap={this.open('primaryModal')}>
                   <ActionOpenInNew color={palette.disabledColor} hoverColor={palette.textColor} />
                 </IconButton>
               </div>
