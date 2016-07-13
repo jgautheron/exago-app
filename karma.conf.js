@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = function (config) {
   config.set({
@@ -18,24 +19,32 @@ module.exports = function (config) {
       'tests.webpack.js': [ 'webpack', 'sourcemap' ]
     },
 
-    reporters: [ 'mocha' ],
+    reporters: [ 'mocha', 'coverage' ],
 
     plugins: [
-      require("karma-webpack"),
-      require("karma-mocha"),
-      require("karma-mocha-reporter"),
-      require("karma-phantomjs-launcher"),
-      require("karma-sourcemap-loader")
+      'karma-phantomjs-launcher',
+      'karma-mocha',
+      'karma-sourcemap-loader',
+      'karma-webpack',
+      'karma-coverage',
+      'karma-mocha-reporter'
     ],
 
     webpack: {
       devtool: 'inline-source-map',
       module: {
         loaders: [
-          { test: /\.(jpe?g|png|gif|svg)$/, loader: 'url', query: {limit: 10240} },
+          { test: /\.(jpe?g|png|gif|svg|ttf)$/, loader: 'url', query: {limit: 10240} },
           { test: /\.js$/, exclude: /node_modules/, loaders: ['babel']},
           { test: /\.json$/, loader: 'json-loader' },
           { test: /\.css$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!postcss' }
+        ],
+        preLoaders: [
+          {
+            test: /\.js$/,
+            loader: 'isparta',
+            include: [path.resolve('src/')],
+          }
         ],
         noParse: [
           /node_modules\/sinon\//,
@@ -72,6 +81,11 @@ module.exports = function (config) {
 
     webpackServer: {
       noInfo: true
+    },
+
+    coverageReporter: {
+      type: 'html',
+      dir: 'coverage/'
     }
 
   });
