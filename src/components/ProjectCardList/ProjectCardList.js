@@ -46,7 +46,11 @@ export default class ProjectCardList extends Component {
       [constants.TESTS]: {
         extra: rawTestOutput === '' ? null : <pre>{rawTestOutput}</pre>,
         extraTitle: 'See raw output',
-        extraTooltip: 'Raw tests output'
+        extraTooltip: 'Raw tests output',
+        explanation: 'Some explanation for the test box'
+      },
+      [constants.THIRD_PARTIES]: {
+        explanation: 'How many third parties youre using. They affect also your scoring'
       }
     };
 

@@ -14,8 +14,22 @@
   width: 100%;
 }
 
-.iconContainer {
+.iconsBar {
+  background: #f0f0f0;
+  height: 50px;
+}
+
+.iconsContainer {
   position: absolute;
   top: 0;
+}
+
+.rightIconContainer {
+  composes: iconsContainer;
   right: 0;
+}
+
+.leftIconContainer {
+  composes: iconsContainer;
+  left: 0;
 }

@@ -10,6 +10,17 @@ import {
   TableBody,
 } from 'material-ui/Table';
 
+function isInt(value) {
+  return typeof value === 'number' &&
+    isFinite(value) &&
+    Math.floor(value) === value;
+}
+
+function formatScore(score) {
+  if (isInt(score)) return score;
+  return parseFloat(Math.round(score * 100) / 100).toFixed(2);
+}
+
 export function getTestList(data) {
   if (
     !data.testresults.hasOwnProperty('packages') ||
@@ -55,7 +66,7 @@ export function getScoreDetails(data) {
           <TableHeaderColumn style={{ width: 60 }}>Category</TableHeaderColumn>
           <TableHeaderColumn>Description</TableHeaderColumn>
           <TableHeaderColumn>Message</TableHeaderColumn>
-          <TableHeaderColumn style={{ width: 30 }}>Score</TableHeaderColumn>
+          <TableHeaderColumn style={{ width: 45 }}>Score</TableHeaderColumn>
         </TableRow>
       </TableHeader>
       <TableBody displayRowCheckbox={false}>
@@ -64,7 +75,7 @@ export function getScoreDetails(data) {
           <TableRowColumn style={{ width: 60 }}>{el.name}</TableRowColumn>
           <TableRowColumn>{el.desc}</TableRowColumn>
           <TableRowColumn>{el.msg}</TableRowColumn>
-          <TableRowColumn style={{ width: 30 }}>{el.score}</TableRowColumn>
+          <TableRowColumn style={{ width: 45 }}>{formatScore(el.score)}</TableRowColumn>
         </TableRow>
       )}
       </TableBody>

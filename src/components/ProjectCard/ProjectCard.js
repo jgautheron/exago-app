@@ -6,6 +6,7 @@ import styles from './ProjectCard.css';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import ActionOpenInNew from 'material-ui/svg-icons/action/open-in-new';
+import HelpIcon from 'material-ui/svg-icons/action/help-outline';
 import AlertError from 'material-ui/svg-icons/alert/error';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -20,6 +21,10 @@ export default class ProjectCard extends Component {
       PropTypes.number
     ]),
     children: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
+    explanation: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object
     ]),
@@ -67,14 +72,25 @@ export default class ProjectCard extends Component {
 
     return (
       <Card className={styles.container}>
+        <div className={styles.iconsBar}></div>
         <CardTitle
           title={this.props.title}
           titleStyle={titleStyle}
         />
         <Choose>
+          <When condition={this.props.explanation}>
+            <div className={styles.leftIconContainer}>
+              <IconButton style={{ cursor: 'help' }} tooltip={this.props.explanation} tooltipPosition="bottom-right">
+                <HelpIcon color={palette.disabledColor} hoverColor={palette.textColor} />
+              </IconButton>
+            </div>
+          </When>
+        </Choose>
+        <Choose>
           <When condition={this.props.children}>
             <div className={styles.childrenContainer}>
               <Dialog
+                contentStyle={{ maxWidth: '1200px', width: '90%' }}
                 title={this.props.title}
                 autoScrollBodyContent
                 actions={
@@ -91,7 +107,7 @@ export default class ProjectCard extends Component {
               >
                 {this.props.children}
               </Dialog>
-              <div className={styles.iconContainer}>
+              <div className={styles.rightIconContainer}>
                 <Choose>
                   <When condition={this.props.extra}>
                     <Dialog
