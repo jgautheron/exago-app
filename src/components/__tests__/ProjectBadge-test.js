@@ -2,6 +2,7 @@ import expect from 'expect';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import ProjectBadge from '../ProjectBadge/ProjectBadge';
+import { withTheme } from './WithTheme';
 
 describe('ProjectBadge', () => {
   const props = {
@@ -17,23 +18,23 @@ describe('ProjectBadge', () => {
     return expect(srcAttr).toContain(props.repository);
   });
 
-  const pbadgeMount = mount(<ProjectBadge {...props} />);
+  const pbadgeMount = mount(withTheme(<ProjectBadge {...props} />)).find('ProjectBadge').get(0);
   it('should have closed Dialog by default', () => {
-    const dialogOpened = pbadgeMount.state('showDialog');
+    const dialogOpened = pbadgeMount.state.showDialog;
     return expect(dialogOpened).toBe(false);
   });
 
   describe('showDialog', () => {
     it('should open the Dialog', () => {
-      pbadgeMount.get(0).showDialog();
-      const dialogOpened = pbadgeMount.state('showDialog');
+      pbadgeMount.showDialog();
+      const dialogOpened = pbadgeMount.state.showDialog;
       return expect(dialogOpened).toBe(true);
     });
   });
   describe('closeDialog', () => {
     it('should close the Dialog', () => {
-      pbadgeMount.get(0).closeDialog();
-      const dialogOpened = pbadgeMount.state('showDialog');
+      pbadgeMount.closeDialog();
+      const dialogOpened = pbadgeMount.state.showDialog;
       return expect(dialogOpened).toBe(false);
     });
   });
