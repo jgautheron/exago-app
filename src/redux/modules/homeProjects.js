@@ -1,6 +1,6 @@
-const LOAD = 'exago/homeProjects/LOAD';
-const LOAD_SUCCESS = 'exago/homeProjects/LOAD_SUCCESS';
-const LOAD_FAIL = 'exago/homeProjects/LOAD_FAIL';
+export const LOAD = 'exago/homeProjects/LOAD';
+export const LOAD_SUCCESS = 'exago/homeProjects/LOAD_SUCCESS';
+export const LOAD_FAIL = 'exago/homeProjects/LOAD_FAIL';
 
 const homeProjects = {
   recent: [],
