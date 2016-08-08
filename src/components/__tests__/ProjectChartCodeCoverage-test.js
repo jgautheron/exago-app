@@ -24,7 +24,7 @@ describe('ProjectChartCodeCoverage', () => {
   it('should pass config to charts', () => {
     const chartProps = projectCharts.find('CardMedia').children().props();
 
-    expect(projectCharts.find('CardMedia').children().props().config).toExist();
+    expect(chartProps.config).toExist();
     expect(chartProps.config.series[0].data).toEqual(coverages);
     expect(chartProps.config.xAxis.categories).toEqual(names);
   });
