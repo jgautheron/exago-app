@@ -30,7 +30,7 @@ const dataMock = {
     },
     imports: [
     ],
-    testresults: {
+    projectrunner: {
       checklist: {
         Failed: [
           {
@@ -327,20 +327,20 @@ describe('ProjectCardList', () => {
   });
 
   it('should preapareData when will receive props', () => {
-    expect(pcl.instance().props.data.testresults.raw_output.gotest).toNotBe('');
+    expect(pcl.instance().props.data.projectrunner.raw_output.gotest).toNotBe('');
 
-    dataMock.data.testresults.raw_output.gotest = '';
-    delete dataMock.data.testresults.checklist;
+    dataMock.data.projectrunner.raw_output.gotest = '';
+    delete dataMock.data.projectrunner.checklist;
 
     dataMock.data.codestats.Test = 1;
 
     pcl.setProps(dataMock);
-    expect(pcl.instance().props.data.testresults.raw_output.gotest).toBe('');
+    expect(pcl.instance().props.data.projectrunner.raw_output.gotest).toBe('');
   });
 
   describe('getTestResults', () => {
     it('returns no results when no package was tested', () => {
-      expect(getTestResults({ testresults: {} })).toEqual({
+      expect(getTestResults({ projectrunner: {} })).toEqual({
         coverageMean: '',
         durationMean: '',
         testsPassed: false
@@ -348,7 +348,7 @@ describe('ProjectCardList', () => {
     });
     it('returns coverage and duration mean', () => {
       expect(getTestResults({
-        testresults: {
+        projectrunner: {
           packages: [
             { success: false, coverage: 10, execution_time: 5 },
             { success: true }
@@ -370,12 +370,12 @@ describe('ProjectCardList', () => {
 
     describe('getChecklist', () => {
       it('should return empty when no score data is there', () => {
-        expect(popoverHtml.getChecklist({ testresults: {} })).toEqual('');
+        expect(popoverHtml.getChecklist({ projectrunner: {} })).toEqual('');
       });
 
       it('should show the checklist', () => {
         const mock = {
-          testresults: {
+          projectrunner: {
             checklist: {
               Failed: [
                 { Category: 'extraCredit', Desc: 'fooDescription', Name: 'fooName' },
@@ -391,8 +391,8 @@ describe('ProjectCardList', () => {
           }
         };
 
-        const passed = mock.testresults.checklist.Passed;
-        const failed = mock.testresults.checklist.Failed;
+        const passed = mock.projectrunner.checklist.Passed;
+        const failed = mock.projectrunner.checklist.Failed;
 
         const checklist = shallow(withTheme(popoverHtml.getChecklist(mock)));
         const cols = checklist.find('TableRowColumn');
@@ -416,12 +416,12 @@ describe('ProjectCardList', () => {
 
     describe('getTestCoverage', () => {
       it('should return empty when no packages data is there', () => {
-        expect(popoverHtml.getTestCoverage({ testresults: { packages: [] } })).toEqual('');
+        expect(popoverHtml.getTestCoverage({ projectrunner: { packages: [] } })).toEqual('');
       });
 
       it('should show coverage info', () => {
         const mock = {
-          testresults: {
+          projectrunner: {
             packages: [
               { name: 'foo', coverage: 10 },
               { name: 'bar', coverage: 20 },
@@ -429,7 +429,7 @@ describe('ProjectCardList', () => {
             ]
           }
         };
-        const { testresults: { packages: pkgs } } = mock;
+        const { projectrunner: { packages: pkgs } } = mock;
         const testCoverage = shallow(withTheme(popoverHtml.getTestCoverage(mock)));
         const cols = testCoverage.find('TableRowColumn');
 
@@ -446,11 +446,11 @@ describe('ProjectCardList', () => {
 
     describe('getThirdParties', () => {
       it('should return empty when no imports data is there', () => {
-        expect(popoverHtml.getThirdParties({ imports: [] })).toEqual('');
+        expect(popoverHtml.getThirdParties({ projectrunner: { third_parties: [] } })).toEqual('');
       });
 
       it('should show packages info', () => {
-        const mock = { imports: ['foo', 'bar', 'moo'] };
+        const mock = { projectrunner: { third_parties: ['foo', 'bar', 'moo'] } };
         const thirdParties = shallow(withTheme(popoverHtml.getThirdParties(mock)));
         const cols = thirdParties.find('TableRowColumn');
 
@@ -462,12 +462,12 @@ describe('ProjectCardList', () => {
 
     describe('getTestDuration', () => {
       it('should return empty when no score data is there', () => {
-        expect(popoverHtml.getTestDuration({ testresults: {} })).toEqual('');
+        expect(popoverHtml.getTestDuration({ projectrunner: {} })).toEqual('');
       });
 
       it('should show tests duration', () => {
         const mock = {
-          testresults: {
+          projectrunner: {
             packages: [
               { name: 'foo', execution_time: 10 },
               { name: 'bar', execution_time: 20 },
@@ -475,7 +475,7 @@ describe('ProjectCardList', () => {
           }
         };
 
-        const pkgs = mock.testresults.packages;
+        const pkgs = mock.projectrunner.packages;
         const testDuration = shallow(withTheme(popoverHtml.getTestDuration(mock)));
         const cols = testDuration.find('TableRowColumn');
 
@@ -489,12 +489,12 @@ describe('ProjectCardList', () => {
 
     describe('getTestList', () => {
       it('should return empty when no score data is there', () => {
-        expect(popoverHtml.getTestList({ testresults: {} })).toEqual('');
+        expect(popoverHtml.getTestList({ projectrunner: {} })).toEqual('');
       });
 
       it('should generate test list', () => {
         const mock = {
-          testresults: {
+          projectrunner: {
             packages: [
               {
                 tests: [
@@ -505,7 +505,7 @@ describe('ProjectCardList', () => {
             ]
           }
         };
-        const testMock = mock.testresults.packages[0].tests;
+        const testMock = mock.projectrunner.packages[0].tests;
         const testList = shallow(withTheme(popoverHtml.getTestList(mock)));
         const cols = testList.find('TableRowColumn');
 

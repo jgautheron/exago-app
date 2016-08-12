@@ -39,7 +39,7 @@ export default class ProjectCharts extends Component {
       }]
     };
 
-    const data = this.props.data.testresults;
+    const data = this.props.data.projectrunner;
     data.packages.forEach((pkg) => {
       this.config.xAxis.categories.push(pkg.name);
       this.config.series[0].data.push(pkg.coverage);

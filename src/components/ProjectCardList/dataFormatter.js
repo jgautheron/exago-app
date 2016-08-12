@@ -10,15 +10,15 @@ export function getRatioLines(data) {
 }
 
 export function getThirdParties(data) {
-  return data.imports.length;
+  return data.projectrunner.thirdParties.length;
 }
 
 export function getChecklistCompliance(data) {
-  if (!data.testresults.hasOwnProperty('checklist')) {
+  if (!data.projectrunner.hasOwnProperty('checklist')) {
     return '';
   }
 
-  const results = data.testresults;
+  const results = data.projectrunner;
   const checklistTotalItems = results.checklist.Passed.length + results.checklist.Failed.length;
   return `${results.checklist.Passed.length} / ${checklistTotalItems}`;
 }
@@ -28,7 +28,7 @@ export function getTestsCount(data) {
 }
 
 export function getTestResults(data) {
-  if (!data.testresults.hasOwnProperty('packages')) {
+  if (!data.projectrunner.hasOwnProperty('packages')) {
     return {
       coverageMean: '',
       durationMean: '',
@@ -37,7 +37,7 @@ export function getTestResults(data) {
   }
 
   // There were tests but we couldn't run them
-  if (data.codestats.Test > 0 && data.testresults.packages.length === 0) {
+  if (data.codestats.Test > 0 && data.projectrunner.packages.length === 0) {
     return {
       coverageMean: '',
       durationMean: '',
@@ -49,7 +49,7 @@ export function getTestResults(data) {
   const cov = [];
   const duration = [];
 
-  data.testresults.packages.forEach((pkg) => {
+  data.projectrunner.packages.forEach((pkg) => {
     if (!pkg.success) {
       testsPassed = false;
     }

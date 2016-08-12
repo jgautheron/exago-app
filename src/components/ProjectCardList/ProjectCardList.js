@@ -40,7 +40,7 @@ export default class ProjectCardList extends Component {
 
 
   render() {
-    const rawTestOutput = this.props.data.testresults.raw_output.gotest;
+    const rawTestOutput = this.props.data.projectrunner.raw_output.gotest;
 
     const SPECIFIC_PROPS = {
       [constants.TESTS]: {

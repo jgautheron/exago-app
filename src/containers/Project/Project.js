@@ -79,15 +79,15 @@ export default class Project extends Component {
   }
 
   getLoadingDuration() {
-    const executionTime = this.props.repository.results.execution_time;
-    if (!executionTime) {
+    const execution_time = this.props.repository.results.execution_time;
+    if (!execution_time) {
       return 0;
     }
-    return parseInt(executionTime, 10);
+    return parseInt(execution_time, 10);
   }
 
   hasProcessingError() {
-    if (this.props.repository.results.testresults.hasOwnProperty('error')) {
+    if (this.props.repository.results.projectrunner.hasOwnProperty('error')) {
       return true;
     }
 
@@ -147,7 +147,7 @@ export default class Project extends Component {
           <Otherwise>
             <Choose>
               <When condition={this.hasProcessingError()}>
-                <ProjectError {...this.props.repository.results.testresults} />
+                <ProjectError {...this.props.repository.results.projectrunner} />
               </When>
             </Choose>
             <div>

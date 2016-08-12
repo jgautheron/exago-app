@@ -80,11 +80,11 @@ export default class Project extends Component {
   }
 
   getLoadingDuration() {
-    const executionTime = this.props.repository.results.executionTime;
-    if (!executionTime) {
+    const execution_time = this.props.repository.results.execution_time;
+    if (!execution_time) {
       return 0;
     }
-    return parseInt(executionTime, 10);
+    return parseInt(execution_time, 10);
   }
 
   render() {

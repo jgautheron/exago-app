@@ -23,13 +23,13 @@ function formatScore(score) {
 
 export function getTestList(data) {
   if (
-    !data.testresults.hasOwnProperty('packages') ||
-    data.testresults.packages.length === 0
+    !data.projectrunner.hasOwnProperty('packages') ||
+    data.projectrunner.packages.length === 0
   ) {
     return '';
   }
 
-  const pkgs = data.testresults.packages;
+  const pkgs = data.projectrunner.packages;
   const rowStyle = {
     width: '45px'
   };
@@ -107,11 +107,11 @@ export function getThirdParties(data) {
 }
 
 export function getChecklist(data) {
-  if (!data.testresults.hasOwnProperty('checklist')) {
+  if (!data.projectrunner.hasOwnProperty('checklist')) {
     return '';
   }
 
-  const res = data.testresults.checklist;
+  const res = data.projectrunner.checklist;
   const sortedData = { minimumCriteria: [], goodCitizen: [], extraCredit: [] };
 
   let cnt;
@@ -192,13 +192,13 @@ export function getChecklist(data) {
 
 export function getTestCoverage(data) {
   if (
-    !data.testresults.hasOwnProperty('packages') ||
-    data.testresults.packages.length === 0
+    !data.projectrunner.hasOwnProperty('packages') ||
+    data.projectrunner.packages.length === 0
   ) {
     return '';
   }
 
-  const pkgs = data.testresults.packages;
+  const pkgs = data.projectrunner.packages;
   const rowStyle = {
     width: '70px'
   };
@@ -224,13 +224,13 @@ export function getTestCoverage(data) {
 
 export function getTestDuration(data) {
   if (
-    !data.testresults.hasOwnProperty('packages') ||
-    data.testresults.packages.length === 0
+    !data.projectrunner.hasOwnProperty('packages') ||
+    data.projectrunner.packages.length === 0
   ) {
     return '';
   }
 
-  const pkgs = data.testresults.packages;
+  const pkgs = data.projectrunner.packages;
   const rowStyle = {
     width: '70px'
   };
