@@ -10,7 +10,7 @@ export function getRatioLines(data) {
 }
 
 export function getThirdParties(data) {
-  return data.projectrunner.thirdParties.length;
+  return data.projectrunner.third_parties.length;
 }
 
 export function getChecklistCompliance(data) {
