@@ -9,6 +9,7 @@ export ProjectChartList from './ProjectChartList/ProjectChartList';
 export ProjectChartCodeCoverage from './ProjectChartCodeCoverage/ProjectChartCodeCoverage';
 export ProjectChartTestDuration from './ProjectChartTestDuration/ProjectChartTestDuration';
 export ProjectChartLinterWarnings from './ProjectChartLinterWarnings/ProjectChartLinterWarnings';
+export ProjectChartScoreSpider from './ProjectChartScoreSpider/ProjectChartScoreSpider';
 export ProjectFileList from './ProjectFileList/ProjectFileList';
 export ProjectError from './ProjectError/ProjectError';
 export ProjectBadge from './ProjectBadge/ProjectBadge';

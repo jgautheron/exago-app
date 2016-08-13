@@ -10,6 +10,9 @@ export function getRatioLines(data) {
 }
 
 export function getThirdParties(data) {
+  if (!data.projectrunner.third_parties) {
+    return 0;
+  }
   return data.projectrunner.third_parties.length;
 }
 

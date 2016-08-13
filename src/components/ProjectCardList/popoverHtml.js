@@ -84,7 +84,7 @@ export function getScoreDetails(data) {
 }
 
 export function getThirdParties(data) {
-  if (data.imports.length === 0) {
+  if (!data.projectrunner.third_parties || data.projectrunner.third_parties.length === 0) {
     return '';
   }
 
@@ -96,7 +96,7 @@ export function getThirdParties(data) {
         </TableRow>
       </TableHeader>
       <TableBody displayRowCheckbox={false}>
-      {data.imports.map((el, id) =>
+      {data.projectrunner.third_parties.map((el, id) =>
         <TableRow key={id}>
           <TableRowColumn>{el}</TableRowColumn>
         </TableRow>

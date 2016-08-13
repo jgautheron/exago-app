@@ -3,6 +3,7 @@ import {
   ProjectChartCodeCoverage,
   ProjectChartTestDuration,
   ProjectChartLinterWarnings,
+  ProjectChartScoreSpider,
 } from 'components';
 
 import styles from './ProjectChartList.css';
@@ -14,15 +15,23 @@ export default class ProjectChartList extends Component {
 
   render() {
     return (
-      <div className={styles.row}>
-        <div className={styles.card}>
-          <ProjectChartCodeCoverage data={this.props.data} />
+      <div>
+        <div className={styles.row}>
+          <div className={styles.card}>
+            <ProjectChartCodeCoverage data={this.props.data} />
+          </div>
+          <div className={styles.card}>
+            <ProjectChartTestDuration data={this.props.data} />
+          </div>
+          <div className={styles.card}>
+            <ProjectChartLinterWarnings data={this.props.data} />
+          </div>
         </div>
-        <div className={styles.card}>
-          <ProjectChartTestDuration data={this.props.data} />
-        </div>
-        <div className={styles.card}>
-          <ProjectChartLinterWarnings data={this.props.data} />
+
+        <div className={styles.row}>
+          <div className={styles.card}>
+            <ProjectChartScoreSpider data={this.props.data} />
+          </div>
         </div>
       </div>
     );

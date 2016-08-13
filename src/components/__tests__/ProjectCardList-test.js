@@ -28,9 +28,8 @@ const dataMock = {
       SwitchStatement: 1,
       Test: 0
     },
-    imports: [
-    ],
     projectrunner: {
+      third_parties: [],
       checklist: {
         Failed: [
           {
@@ -454,9 +453,9 @@ describe('ProjectCardList', () => {
         const thirdParties = shallow(withTheme(popoverHtml.getThirdParties(mock)));
         const cols = thirdParties.find('TableRowColumn');
 
-        expect(cols.at(0).children().text()).toBe(mock.imports[0]);
-        expect(cols.at(1).children().text()).toBe(mock.imports[1]);
-        expect(cols.at(2).children().text()).toBe(mock.imports[2]);
+        expect(cols.at(0).children().text()).toBe(mock.projectrunner.third_parties[0]);
+        expect(cols.at(1).children().text()).toBe(mock.projectrunner.third_parties[1]);
+        expect(cols.at(2).children().text()).toBe(mock.projectrunner.third_parties[2]);
       });
     });
 

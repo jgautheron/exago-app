@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Card, CardTitle, CardMedia } from 'material-ui/Card';
 import ReactHighcharts from 'react-highcharts';
 
-export default class ProjectCharts extends Component {
+export default class ProjectChartCodeCoverage extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired
   };
