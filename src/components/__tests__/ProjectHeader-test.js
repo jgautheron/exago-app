@@ -1,11 +1,11 @@
 import expect from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
-import Projectheader from '../Projectheader/Projectheader';
+import ProjectHeader from '../ProjectHeader/ProjectHeader';
 
 describe('ProjectHeader', () => {
   const repoTitle = 'foo';
-  const projectHeader = shallow(<Projectheader repository={repoTitle} />);
+  const projectHeader = shallow(<ProjectHeader repository={repoTitle} />);
 
   it('should render correctly', () => {
     expect(projectHeader).toExist();
