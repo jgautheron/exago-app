@@ -2,7 +2,7 @@ import expect from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
 import ProjectCardList from '../ProjectCardList/ProjectCardList';
-import { getTestResults } from '../ProjectCardList/dataFormatter';
+import { getTestResults, getThirdParties } from '../ProjectCardList/dataFormatter';
 import * as popoverHtml from '../ProjectCardList/popoverHtml';
 import { withTheme } from './WithTheme';
 
@@ -335,6 +335,12 @@ describe('ProjectCardList', () => {
 
     pcl.setProps(dataMock);
     expect(pcl.instance().props.data.projectrunner.raw_output.gotest).toBe('');
+  });
+
+  describe('getThirdParties (dataFormatter)', () => {
+    it('should return 0 when third parites doesn\'t exist', () => {
+      expect(getThirdParties({ projectrunner: {} })).toEqual(0);
+    });
   });
 
   describe('getTestResults', () => {
