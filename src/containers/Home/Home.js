@@ -1,14 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-
-import { asyncConnect } from 'redux-connect';
-import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-
+import { load } from 'redux/modules/homeProjects';
+import Helmet from 'react-helmet';
 import styles from './Home.css';
 import Paper from 'material-ui/Paper';
-
 import { SearchInput, ProjectsList } from 'components';
-import { load } from 'redux/modules/homeProjects';
 
 const paperStyle = {
   width: '85%',
@@ -18,27 +14,21 @@ const paperStyle = {
   padding: '30px 20px 50px 90px'
 };
 
-@asyncConnect([{
-  // eslint-disable-next-line react/prop-types
-  promise: ({ store: { dispatch } }) => {
-    const promises = [];
-    promises.push(dispatch(load('recent')));
-    promises.push(dispatch(load('popular')));
-    promises.push(dispatch(load('top')));
-    return Promise.all(promises);
-  }
-}])
-@connect(
-  state => ({
-    repository: state.repository.name,
-    projects: state.homeProjects
-  })
-)
-export default class Home extends Component {
+export class HomePure extends Component {
   static propTypes = {
     repository: PropTypes.string.isRequired,
     projects: PropTypes.object.isRequired
   };
+
+  static reduxAsyncConnect = [{
+    promise: ({ store: { dispatch } }) => {
+      const promises = [];
+      promises.push(dispatch(load('recent')));
+      promises.push(dispatch(load('popular')));
+      promises.push(dispatch(load('top')));
+      return Promise.all(promises);
+    }
+  }];
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -73,3 +63,10 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  repository: state.repository.name,
+  projects: state.homeProjects
+});
+
+export default connect(mapStateToProps)(HomePure);

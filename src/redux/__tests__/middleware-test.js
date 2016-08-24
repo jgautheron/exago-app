@@ -27,6 +27,7 @@ describe('clientMiddleware', () => {
   });
 
   it('should handle promises and catch errors', () => {
+    const noop = () => {};
     const ERROR = 'ERROR';
     const callAction = dispatchGetState((action) => {
       if (action.error === ERROR) {
@@ -39,7 +40,8 @@ describe('clientMiddleware', () => {
       foo: true, types: ['REQUEST', 'SUCCESS', 'FAIL']
     });
 
-    return callActionResult.then(() => {}, (err) => {
+    return callActionResult.then(noop, (err) => {
+      expect(noop()).toBe(undefined);
       expect(err).toEqual(ERROR);
     });
   });
