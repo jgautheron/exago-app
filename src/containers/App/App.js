@@ -19,13 +19,7 @@ import styles from './App.css';
 
 injectTapEventPlugin();
 
-@connect(
-  state => ({
-    menu: state.menu.open
-  }),
-  { open, close }
-)
-export default class App extends Component {
+export class AppPure extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     menu: PropTypes.bool,
@@ -81,3 +75,9 @@ export default class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  menu: state.menu.open
+});
+
+export default connect(mapStateToProps, { open, close })(AppPure);
