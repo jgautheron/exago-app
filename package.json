@@ -115,6 +115,7 @@
     "react-syntax-highlighter": "^2.1.0",
     "react-tap-event-plugin": "^1.0.0",
     "react-timeago": "^3.0.0",
+    "recharts": "^0.13.4",
     "redux": "^3.0.4",
     "redux-connect": "^2.1.0",
     "redux-form": "^3.0.12",

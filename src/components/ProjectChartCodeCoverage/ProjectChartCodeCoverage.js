@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Card, CardTitle, CardMedia } from 'material-ui/Card';
-import ReactHighcharts from 'react-highcharts';
+import { BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts';
 
 export default class ProjectChartCodeCoverage extends Component {
   static propTypes = {
@@ -8,41 +8,10 @@ export default class ProjectChartCodeCoverage extends Component {
   };
 
   componentWillMount() {
-    this.config = {
-      chart: {
-        type: 'column'
-      },
-      title: {
-        style: {
-          display: 'none'
-        }
-      },
-      legend: {
-        enabled: false
-      },
-      xAxis: {
-        type: 'category',
-        categories: []
-      },
-      yAxis: {
-        title: {
-          text: 'Code coverage in %'
-        }
-      },
-      tooltip: {
-        pointFormat: '{point.name} <b>{point.y:.2f}%</b>'
-      },
-      series: [{
-        name: 'Coverage',
-        colorByPoint: true,
-        data: []
-      }]
-    };
-
+    this.data = [];
     const data = this.props.data.projectrunner;
     data.packages.forEach((pkg) => {
-      this.config.xAxis.categories.push(pkg.name);
-      this.config.series[0].data.push(pkg.coverage);
+      this.data.push({ name: pkg.name, coverage: pkg.coverage });
     });
   }
 
@@ -59,7 +28,13 @@ export default class ProjectChartCodeCoverage extends Component {
           titleStyle={titleStyle}
         />
         <CardMedia>
-          <ReactHighcharts config={this.config} />
+          <BarChart width={400} height={300} data={this.data}>
+            <XAxis dataKey="name" />
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip />
+            <Bar dataKey="coverage" fill="#8884d8" />
+          </BarChart>
         </CardMedia>
       </Card>
     );

@@ -61,10 +61,10 @@ const TWITTER_MSG = {
     { text: '📚 Not bad. Keep training Go!', img: [2, 11, 16, 19, 23] }
   ],
   D: [
-    { text: '🍺 Don\'t drink and code! It\'s a D project ', img: [3, 17, 5] }
+    { text: '🍺 Don\'t drink and code! It\'s a D project', img: [3, 17, 5] }
   ],
   E: [
-    { text: '🖥 It\'s a E ranked project. Do you even code bro?', img: [21, 22] }
+    { text: '🖥 It\'s an E-ranked project. Do you even code bro?', img: [21, 22] }
   ],
   F: [
     { text: '💩 Hooray! Your project gets strong F!', img: [24, 21, 3, 17] },
@@ -72,8 +72,8 @@ const TWITTER_MSG = {
     { text: '⌨ Author of this repo - PLEASE DON\'T CODE MORE', img: [7, 6, 17, 18] },
     { text: '⌨ Worst repo ever! Please quit programming...', img: [3, 7, 17] },
     { text: '🔥 Kill it with fire! It\'s an F ranked repo', img: [7, 3, 17] },
-    { text: '✈ Nothing to do here! It\'s a F project!', img: [1, 4, 11, 20] }
-  ]
+    { text: '✈ Nothing to do here! It\'s an F project!', img: [1, 4, 11, 20] }
+  ],
 };
 
 import React, { Component, PropTypes } from 'react';
@@ -95,7 +95,7 @@ export default class ProjectShare extends Component {
       return { msg: 'Your project has an error', img: 3 };
     }
 
-    const pickedMsg = TWITTER_MSG[rank][Math.floor(Math.random() * TWITTER_MSG[rank].length)];
+    const pickedMsg = TWITTER_MSG[rank[0]][Math.floor(Math.random() * TWITTER_MSG[rank[0]].length)];
     const msg = pickedMsg.text;
     const img = pickedMsg.img[Math.floor(Math.random() * pickedMsg.img.length)];
 
@@ -123,7 +123,7 @@ export default class ProjectShare extends Component {
 
   render() {
     const { msg, img } = this.getShare();
-    const toTweet = `${msg}\n[http://exago.io/project/${this.props.repository}]`;
+    const toTweet = `${msg}\n[https://exago.io/project/${this.props.repository}]`;
     const gopherImage = require(`./gophers/${img}.svg`); // eslint-disable-line global-require
 
     const shareActions = [

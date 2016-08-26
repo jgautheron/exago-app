@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Card, CardTitle, CardMedia } from 'material-ui/Card';
-import ReactHighcharts from 'react-highcharts';
+import { PieChart, Pie, Cell } from 'recharts';
 
 export default class ProjectChartLinterWarnings extends Component {
   static propTypes = {
@@ -8,41 +8,7 @@ export default class ProjectChartLinterWarnings extends Component {
   };
 
   componentWillMount() {
-    this.config = {
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-      },
-      title: {
-        style: {
-          display: 'none'
-        }
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        pointFormat: '<b>{point.y}</b> warnings'
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: 'pointer',
-          dataLabels: {
-            enabled: true,
-            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-          }
-        }
-      },
-      series: [{
-        name: 'Coverage',
-        colorByPoint: true,
-        data: []
-      }]
-    };
-
+    this.data = [];
     const data = this.props.data.lintmessages;
 
     // Extract linters and the amount of warnings
@@ -57,9 +23,9 @@ export default class ProjectChartLinterWarnings extends Component {
     });
 
     Object.keys(linters).forEach((linter) => {
-      this.config.series[0].data.push({
+      this.data.push({
         name: linter,
-        y: linters[linter],
+        value: linters[linter],
       });
     });
   }
@@ -70,6 +36,27 @@ export default class ProjectChartLinterWarnings extends Component {
       fontSize: 26
     };
 
+    const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const radian = Math.PI / 180;
+    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, value }) => {
+      const radius = innerRadius + (outerRadius - innerRadius) * 1.35;
+      const x = cx + radius * Math.cos(-midAngle * radian);
+      const y = cy + radius * Math.sin(-midAngle * radian);
+
+      return (
+        <text
+          x={x}
+          y={y}
+          fill="black"
+          textAnchor={x > cx ? 'start' : 'end'}
+          dominantBaseline="central"
+          style={{ fontSize: 11, fontFamily: 'Roboto, sans-serif', fontWeight: 300 }}
+        >
+          {`${name}: ${value}`}
+        </text>
+      );
+    };
+
     return (
       <Card>
         <CardTitle
@@ -77,7 +64,21 @@ export default class ProjectChartLinterWarnings extends Component {
           titleStyle={titleStyle}
         />
         <CardMedia>
-          <ReactHighcharts config={this.config} />
+          <PieChart width={800} height={400}>
+            <Pie
+              isAnimationActive={false}
+              data={this.data}
+              cx={200}
+              cy={200}
+              outerRadius={80}
+              fill="#8884d8"
+              label={renderCustomizedLabel}
+            >
+              {
+                this.data.map((entry, index) => <Cell fill={colors[index % colors.length]} />)
+              }
+            </Pie>
+          </PieChart>
         </CardMedia>
       </Card>
     );
