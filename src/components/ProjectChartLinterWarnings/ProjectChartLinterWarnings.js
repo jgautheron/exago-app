@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Card, CardTitle, CardMedia } from 'material-ui/Card';
-import { PieChart, Pie, Cell } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 export default class ProjectChartLinterWarnings extends Component {
   static propTypes = {
@@ -64,21 +64,20 @@ export default class ProjectChartLinterWarnings extends Component {
           titleStyle={titleStyle}
         />
         <CardMedia>
-          <PieChart width={800} height={400}>
-            <Pie
-              isAnimationActive={false}
-              data={this.data}
-              cx={200}
-              cy={200}
-              outerRadius={80}
-              fill="#8884d8"
-              label={renderCustomizedLabel}
-            >
-              {
-                this.data.map((entry, index) => <Cell fill={colors[index % colors.length]} />)
-              }
-            </Pie>
-          </PieChart>
+          <ResponsiveContainer minHeight={300} minWidth={200}>
+            <PieChart>
+              <Pie
+                isAnimationActive={false}
+                data={this.data}
+                fill="#8884d8"
+                label={renderCustomizedLabel}
+              >
+                {
+                  this.data.map((entry, index) => <Cell fill={colors[index % colors.length]} />)
+                }
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
         </CardMedia>
       </Card>
     );
