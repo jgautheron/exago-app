@@ -1,10 +1,17 @@
 import React, { Component, PropTypes } from 'react';
-import { Card, CardTitle, CardMedia } from 'material-ui/Card';
+import { Card, CardMedia } from 'material-ui/Card';
+import { ProjectCardTitle } from 'components';
 import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
-export default class ProjectChartLinterWarnings extends Component {
+import { projectChartStyles } from '../ProjectChartStyles/ProjectChartStyles';
+
+@projectChartStyles
+class ProjectChartLinterWarnings extends Component {
   static propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    palette: PropTypes.object.isRequired,
+    pieColors: PropTypes.array.isRequired,
+    labelStyle: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
@@ -31,12 +38,6 @@ export default class ProjectChartLinterWarnings extends Component {
   }
 
   render() {
-    const titleStyle = {
-      fontWeight: 300,
-      fontSize: 26
-    };
-
-    const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
     const radian = Math.PI / 180;
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, value }) => {
       const radius = innerRadius + (outerRadius - innerRadius) * 1.35;
@@ -57,23 +58,21 @@ export default class ProjectChartLinterWarnings extends Component {
       );
     };
 
+    const { pieColors, palette: { primary1Color } } = this.props;
+
     return (
       <Card>
-        <CardTitle
-          title="Most warnings per linter"
-          titleStyle={titleStyle}
-        />
+        <ProjectCardTitle title="Most warnings per linter" />
         <CardMedia>
           <ResponsiveContainer minHeight={300} minWidth={200}>
             <PieChart>
               <Pie
-                isAnimationActive={false}
                 data={this.data}
-                fill="#8884d8"
+                fill={primary1Color}
                 label={renderCustomizedLabel}
               >
                 {
-                  this.data.map((entry, index) => <Cell fill={colors[index % colors.length]} />)
+                  this.data.map((entry, index) => <Cell key={index} fill={pieColors[index % pieColors.length]} />)
                 }
               </Pie>
             </PieChart>
@@ -83,3 +82,5 @@ export default class ProjectChartLinterWarnings extends Component {
     );
   }
 }
+
+export default ProjectChartLinterWarnings;

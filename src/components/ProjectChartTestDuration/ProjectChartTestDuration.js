@@ -1,65 +1,41 @@
 import React, { Component, PropTypes } from 'react';
-import { Card, CardTitle, CardMedia } from 'material-ui/Card';
-import ReactHighcharts from 'react-highcharts';
+import { Card, CardMedia } from 'material-ui/Card';
+import { ProjectCardTitle } from 'components';
+import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts';
 
+import { projectChartStyles } from '../ProjectChartStyles/ProjectChartStyles';
+
+@projectChartStyles
 export default class ProjectChartTestDuration extends Component {
   static propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    palette: PropTypes.object.isRequired,
+    labelStyle: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
-    this.config = {
-      chart: {
-        type: 'column'
-      },
-      title: {
-        style: {
-          display: 'none'
-        }
-      },
-      legend: {
-        enabled: false
-      },
-      xAxis: {
-        type: 'category',
-        categories: []
-      },
-      yAxis: {
-        title: {
-          text: 'Execution time in seconds'
-        }
-      },
-      tooltip: {
-        pointFormat: '{point.name} <b>{point.y:.2f}s</b>'
-      },
-      series: [{
-        name: 'Coverage',
-        colorByPoint: true,
-        data: []
-      }]
-    };
-
+    this.data = [];
     const data = this.props.data.projectrunner;
     data.packages.forEach((pkg) => {
-      this.config.xAxis.categories.push(pkg.name);
-      this.config.series[0].data.push(pkg.execution_time);
+      this.data.push({ name: pkg.name, coverage: pkg.execution_time });
     });
   }
 
   render() {
-    const titleStyle = {
-      fontWeight: 300,
-      fontSize: 26
-    };
-
+    const { labelStyle, palette: { primary1Color } } = this.props;
     return (
       <Card>
-        <CardTitle
-          title="Test duration per package"
-          titleStyle={titleStyle}
-        />
+        <ProjectCardTitle title="Test duration per package" />
         <CardMedia>
-          <ReactHighcharts config={this.config} />
+          <ResponsiveContainer minHeight={300} minWidth={200}>
+            <BarChart data={this.data}>
+              <XAxis dataKey="name" hide />
+              <YAxis style={labelStyle} />
+              <CartesianGrid strokeDasharray="5 5" />
+              <Tooltip />
+              <Bar dataKey="coverage" fill={primary1Color} label style={labelStyle} />
+            </BarChart>
+          </ResponsiveContainer>
         </CardMedia>
       </Card>
     );

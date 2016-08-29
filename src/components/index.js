@@ -1,6 +1,7 @@
 export SearchInput from './SearchInput/SearchInput';
 export ProjectHeader from './ProjectHeader/ProjectHeader';
 export ProjectCard from './ProjectCard/ProjectCard';
+export ProjectCardTitle from './ProjectCardTitle/ProjectCardTitle';
 export ProjectCardList from './ProjectCardList/ProjectCardList';
 export ProjectCode from './ProjectCode/ProjectCode';
 export ProjectsList from './ProjectsList/ProjectsList';

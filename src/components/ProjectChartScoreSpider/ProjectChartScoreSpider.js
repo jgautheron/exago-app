@@ -1,81 +1,52 @@
 import React, { Component, PropTypes } from 'react';
-import { Card, CardTitle, CardMedia } from 'material-ui/Card';
-import ReactHighcharts from 'react-highcharts';
-import highchartsMore from 'highcharts-more';
+import { Card, CardMedia } from 'material-ui/Card';
+import { ProjectCardTitle } from 'components';
+import { ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 
+import { projectChartStyles } from '../ProjectChartStyles/ProjectChartStyles';
+
+@projectChartStyles
 export default class ProjectChartScoreSpider extends Component {
   static propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    palette: PropTypes.object.isRequired,
+    labelStyle: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
-    highchartsMore(ReactHighcharts.Highcharts);
-
+    this.data = [];
     const criterias = {
       thirdparties: 'Third Parties',
       codestats: 'Code Stats',
       testduration: 'Test Duration',
       testcoverage: 'Test Coverage',
       checklist: 'Checklist',
-      lintmessages: 'Lint Messages'
-    };
-
-    this.config = {
-      chart: {
-        polar: true,
-        type: 'line'
-      },
-      title: {
-        style: {
-          display: 'none'
-        }
-      },
-      legend: {
-        enabled: false
-      },
-      xAxis: {
-        categories: [],
-        tickmarkPlacement: 'on',
-        lineWidth: 0
-      },
-      yAxis: {
-        gridLineInterpolation: 'polygon',
-        lineWidth: 0,
-        min: 0,
-        max: 100
-      },
-      tooltip: {
-        shared: true,
-        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.3f}</b><br/>'
-      },
-      series: [{
-        name: 'Score',
-        data: [],
-        pointPlacement: 'on'
-      }]
+      lintmessages: 'Linter Messages'
     };
 
     const data = this.props.data.score;
     data.details.forEach((criteria) => {
-      this.config.xAxis.categories.push(criterias[criteria.name]);
-      this.config.series[0].data.push(criteria.score);
+      this.data.push({
+        name: criterias[criteria.name],
+        score: criteria.score,
+      });
     });
   }
 
   render() {
-    const titleStyle = {
-      fontWeight: 300,
-      fontSize: 26
-    };
-
+    const { labelStyle, palette: { primary1Color } } = this.props;
     return (
       <Card>
-        <CardTitle
-          title="Grade distribution"
-          titleStyle={titleStyle}
-        />
+        <ProjectCardTitle title="Grade distribution" />
         <CardMedia>
-          <ReactHighcharts config={this.config} />
+          <ResponsiveContainer minHeight={300} minWidth={200}>
+            <RadarChart data={this.data}>
+              <Radar dataKey="score" stroke={primary1Color} fill={primary1Color} fillOpacity={0.9} />
+              <PolarGrid />
+              <PolarAngleAxis dataKey="name" style={labelStyle} />
+              <PolarRadiusAxis style={labelStyle} />
+            </RadarChart>
+          </ResponsiveContainer>
         </CardMedia>
       </Card>
     );
