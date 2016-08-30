@@ -7,10 +7,10 @@ export ProjectCode from './ProjectCode/ProjectCode';
 export ProjectsList from './ProjectsList/ProjectsList';
 export ProjectLoadingScreen from './ProjectLoadingScreen/ProjectLoadingScreen';
 export ProjectChartList from './ProjectChartList/ProjectChartList';
-export ProjectChartCodeCoverage from './ProjectChartCodeCoverage/ProjectChartCodeCoverage';
-export ProjectChartTestDuration from './ProjectChartTestDuration/ProjectChartTestDuration';
-export ProjectChartLinterWarnings from './ProjectChartLinterWarnings/ProjectChartLinterWarnings';
-export ProjectChartScoreSpider from './ProjectChartScoreSpider/ProjectChartScoreSpider';
+export ProjectChartCodeCoverage from './ProjectChartCodeCoverage/ProjectChartCodeCoverage'; // eslint-disable-line
+export ProjectChartTestDuration from './ProjectChartTestDuration/ProjectChartTestDuration'; // eslint-disable-line
+export ProjectChartLinterWarnings from './ProjectChartLinterWarnings/ProjectChartLinterWarnings'; // eslint-disable-line
+export ProjectChartScoreSpider from './ProjectChartScoreSpider/ProjectChartScoreSpider'; // eslint-disable-line
 export ProjectFileList from './ProjectFileList/ProjectFileList';
 export ProjectError from './ProjectError/ProjectError';
 export ProjectBadge from './ProjectBadge/ProjectBadge';
