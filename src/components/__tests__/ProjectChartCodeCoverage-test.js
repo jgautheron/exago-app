@@ -1,7 +1,8 @@
 import expect from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
-import ProjectCharts from '../ProjectChartCodeCoverage/ProjectChartCodeCoverage';
+import { ProjectChartCodeCoverage } from '../ProjectChartCodeCoverage/ProjectChartCodeCoverage';
+import theme from '../../theme';
 
 describe('ProjectChartCodeCoverage', () => {
   const names = ['foo', 'bar'];
@@ -14,18 +15,24 @@ describe('ProjectChartCodeCoverage', () => {
       ]
     }
   };
+  const props = {
+    data: mock,
+    palette: theme.palette,
+    labelStyle: {},
+  };
 
-  const projectCharts = shallow(<ProjectCharts data={mock} />);
+  const projectCharts = shallow(<ProjectChartCodeCoverage {...props} />);
 
   it('should render correctly', () => {
     expect(projectCharts).toExist();
   });
 
   it('should pass config to charts', () => {
-    const chartProps = projectCharts.find('CardMedia').children().props();
+    const chartProps = projectCharts.find('CardMedia').children().children()
+      .props();
 
-    expect(chartProps.config).toExist();
-    expect(chartProps.config.series[0].data).toEqual(coverages);
-    expect(chartProps.config.xAxis.categories).toEqual(names);
+    expect(chartProps.data).toExist();
+    expect(chartProps.data[0].coverage).toEqual(coverages[0]);
+    expect(chartProps.data[1].name).toEqual(names[1]);
   });
 });

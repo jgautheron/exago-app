@@ -1,48 +1,20 @@
 import React, { Component, PropTypes } from 'react';
-import { Card, CardTitle, CardMedia } from 'material-ui/Card';
-import ReactHighcharts from 'react-highcharts';
+import { Card, CardMedia } from 'material-ui/Card';
+import { ProjectCardTitle } from 'components';
+import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
-export default class ProjectChartLinterWarnings extends Component {
+import { projectChartStyles } from '../ProjectChartStyles/ProjectChartStyles';
+
+export class ProjectChartLinterWarnings extends Component {
   static propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    palette: PropTypes.object.isRequired,
+    pieColors: PropTypes.array.isRequired,
+    labelStyle: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
-    this.config = {
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-      },
-      title: {
-        style: {
-          display: 'none'
-        }
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        pointFormat: '<b>{point.y}</b> warnings'
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: 'pointer',
-          dataLabels: {
-            enabled: true,
-            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-          }
-        }
-      },
-      series: [{
-        name: 'Coverage',
-        colorByPoint: true,
-        data: []
-      }]
-    };
-
+    this.data = [];
     const data = this.props.data.lintmessages;
 
     // Extract linters and the amount of warnings
@@ -57,29 +29,57 @@ export default class ProjectChartLinterWarnings extends Component {
     });
 
     Object.keys(linters).forEach((linter) => {
-      this.config.series[0].data.push({
+      this.data.push({
         name: linter,
-        y: linters[linter],
+        value: linters[linter],
       });
     });
   }
 
   render() {
-    const titleStyle = {
-      fontWeight: 300,
-      fontSize: 26
+    const radian = Math.PI / 180;
+    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, value }) => {
+      const radius = innerRadius + (outerRadius - innerRadius) * 1.35;
+      const x = cx + radius * Math.cos(-midAngle * radian);
+      const y = cy + radius * Math.sin(-midAngle * radian);
+
+      return (
+        <text
+          x={x}
+          y={y}
+          fill="black"
+          textAnchor={x > cx ? 'start' : 'end'}
+          dominantBaseline="central"
+          style={{ fontSize: 11, fontFamily: 'Roboto, sans-serif', fontWeight: 300 }}
+        >
+          {`${name}: ${value}`}
+        </text>
+      );
     };
+
+    const { pieColors, palette: { primary1Color } } = this.props;
 
     return (
       <Card>
-        <CardTitle
-          title="Most warnings per linter"
-          titleStyle={titleStyle}
-        />
+        <ProjectCardTitle title="Most warnings per linter" />
         <CardMedia>
-          <ReactHighcharts config={this.config} />
+          <ResponsiveContainer minHeight={300} minWidth={200}>
+            <PieChart>
+              <Pie
+                data={this.data}
+                fill={primary1Color}
+                label={renderCustomizedLabel}
+              >
+                {
+                  this.data.map((entry, index) => <Cell key={index} fill={pieColors[index % pieColors.length]} />)
+                }
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
         </CardMedia>
       </Card>
     );
   }
 }
+
+export default projectChartStyles(ProjectChartLinterWarnings);
