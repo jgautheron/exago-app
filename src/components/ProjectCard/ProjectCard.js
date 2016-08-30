@@ -6,6 +6,7 @@ import styles from './ProjectCard.css';
 import { Card, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import ActionOpenInNew from 'material-ui/svg-icons/action/open-in-new';
+import ActionCode from 'material-ui/svg-icons/action/code';
 import HelpIcon from 'material-ui/svg-icons/action/help-outline';
 import AlertError from 'material-ui/svg-icons/alert/error';
 import Dialog from 'material-ui/Dialog';
@@ -122,7 +123,7 @@ export default class ProjectCard extends Component {
                       {this.props.extra}
                     </Dialog>
                     <IconButton tooltip={this.props.extraTooltip} tooltipPosition="bottom-left" onTouchTap={this.open('secondaryModal')}>
-                      <ActionOpenInNew color={palette.disabledColor} hoverColor={palette.textColor} />
+                      <ActionCode color={palette.disabledColor} hoverColor={palette.textColor} />
                     </IconButton>
                   </When>
                 </Choose>
