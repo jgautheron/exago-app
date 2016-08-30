@@ -5,8 +5,7 @@ import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 import { projectChartStyles } from '../ProjectChartStyles/ProjectChartStyles';
 
-@projectChartStyles
-class ProjectChartLinterWarnings extends Component {
+export class ProjectChartLinterWarnings extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     palette: PropTypes.object.isRequired,
@@ -83,4 +82,4 @@ class ProjectChartLinterWarnings extends Component {
   }
 }
 
-export default ProjectChartLinterWarnings;
+export default projectChartStyles(ProjectChartLinterWarnings);

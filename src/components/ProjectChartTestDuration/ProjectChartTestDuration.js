@@ -5,8 +5,7 @@ import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Ba
 
 import { projectChartStyles } from '../ProjectChartStyles/ProjectChartStyles';
 
-@projectChartStyles
-export default class ProjectChartTestDuration extends Component {
+export class ProjectChartTestDuration extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     palette: PropTypes.object.isRequired,
@@ -41,3 +40,5 @@ export default class ProjectChartTestDuration extends Component {
     );
   }
 }
+
+export default projectChartStyles(ProjectChartTestDuration);

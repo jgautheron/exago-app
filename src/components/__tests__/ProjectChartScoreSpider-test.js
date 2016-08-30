@@ -1,7 +1,8 @@
 import expect from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
-import ProjectChartScoreSpider from '../ProjectChartScoreSpider/ProjectChartScoreSpider';
+import { ProjectChartScoreSpider } from '../ProjectChartScoreSpider/ProjectChartScoreSpider';
+import theme from '../../theme';
 
 describe('ProjectChartScoreSpider', () => {
   const mock = {
@@ -130,18 +131,25 @@ describe('ProjectChartScoreSpider', () => {
     }
   };
 
-  const chartScoreSpider = shallow(<ProjectChartScoreSpider data={mock} />);
+  const props = {
+    data: mock,
+    palette: theme.palette,
+    labelStyle: {},
+  };
+
+  const chartScoreSpider = shallow(<ProjectChartScoreSpider {...props} />);
 
   it('should render correctly', () => {
     expect(chartScoreSpider).toExist();
   });
 
   it('should pass config to chart', () => {
-    const chartProps = chartScoreSpider.find('CardMedia').children().props();
+    const chartProps = chartScoreSpider.find('CardMedia').children()
+      .children()
+      .props();
 
-    expect(chartProps.config).toExist();
-    expect(chartProps.config.series.length, 1);
-    expect(chartProps.config.series[0].data.length)
+    expect(chartProps.data).toExist();
+    expect(chartProps.data.length)
       .toEqual(mock.score.details.length);
   });
 });

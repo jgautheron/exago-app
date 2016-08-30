@@ -309,23 +309,26 @@ const dataMock = {
 
 describe('ProjectCardList', () => {
   const pcl = shallow(<ProjectCardList data={dataMock.data} />);
+  pcl.setProps({ data: dataMock.data });
 
   it('should render correctly', () => {
     return expect(pcl).toExist();
   });
 
+  const cards = pcl.find('div > div');
+
   it('should render 8 ProjectCards', () => {
-    return expect(pcl.find('ProjectCard').length).toBe(8);
+    return expect(cards.length).toBe(8);
   });
 
   it('ProjectCards should have correct title & value', () => {
-    expect(pcl.find('ProjectCard').get(0).props.title).toBe('Total/Average Lines');
-    expect(pcl.find('ProjectCard').get(0).props.value).toBe('342 / 114');
-    expect(pcl.find('ProjectCard').get(2).props.title).toBe('Third Parties');
-    expect(pcl.find('ProjectCard').get(2).props.value).toBe(0);
+    expect(cards.at(0).children().props().title).toBe('Total/Average Lines');
+    expect(cards.at(0).children().props().value).toBe('342 / 114');
+    expect(cards.at(2).children().props().title).toBe('Third Parties');
+    expect(cards.at(2).children().props().value).toBe(0);
   });
 
-  it('should preapareData when will receive props', () => {
+  it('should prepareData when will receive props', () => {
     expect(pcl.instance().props.data.projectrunner.raw_output.gotest).toNotBe('');
 
     dataMock.data.projectrunner.raw_output.gotest = '';
@@ -338,7 +341,7 @@ describe('ProjectCardList', () => {
   });
 
   describe('getThirdParties (dataFormatter)', () => {
-    it('should return 0 when third parites doesn\'t exist', () => {
+    it('should return 0 when third parties do not exist', () => {
       expect(getThirdParties({ projectrunner: {} })).toEqual(0);
     });
   });

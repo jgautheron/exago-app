@@ -38,7 +38,6 @@ export default class ProjectCardList extends Component {
     this.cards[constants.RATING] = formatter.getRank(res);
   }
 
-
   render() {
     const rawTestOutput = this.props.data.projectrunner.raw_output.gotest;
 

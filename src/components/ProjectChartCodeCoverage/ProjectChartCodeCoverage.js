@@ -5,8 +5,7 @@ import { ProjectCardTitle } from 'components';
 
 import { projectChartStyles } from '../ProjectChartStyles/ProjectChartStyles';
 
-@projectChartStyles
-export default class ProjectChartCodeCoverage extends Component {
+export class ProjectChartCodeCoverage extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     palette: PropTypes.object.isRequired,
@@ -41,3 +40,5 @@ export default class ProjectChartCodeCoverage extends Component {
     );
   }
 }
+
+export default projectChartStyles(ProjectChartCodeCoverage);
