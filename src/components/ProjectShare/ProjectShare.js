@@ -89,7 +89,7 @@ export default class ProjectShare extends Component {
   }
 
   getShare = () => {
-    const rank = this.props.rank;
+    const rank = this.props.rank && this.props.rank[0];
 
     if (!rank) {
       return { msg: 'Your project has an error', img: 3 };

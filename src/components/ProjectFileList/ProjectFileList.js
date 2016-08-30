@@ -63,7 +63,7 @@ export default class ProjectFileList extends Component {
                 leftAvatar={
                   <Avatar
                     color={palette.primary1Color} backgroundColor={transparent}
-                    style={{ left: 8 }}
+                    style={{ left: 20, top: 19 }}
                   >
                     {item.count}
                   </Avatar>
@@ -76,7 +76,7 @@ export default class ProjectFileList extends Component {
                     leftAvatar={
                       <Avatar
                         color={palette.primary1Color} backgroundColor={transparent}
-                        style={{ left: 8 }}
+                        style={{ left: 20, top: 19 }}
                       >
                         {item.messages[linter].length}
                       </Avatar>
