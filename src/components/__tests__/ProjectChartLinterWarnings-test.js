@@ -1,7 +1,8 @@
 import expect from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
-import ProjectChartLinterWarnings from '../ProjectChartLinterWarnings/ProjectChartLinterWarnings';
+import { ProjectChartLinterWarnings } from '../ProjectChartLinterWarnings/ProjectChartLinterWarnings';
+import theme from '../../theme';
 
 describe('ProjectChartLinterWarnings', () => {
   const mock = {
@@ -15,18 +16,28 @@ describe('ProjectChartLinterWarnings', () => {
       },
     }
   };
+  const props = {
+    data: mock,
+    palette: theme.palette,
+    labelStyle: {},
+    pieColors: ['#fff', '#000'],
+  };
 
-  const chartLinters = shallow(<ProjectChartLinterWarnings data={mock} />);
+  const chartLinters = shallow(<ProjectChartLinterWarnings {...props} />);
 
   it('should render correctly', () => {
     expect(chartLinters).toExist();
   });
 
   it('should pass config to charts', () => {
-    const chartProps = chartLinters.find('CardMedia').children().props();
+    const chartProps = chartLinters.find('CardMedia').children().children()
+      .children()
+      .props();
 
-    expect(chartProps.config).toExist();
-    expect(chartProps.config.series[0].data)
-      .toEqual([{ name: 'gocyclo', y: 1 }, { name: 'vet', y: 2 }]);
+    expect(chartProps.data).toExist();
+    expect(chartProps.data[0])
+      .toEqual({ name: 'gocyclo', value: 1 });
+    expect(chartProps.data[1])
+      .toEqual({ name: 'vet', value: 2 });
   });
 });

@@ -3,13 +3,16 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './ProjectCard.css';
 
-import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import ActionOpenInNew from 'material-ui/svg-icons/action/open-in-new';
+import ActionCode from 'material-ui/svg-icons/action/code';
 import HelpIcon from 'material-ui/svg-icons/action/help-outline';
 import AlertError from 'material-ui/svg-icons/alert/error';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+
+import { ProjectCardTitle } from 'components';
 
 import { palette } from '../../theme';
 
@@ -60,11 +63,6 @@ export default class ProjectCard extends Component {
   })
 
   render() {
-    const titleStyle = {
-      fontWeight: 300,
-      fontSize: 26,
-      margin: '0 0 20px 0'
-    };
     const errorIconStyle = {
       width: 48,
       height: 48
@@ -73,10 +71,7 @@ export default class ProjectCard extends Component {
     return (
       <Card className={styles.container}>
         <div className={styles.iconsBar}></div>
-        <CardTitle
-          title={this.props.title}
-          titleStyle={titleStyle}
-        />
+        <ProjectCardTitle title={this.props.title} />
         <Choose>
           <When condition={this.props.explanation}>
             <div className={styles.leftIconContainer}>
@@ -128,7 +123,7 @@ export default class ProjectCard extends Component {
                       {this.props.extra}
                     </Dialog>
                     <IconButton tooltip={this.props.extraTooltip} tooltipPosition="bottom-left" onTouchTap={this.open('secondaryModal')}>
-                      <ActionOpenInNew color={palette.disabledColor} hoverColor={palette.textColor} />
+                      <ActionCode color={palette.disabledColor} hoverColor={palette.textColor} />
                     </IconButton>
                   </When>
                 </Choose>

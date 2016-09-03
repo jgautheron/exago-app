@@ -38,20 +38,34 @@ export default class ProjectCardList extends Component {
     this.cards[constants.RATING] = formatter.getRank(res);
   }
 
-
   render() {
     const rawTestOutput = this.props.data.projectrunner.raw_output.gotest;
 
     const SPECIFIC_PROPS = {
+      [constants.TOTAL_AVG_LOC]: {
+        explanation: 'If your AVG LOC per file is high, it\'s a sign that the separation of concepts might not be optimum',
+      },
+      [constants.RATIO_LOC_CLOC]: {
+        explanation: 'A well-commented code increases maintainability',
+      },
+      [constants.THIRD_PARTIES]: {
+        explanation: 'Third parties are like moving foundations, having too much of them impacts stability'
+      },
+      [constants.CHECKLIST_COMPLIANCE]: {
+        explanation: 'A project that scores well at the Go Checklist is a sign that its author cares',
+      },
       [constants.TESTS]: {
         extra: rawTestOutput === '' ? null : <pre>{rawTestOutput}</pre>,
         extraTitle: 'See raw output',
         extraTooltip: 'Raw tests output',
-        explanation: 'Some explanation for the test box'
+        explanation: 'How many tests your project contains',
       },
-      [constants.THIRD_PARTIES]: {
-        explanation: 'How many third parties youre using. They affect also your scoring'
-      }
+      [constants.CODE_COVERAGE]: {
+        explanation: 'The better the coverage, the less the uncertainty',
+      },
+      [constants.TEST_DURATION]: {
+        explanation: 'The faster tests can be executed, the better the coverage',
+      },
     };
 
     return (
