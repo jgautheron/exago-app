@@ -454,14 +454,10 @@ describe('ProjectCardList', () => {
         expect(popoverHtml.getThirdParties({ projectrunner: { third_parties: [] } })).toEqual('');
       });
 
-      it('should show packages info', () => {
+      it('should render ProjectThirdParties', () => {
         const mock = { projectrunner: { third_parties: ['foo', 'bar', 'moo'] } };
         const thirdParties = shallow(withTheme(popoverHtml.getThirdParties(mock)));
-        const cols = thirdParties.find('TableRowColumn');
-
-        expect(cols.at(0).children().text()).toBe(mock.projectrunner.third_parties[0]);
-        expect(cols.at(1).children().text()).toBe(mock.projectrunner.third_parties[1]);
-        expect(cols.at(2).children().text()).toBe(mock.projectrunner.third_parties[2]);
+        expect(thirdParties.find('ProjectThirdParties').length).toEqual(1);
       });
     });
 

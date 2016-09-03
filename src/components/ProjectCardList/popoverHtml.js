@@ -10,6 +10,8 @@ import {
   TableBody,
 } from 'material-ui/Table';
 
+import { ProjectThirdParties } from 'components';
+
 function isInt(value) {
   return typeof value === 'number' &&
     isFinite(value) &&
@@ -88,22 +90,7 @@ export function getThirdParties(data) {
     return '';
   }
 
-  return (
-    <Table>
-      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-        <TableRow>
-          <TableHeaderColumn>Package</TableHeaderColumn>
-        </TableRow>
-      </TableHeader>
-      <TableBody displayRowCheckbox={false}>
-      {data.projectrunner.third_parties.map((el, id) =>
-        <TableRow key={id}>
-          <TableRowColumn>{el}</TableRowColumn>
-        </TableRow>
-      )}
-      </TableBody>
-    </Table>
-  );
+  return <ProjectThirdParties data={data} />;
 }
 
 export function getChecklist(data) {
