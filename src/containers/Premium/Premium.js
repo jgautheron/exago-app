@@ -22,7 +22,7 @@ export default class About extends Component {
         </div>
         <div style={{ float: 'left', marginLeft: '30%', width: '50%', padding: '4%', paddingTop: 50, background: 'rgba(255,255,255,.9)' }}>
           <h1 className={styles.bigText}>Unleash the Gopher!</h1>
-          <h1><small>$</small>10<small>/month</small></h1>
+          <div className={styles.prizeBox}><small>$</small>10<small>/month</small></div>
           <h1 className={styles.features}>Explore Powerful Features</h1>
           <div>
             <div className={styles.featureBox}>

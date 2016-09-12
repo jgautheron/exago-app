@@ -4,6 +4,20 @@
   font-weight: bold;
 }
 
+.prizeBox {
+  font-size: 3em;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  margin-top: -20px;
+  font-weight: bold;
+  background: #f0f0f0;
+}
+
+.prizeBox small {
+  font-size: 30px;
+}
+
 .features {
   /*border-top: 2px dashed #375EAB;*/
   background: #375EAB;
