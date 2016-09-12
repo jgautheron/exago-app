@@ -20,9 +20,9 @@
 
 .icon {
   position: relative;
-  top: 4px;
+  top: -5px;
   margin-right: 10px;
-  height: 50px !important;
+  height: 70px !important;
   width: 50px !important;
   float: left;
   clear: both;

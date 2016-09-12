@@ -4,6 +4,8 @@ import styles from './Premium.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import ActionCached2 from 'material-ui/svg-icons/content/save';
 import ActionCached3 from 'material-ui/svg-icons/action/account-circle';
+import ActionCached4 from 'material-ui/svg-icons/action/language';
+import ActionCached5 from 'material-ui/svg-icons/action/assessment';
 
 import TextField from 'material-ui/TextField';
 
@@ -24,12 +26,20 @@ export default class About extends Component {
           <h1 className={styles.features}>Explore Powerful Features</h1>
           <div>
             <div className={styles.featureBox}>
-              <ActionCached2 className={styles.icon} />
+              <ActionCached4 className={styles.icon} />
               <p className={styles.featureName}>Feature no 1</p>
               <p className={styles.featureDesc}>
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+              </p>
+            </div>
+
+            <div className={styles.featureBox}>
+              <ActionCached5 className={styles.icon} />
+              <p className={styles.featureName}>Some description</p>
+              <p className={styles.featureDesc}>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                orem Ipsum has been the industry's standard dummy text ever since the 1500s.
               </p>
             </div>
 
@@ -38,18 +48,7 @@ export default class About extends Component {
               <p className={styles.featureName}>Some description</p>
               <p className={styles.featureDesc}>
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                orem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-              </p>
-            </div>
-
-            <div className={styles.featureBox}>
-              <ActionCached2 className={styles.icon} />
-              <p className={styles.featureName}>Some description</p>
-              <p className={styles.featureDesc}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                orem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                orem Ipsum has been the industry's standard dummy text ever since the 1500s.
               </p>
             </div>
 
@@ -58,8 +57,7 @@ export default class About extends Component {
               <p className={styles.featureName}>Some description</p>
               <p className={styles.featureDesc}>
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                orem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                orem Ipsum has been the industry's standard dummy text ever since the 1500s.
               </p>
             </div>
           </div>
