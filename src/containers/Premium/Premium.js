@@ -5,6 +5,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ActionCached2 from 'material-ui/svg-icons/content/save';
 import ActionCached3 from 'material-ui/svg-icons/action/account-circle';
 
+import TextField from 'material-ui/TextField';
+
+
 const gopherImg = require('../../components/ProjectShare/gophers/10.svg');
 
 export default class About extends Component {
@@ -60,8 +63,16 @@ export default class About extends Component {
               </p>
             </div>
           </div>
+
+          <hr />
+          <h1>Interested?</h1>
+          <h3>Just leave us your e-mail</h3>
+          <TextField
+            hintText="Your e-mail address"
+            style={{ marginRight: 20 }}
+          />
           <RaisedButton
-            label="UPGRAGE"
+            label="I want upgrade"
             primary
           />
         </div>
