@@ -10,8 +10,10 @@ const environment = {
 }[process.env.NODE_ENV || 'development'];
 
 module.exports = Object.assign({
+  protocol: process.env.PROTOCOL || 'http',
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
+  apiProtocol: process.env.APIPROTOCOL || 'http',
   apiHost: process.env.APIHOST || 'localhost',
   apiPort: process.env.APIPORT || 8080,
   app: {
