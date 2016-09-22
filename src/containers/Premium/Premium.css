@@ -1,7 +1,12 @@
 .bigText {
   color: #375EAB;
   font-size: 60px;
-  font-weight: bold;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.introText {
+  font-weight: 300;
 }
 
 .prizeBox {
@@ -20,6 +25,7 @@
 
 .features {
   /*border-top: 2px dashed #375EAB;*/
+  font-weight: 500;
   background: #375EAB;
   padding: 20px;
   color: #fff;
@@ -45,7 +51,7 @@
 .featureName {
   text-transform: uppercase;
   float: left;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 1.2em;
 }
 
@@ -53,4 +59,5 @@
   clear: both;
   line-height: 1.4em;
   font-size: .9em;
+  font-weight: 300;
 }
