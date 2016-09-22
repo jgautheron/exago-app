@@ -10,7 +10,9 @@ const paperStyle = {
   width: '85%',
   margin: '40px auto',
   display: 'block',
-  background: 'url(http://www.i-programmer.info/images/stories/News/2012/APR/A/goiconhalf.jpg) 87% 100% no-repeat',
+  backgroundImage: 'url(/gopherhalf.jpg)',
+  backgroundPosition: '87% 100%',
+  backgroundRepeat: 'no-repeat',
   padding: '30px 20px 50px 90px'
 };
 
