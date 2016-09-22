@@ -10,6 +10,8 @@ import config from '../../config';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
+import Stars from 'material-ui/svg-icons/action/stars';
 
 import exagoTheme from '../../theme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -61,6 +63,9 @@ export class AppPure extends Component {
               style={{ position: 'fixed', top: 0 }}
               title="exago"
               onLeftIconButtonTouchTap={this.handleToggle}
+              iconElementRight={
+                <FlatButton label="Premium" icon={<Stars />} href="/premium" />
+              }
             />
             <Drawer open={this.props.menu} docked={false} onRequestChange={this.handleToggle}>
               <MenuItem onClick={() => push('/')}>Home</MenuItem>
