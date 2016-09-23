@@ -126,7 +126,8 @@
 }
 
 .footer {
-  margin-top: 20px;
+  clear: both;
+  margin: 20px 0;
   font-size: 10px;
   font-weight: 300;
   text-align: center;
