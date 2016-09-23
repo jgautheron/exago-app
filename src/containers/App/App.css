@@ -119,3 +119,15 @@
 .appBar {
   display: flex;
 }
+
+.logo {
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 10px;
+  font-weight: 300;
+  text-align: center;
+}
