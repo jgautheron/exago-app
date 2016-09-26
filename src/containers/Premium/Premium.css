@@ -1,0 +1,63 @@
+.bigText {
+  color: #375EAB;
+  font-size: 60px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.introText {
+  font-weight: 300;
+}
+
+.prizeBox {
+  font-size: 3em;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  margin-top: -20px;
+  font-weight: bold;
+  background: #f0f0f0;
+}
+
+.prizeBox small {
+  font-size: 30px;
+}
+
+.features {
+  /*border-top: 2px dashed #375EAB;*/
+  font-weight: 500;
+  background: #375EAB;
+  padding: 20px;
+  color: #fff;
+}
+
+.featureBox {
+  padding: 2%;
+  /*background: #2be;*/
+  float: left;
+  width: 46%;
+}
+
+.icon {
+  position: relative;
+  top: -5px;
+  margin-right: 10px;
+  height: 70px !important;
+  width: 50px !important;
+  float: left;
+  clear: both;
+}
+
+.featureName {
+  text-transform: uppercase;
+  float: left;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.featureDesc {
+  clear: both;
+  line-height: 1.4em;
+  font-size: .9em;
+  font-weight: 300;
+}

@@ -10,7 +10,9 @@ const paperStyle = {
   width: '85%',
   margin: '40px auto',
   display: 'block',
-  background: 'url(http://steveperkins.com/wp-content/uploads/2014/02/gopher-head.png) 87% 100% no-repeat',
+  backgroundImage: 'url(/gopherhalf.jpg)',
+  backgroundPosition: '87% 100%',
+  backgroundRepeat: 'no-repeat',
   padding: '30px 20px 50px 90px'
 };
 

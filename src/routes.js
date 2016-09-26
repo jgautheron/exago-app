@@ -6,6 +6,7 @@ import {
   Project,
   File,
   About,
+  Premium,
   NotFound,
 } from 'containers';
 
@@ -16,6 +17,7 @@ export default () => {
       <Route path="project/*" component={Project} />
       <Route path="file/*" component={File} />
       <Route path="about" component={About} />
+      <Route path="premium" component={Premium} />
       <Route path="*" component={NotFound} status={404} />
     </Route>
   );
