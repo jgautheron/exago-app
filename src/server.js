@@ -10,6 +10,8 @@ import ApiClient from './helpers/ApiClient';
 import Html from './helpers/Html';
 import PrettyError from 'pretty-error';
 import http from 'http';
+import bodyParser from 'body-parser';
+import Spreadsheet from 'edit-google-spreadsheet';
 
 import { match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
@@ -23,9 +25,51 @@ const app = new Express();
 const server = new http.Server(app);
 
 app.use(compression());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 
 app.use(Express.static(path.join(__dirname, '..', 'static')));
+
+app.post('/premium-submit', (req, res) => {
+  const company = req.body.company;
+  const email = req.body.email;
+  const feature = req.body.feature;
+
+  Spreadsheet.load({
+    debug: true,
+    spreadsheetId: process.env.PREMIUM_SPREADSHEET_ID,
+    worksheetId: process.env.PREMIUM_WORKSHEET_ID,
+    oauth: {
+      email: process.env.PREMIUM_EMAIL,
+      keyFile: process.env.PREMIUM_KEY_FILE,
+    }
+  }, (err, spreadsheet) => {
+    if (err) {
+      res.status(500).send();
+      return;
+    }
+    spreadsheet.receive((receiveErr, rows, info) => {
+      if (receiveErr) {
+        res.status(500).send();
+        return;
+      }
+
+      spreadsheet.addVal(email, info.nextRow, 1);
+      spreadsheet.addVal(company, info.nextRow, 2);
+      spreadsheet.addVal(feature, info.nextRow, 3);
+
+      spreadsheet.send(sendErr => {
+        if (sendErr) {
+          res.status(500).send();
+          return;
+        }
+
+        res.status(204).send();
+      });
+    });
+  });
+});
 
 app.use((req, res) => {
   if (__DEVELOPMENT__) {

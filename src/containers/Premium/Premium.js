@@ -1,6 +1,10 @@
+/*  global Choose, When, Otherwise */
+
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import styles from './Premium.css';
+import request from 'superagent';
+
 import RaisedButton from 'material-ui/RaisedButton';
 import ActionCached2 from 'material-ui/svg-icons/action/code';
 import ActionCached3 from 'material-ui/svg-icons/action/done-all';
@@ -10,11 +14,45 @@ import ActionCached6 from 'material-ui/svg-icons/action/settings-ethernet';
 import ActionCached7 from 'material-ui/svg-icons/action/view-list';
 import ActionCached8 from 'material-ui/svg-icons/action/cached';
 import ActionCached9 from 'material-ui/svg-icons/action/change-history';
-import TextField from 'material-ui/TextField';
+
+import Formsy from 'formsy-react';
+import FormsyText from 'formsy-material-ui/lib/FormsyText';
 
 const gopherImg = require('../../components/ProjectShare/gophers/10.svg');
 
 export default class Premium extends Component {
+  state = {
+    canSubmit: false,
+    submitted: false,
+  };
+
+  enableButton = () => {
+    this.setState({
+      canSubmit: true,
+    });
+  }
+
+  disableButton = () => {
+    this.setState({
+      canSubmit: false,
+    });
+  }
+
+  submitForm = (data) => {
+    request
+      .post('/premium-submit')
+      .send(data)
+      .end(err => {
+        if (!err) {
+          this.setState({ submitted: true });
+        }
+      });
+  }
+
+  notifyFormError(data) {
+    console.error('Form error:', data);
+  }
+
   render() {
     return (
       <div>
@@ -105,25 +143,51 @@ export default class Premium extends Component {
           </div>
 
           <hr style={{ clear: 'both' }} />
-          <h1>Interested?</h1>
-          <p>
-            <b>Just leave us your e-mail.</b>
-            We’ll only email you once to tell you if/when this premium service will be available.
-          </p>
-          <TextField
-            hintText="Your email address"
-            style={{ marginRight: 20 }}
-          />
-          <TextField
-            hintText="Any feature we didn’t mention above you’d like to see?"
-            multiLine
-            rows={2}
-          />
-          <RaisedButton
-            style={{ marginLeft: 20 }}
-            label="I’m interested!"
-            primary
-          />
+          <Choose>
+            <When condition={this.state.submitted}>
+              Thanks for your interest!
+            </When>
+            <Otherwise>
+              <h1>Interested?</h1>
+              <p>
+                <b>Just leave us your e-mail.</b>
+                We’ll only email you once to tell you if/when this premium service will be available.
+              </p>
+
+              <Formsy.Form
+                onValid={this.enableButton}
+                onInvalid={this.disableButton}
+                onValidSubmit={this.submitForm}
+                onInvalidSubmit={this.notifyFormError}
+              >
+                <FormsyText
+                  name="email"
+                  hintText="Your email address *"
+                  style={{ marginRight: 20 }}
+                  validations="isEmail"
+                  required
+                />
+                <FormsyText
+                  name="company"
+                  hintText="Your company name"
+                  style={{ marginRight: 20 }}
+                />
+                <FormsyText
+                  name="feature"
+                  hintText="Any feature request?"
+                  multiLine
+                  rows={2}
+                />
+                <RaisedButton
+                  type="submit"
+                  style={{ marginLeft: 20 }}
+                  label="I’m interested!"
+                  disabled={!this.state.canSubmit}
+                  primary
+                />
+              </Formsy.Form>
+            </Otherwise>
+          </Choose>
         </div>
       </div>
     );
