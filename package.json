@@ -72,7 +72,10 @@
     "build": {
       "command": "webpack --verbose --colors --display-error-details --config webpack/prod.config.js",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "APIPROTOCOL": "https",
+        "APIHOST": "exago.io",
+        "APIPORT": 8080
       }
     }
   },
