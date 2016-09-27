@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Card, CardMedia } from 'material-ui/Card';
-import { ProjectCardTitle } from 'components';
+import ProjectCardTitle from '../ProjectCardTitle/ProjectCardTitle';
 import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts';
 
 import { projectChartStyles } from '../ProjectChartStyles/ProjectChartStyles';
