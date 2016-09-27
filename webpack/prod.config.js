@@ -58,8 +58,8 @@ module.exports = {
       'process.env': {
         NODE_ENV: '"production"',
         APIPROTOCOL: '"https"',
-        APIHOST: '"exago.io"',
-        APIPORT: '8080'
+        APIHOST: '"api.exago.io"',
+        APIPORT: '443'
       },
 
       __CLIENT__: true,

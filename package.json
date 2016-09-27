@@ -47,8 +47,8 @@
         "NODE_ENV": "production",
         "PORT": 3000,
         "APIPROTOCOL": "https",
-        "APIHOST": "exago.io",
-        "APIPORT": 8080
+        "APIHOST": "api.exago.io",
+        "APIPORT": 443
       }
     },
     "start-dev": {
@@ -72,10 +72,7 @@
     "build": {
       "command": "webpack --verbose --colors --display-error-details --config webpack/prod.config.js",
       "env": {
-        "NODE_ENV": "production",
-        "APIPROTOCOL": "https",
-        "APIHOST": "exago.io",
-        "APIPORT": 8080
+        "NODE_ENV": "production"
       }
     }
   },
