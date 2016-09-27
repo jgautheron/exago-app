@@ -9,8 +9,6 @@ const environment = {
   }
 }[process.env.NODE_ENV || 'development'];
 
-console.log('config.js', process.env);
-
 module.exports = Object.assign({
   protocol: process.env.PROTOCOL || 'http',
   host: process.env.HOST || 'localhost',
