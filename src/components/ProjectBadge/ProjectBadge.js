@@ -34,7 +34,7 @@ export default class ProjectBadge extends Component {
   }
 
   render() {
-    const urlPrefix = `http://${config.apiHost}:${config.apiPort}/badge`;
+    const urlPrefix = `${config.apiProtocol}://${config.apiHost}:${config.apiPort}/badge`;
     const repository = this.props.repository;
     const badges = [
       {
