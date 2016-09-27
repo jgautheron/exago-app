@@ -56,7 +56,10 @@ module.exports = {
     new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
+        NODE_ENV: '"production"',
+        APIPROTOCOL: '"https"',
+        APIHOST: '"exago.io"',
+        APIPORT: '8080'
       },
 
       __CLIENT__: true,
