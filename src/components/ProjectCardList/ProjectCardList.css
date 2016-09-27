@@ -12,3 +12,7 @@
     margin-top: 20px;
   }
 }
+
+.card:hover {
+  z-index: 10;
+}
