@@ -9,15 +9,13 @@ const environment = {
   }
 }[process.env.NODE_ENV || 'development'];
 
-console.log('config.js', process.env);
-
 module.exports = Object.assign({
-  protocol: process.env.PROTOCOL || 'http',
-  host: process.env.HOST || 'localhost',
+  protocol: environment.isProduction ? 'https' : 'http',
+  host: environment.isProduction ? 'exago.io' : 'localhost',
   port: process.env.PORT,
-  apiProtocol: process.env.APIPROTOCOL || 'http',
-  apiHost: process.env.APIHOST || 'localhost',
-  apiPort: process.env.APIPORT || 8080,
+  apiProtocol: environment.isProduction ? 'https' : 'http',
+  apiHost: environment.isProduction ? 'api.exago.io' : 'localhost',
+  apiPort: 8080,
   app: {
     title: 'Exago',
     description: 'Code quality tool that inspects your repository and reports on what could be improved',
