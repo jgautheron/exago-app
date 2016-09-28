@@ -10,8 +10,9 @@ const paperStyle = {
   width: '85%',
   margin: '40px auto',
   display: 'block',
-  backgroundImage: 'url(/gopherhalf.jpg)',
-  backgroundPosition: '87% 100%',
+  backgroundImage: 'url(/gopher01bw.svg)',
+  backgroundSize: '18%',
+  backgroundPosition: '85% 101px',
   backgroundRepeat: 'no-repeat',
   padding: '30px 20px 50px 90px'
 };
@@ -50,7 +51,6 @@ export class HomePure extends Component {
           children={
             <div>
               <h1>Check All The Things</h1>
-              <h5>Only Go repositories for now</h5>
               <SearchInput onRepositorySet={this.onRepositorySet} repository={this.props.repository} />
             </div>
           }
