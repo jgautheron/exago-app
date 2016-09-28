@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Card, CardMedia } from 'material-ui/Card';
 import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts';
-import { ProjectCardTitle } from 'components';
+import ProjectCardTitle from '../ProjectCardTitle/ProjectCardTitle';
 
 import { projectChartStyles } from '../ProjectChartStyles/ProjectChartStyles';
 

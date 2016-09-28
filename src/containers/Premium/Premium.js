@@ -80,7 +80,7 @@ export default class Premium extends Component {
               <ActionCached4 className={styles.icon} />
               <p className={styles.featureName}>Larger projects</p>
               <p className={styles.featureDesc}>
-                Priority processing up to one hour instead of five minutes.
+                Priority processing, execution up to one hour instead of five minutes.
                 Includes support for <strong>CGO</strong>.
               </p>
             </div>
@@ -100,7 +100,8 @@ export default class Premium extends Component {
               <ActionCached3 className={styles.icon} />
               <p className={styles.featureName}>Windows, ARM, BSD</p>
               <p className={styles.featureDesc}>
-                Possibility to also run tests in Windows, ARM and BSD environments.
+                Possibility to build and run tests in Windows and BSD environments,
+                with every processor architecture supported by Go: amd64, 386, arm[64], ppc64[le], mips64[le], s390x.
               </p>
             </div>
 
@@ -137,7 +138,7 @@ export default class Premium extends Component {
               <ActionCached9 className={styles.icon} />
               <p className={styles.featureName}>Predictive models</p>
               <p className={styles.featureDesc}>
-                Exago sets you on the right track by giving reachable and motivating targets to improve your score.
+                Exago sets you on the right track by giving reachable and motivating targets to improve your project quality.
               </p>
             </div>
           </div>
