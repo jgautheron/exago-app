@@ -127,41 +127,53 @@ export default class Project extends Component {
       height: 48
     };
 
+    const { repository } = this.props;
+
+    const title = `Code Quality Report for ${this.props.repository.name}`;
+
     return (
       <div>
-        <Helmet title={`Code Quality Report for ${this.props.repository.name}`} />
-        <ProjectHeader repository={this.props.repository.name} />
+        <Helmet
+          title={title}
+          meta={[
+            { property: 'og:title', content: title },
+            { property: 'og:image', content: repository.metadata.image },
+            { property: 'og:image:width', content: '40' },
+            { property: 'og:image:height', content: '40' }
+          ]}
+        />
+        <ProjectHeader repository={repository.name} />
         <Choose>
-          <When condition={this.props.repository.loading}>
+          <When condition={repository.loading}>
             <ProjectLoadingScreen duration={this.getLoadingDuration()} />
           </When>
-          <When condition={this.props.repository.error}>
+          <When condition={repository.error}>
             <div className={styles.errorMessage}>
               <AlertError style={bigIconStyle} />
               <p className={styles.errorMessage__text}>
                 Something went wrong!<br />
-                {this.props.repository.error.message}
+                {repository.error.message}
               </p>
             </div>
           </When>
           <Otherwise>
             <Choose>
               <When condition={this.hasProcessingError()}>
-                <ProjectError {...this.props.repository.results.projectrunner} />
+                <ProjectError {...repository.results.projectrunner} />
               </When>
             </Choose>
             <div>
               <div className={styles.share}>
                 <ProjectShare
-                  repository={this.props.repository.name}
-                  rank={this.props.repository.results.score.rank}
+                  repository={repository.name}
+                  rank={repository.results.score.rank}
                 />
               </div>
               <div className={styles.badge}>
-                <ProjectBadge repository={this.props.repository.name} />
+                <ProjectBadge repository={repository.name} />
               </div>
               <div className={styles.update}>
-                <span className={styles.update__text}>Updated <TimeAgo date={this.props.repository.results.last_update} /></span>
+                <span className={styles.update__text}>Updated <TimeAgo date={repository.results.last_update} /></span>
                 <IconButton
                   tooltip="Refresh Statistics"
                   tooltipPosition="bottom-center"
@@ -171,11 +183,11 @@ export default class Project extends Component {
                   <ActionCached color={palette.disabledColor} hoverColor={palette.textColor} />
                 </IconButton>
               </div>
-              <ProjectCardList data={this.props.repository.results} />
+              <ProjectCardList data={repository.results} />
               <Choose>
                 <When condition={this.state.showDetails}>
-                  <ProjectChartList data={this.props.repository.results} />
-                  <ProjectFileList data={this.props.repository.results} repository={this.props.repository.name} />
+                  <ProjectChartList data={repository.results} />
+                  <ProjectFileList data={repository.results} repository={repository.name} />
                 </When>
                 <Otherwise>
                   <Choose>
