@@ -87,7 +87,8 @@ export default class Project extends Component {
   }
 
   hasProcessingError() {
-    if (this.props.repository.results.projectrunner.hasOwnProperty('error')) {
+    const { errors } = this.props.repository.results.projectrunner;
+    if (errors.goget !== '' || errors.gotest !== '') {
       return true;
     }
 
@@ -156,7 +157,10 @@ export default class Project extends Component {
           <Otherwise>
             <Choose>
               <When condition={this.hasProcessingError()}>
-                <ProjectError {...repository.results.projectrunner} />
+                <ProjectError
+                  errors={repository.results.projectrunner.errors}
+                  output={repository.results.projectrunner.raw_output}
+                />
               </When>
             </Choose>
             <div>
