@@ -39,7 +39,7 @@ export class ProjectChartLinterWarnings extends Component {
   render() {
     const radian = Math.PI / 180;
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, value }) => {
-      const radius = innerRadius + (outerRadius - innerRadius) * 1.35;
+      const radius = innerRadius + (outerRadius - innerRadius) * 1.25;
       const x = cx + radius * Math.cos(-midAngle * radian);
       const y = cy + radius * Math.sin(-midAngle * radian);
 

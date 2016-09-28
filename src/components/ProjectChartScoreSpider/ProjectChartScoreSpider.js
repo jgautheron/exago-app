@@ -36,7 +36,7 @@ export class ProjectChartScoreSpider extends Component {
     const { labelStyle, palette: { primary1Color } } = this.props;
     return (
       <Card>
-        <ProjectCardTitle title="Grade distribution" />
+        <ProjectCardTitle title="Score distribution" />
         <CardMedia>
           <ResponsiveContainer minHeight={300} minWidth={200}>
             <RadarChart data={this.data}>

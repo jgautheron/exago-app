@@ -137,9 +137,6 @@ export default class Project extends Component {
           title={title}
           meta={[
             { property: 'og:title', content: title },
-            { property: 'og:image', content: repository.metadata.image },
-            { property: 'og:image:width', content: '40' },
-            { property: 'og:image:height', content: '40' }
           ]}
         />
         <ProjectHeader repository={repository.name} />
