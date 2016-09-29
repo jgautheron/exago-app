@@ -15,12 +15,25 @@ export default class ProjectChartList extends Component {
     data: PropTypes.object.isRequired
   };
 
+  hasMoreThanOnePackage() {
+    const { data } = this.props;
+    if (!Array.isArray(data.projectrunner.packages)) {
+      return false;
+    }
+    return data.projectrunner.packages.length > 1;
+  }
+
+  hasLintMessages() {
+    const { data } = this.props;
+    return Object.keys(data.lintmessages).length;
+  }
+
   render() {
     const { data } = this.props;
     return (
       <div>
         <div className={styles.row}>
-          <If condition={data.projectrunner.packages.length > 1}>
+          <If condition={this.hasMoreThanOnePackage()}>
             <div className={styles.card}>
               <ProjectChartCodeCoverage data={data} />
             </div>
@@ -28,7 +41,7 @@ export default class ProjectChartList extends Component {
               <ProjectChartTestDuration data={data} />
             </div>
           </If>
-          <If condition={Object.keys(data.lintmessages).length}>
+          <If condition={this.hasLintMessages()}>
             <div className={styles.card}>
               <ProjectChartLinterWarnings data={data} />
             </div>
