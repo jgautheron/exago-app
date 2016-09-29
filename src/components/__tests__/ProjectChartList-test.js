@@ -7,9 +7,9 @@ import styles from '../ProjectChartList/ProjectChartList.css';
 describe('ProjectChartList', () => {
   const mock = {
     projectrunner: {
-      packages: [],
-      lintmessages: {},
-    }
+      packages: ['foo', 'bar'],
+    },
+    lintmessages: {},
   };
 
   const chartList = shallow(<ProjectChartList data={mock} />);
