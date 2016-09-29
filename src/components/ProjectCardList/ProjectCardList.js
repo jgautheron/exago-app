@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 
 import { ProjectCard } from 'components';
+import IconButton from 'material-ui/IconButton';
+import ActionDone from 'material-ui/svg-icons/action/done';
+import ContentClear from 'material-ui/svg-icons/content/clear';
+
 import * as formatter from './dataFormatter';
 import * as html from './popoverHtml';
 import * as constants from './constants';
@@ -24,7 +28,7 @@ export default class ProjectCardList extends Component {
     const {
       coverageMean,
       durationMean,
-      testsPassed, // eslint-disable-line no-unused-vars
+      testsPassed,
     } = formatter.getTestResults(res);
 
     this.cards = {};
@@ -32,7 +36,16 @@ export default class ProjectCardList extends Component {
     this.cards[constants.RATIO_LOC_CLOC] = formatter.getRatioLines(res);
     this.cards[constants.THIRD_PARTIES] = formatter.getThirdParties(res);
     this.cards[constants.CHECKLIST_COMPLIANCE] = formatter.getChecklistCompliance(res);
-    this.cards[constants.TESTS] = formatter.getTestsCount(res);
+
+    const passedIcon = <IconButton tooltip="Congrats! All tests passed"><ActionDone /></IconButton>;
+    const failedIcon = <IconButton tooltip="Oops! At least one test failed"><ContentClear /></IconButton>;
+    this.cards[constants.TESTS] = (
+      <span>
+        {formatter.getTestsCount(res)}
+        {testsPassed ? passedIcon : failedIcon}
+      </span>
+    );
+
     this.cards[constants.CODE_COVERAGE] = coverageMean;
     this.cards[constants.TEST_DURATION] = durationMean;
     this.cards[constants.RATING] = formatter.getRank(res);

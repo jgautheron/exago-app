@@ -45,6 +45,11 @@ export default class ProjectFileList extends Component {
         left: 2
       }
     };
+
+    if (!this.data.length) {
+      return <div />;
+    }
+
     return (
       <Card>
         <CardTitle

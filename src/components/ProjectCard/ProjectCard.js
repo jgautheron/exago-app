@@ -21,6 +21,7 @@ export default class ProjectCard extends Component {
     title: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([
       PropTypes.string,
+      PropTypes.object,
       PropTypes.number
     ]),
     children: PropTypes.oneOfType([
