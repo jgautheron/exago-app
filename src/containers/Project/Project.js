@@ -130,7 +130,7 @@ export default class Project extends Component {
 
     const { repository } = this.props;
 
-    const title = `Code Quality Report for ${this.props.repository.name}`;
+    const title = `Code quality report for ${this.props.repository.name}`;
 
     return (
       <div>

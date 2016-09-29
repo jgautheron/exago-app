@@ -9,7 +9,7 @@ const environment = {
   }
 }[process.env.NODE_ENV || 'development'];
 
-const desc = 'Go code quality reports';
+const desc = 'Go quality reports';
 
 module.exports = Object.assign({
   protocol: process.env.PROTOCOL || 'http',
@@ -31,11 +31,11 @@ module.exports = Object.assign({
         { property: 'og:locale', content: 'en_US' },
         { property: 'og:title', content: 'Code quality reports' },
         { property: 'og:description', content: desc },
-        { property: 'og:card', content: 'summary' },
+        { property: 'og:card', content: desc },
         { property: 'og:site', content: '@exago.io' },
         { property: 'og:creator', content: '@exago.io' },
-        { property: 'og:image:width', content: '120' },
-        { property: 'og:image:height', content: '50' }
+        { property: 'og:image:width', content: '192' },
+        { property: 'og:image:height', content: '192' }
       ]
     }
   }
