@@ -17,10 +17,9 @@ export function getThirdParties(data) {
 }
 
 export function getChecklistCompliance(data) {
-  if (!data.projectrunner.hasOwnProperty('checklist')) {
+  if (!data.projectrunner.hasOwnProperty('checklist') || !Array.isArray(data.projectrunner.checklist.Passed)) {
     return '';
   }
-
   const results = data.projectrunner;
   const checklistTotalItems = results.checklist.Passed.length + results.checklist.Failed.length;
   return `${results.checklist.Passed.length} / ${checklistTotalItems}`;
@@ -31,7 +30,7 @@ export function getTestsCount(data) {
 }
 
 export function getTestResults(data) {
-  if (!data.projectrunner.hasOwnProperty('packages')) {
+  if (!data.projectrunner.hasOwnProperty('packages') || !Array.isArray(data.projectrunner.packages)) {
     return {
       coverageMean: '',
       durationMean: '',
