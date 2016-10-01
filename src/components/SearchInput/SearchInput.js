@@ -34,7 +34,7 @@ export default class SearchInput extends Component {
       return;
     }
 
-    let val = this.state.value.trim().toLowerCase();
+    let val = this.state.value.trim();
     val = val.replace(/https?:\/\/(www\.)?/, '');
 
     // empty value
