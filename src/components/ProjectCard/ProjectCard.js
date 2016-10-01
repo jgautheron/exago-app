@@ -84,11 +84,12 @@ export default class ProjectCard extends Component {
             <div className={styles.leftIconContainer}>
               <IconButton
                 style={{ cursor: 'help' }}
+                className={styles.explanationBtn}
                 tooltip={
                   <span dangerouslySetInnerHTML={{ __html: explanation }} />
                 }
                 tooltipPosition="bottom-right"
-                tooltipStyles={{ fontSize: 11, top: 25 }}
+                tooltipStyles={{ fontSize: 11, top: 30 }}
               >
                 <HelpIcon color={palette.disabledColor} hoverColor={palette.textColor} />
               </IconButton>

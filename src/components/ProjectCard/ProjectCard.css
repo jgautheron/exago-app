@@ -33,3 +33,9 @@
   composes: iconsContainer;
   left: 0;
 }
+
+.explanationBtn > div > div {
+  line-height: 1.6em !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
