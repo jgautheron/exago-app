@@ -17,3 +17,9 @@
   top: 6px;
   margin-right: 10px;
 }
+
+.listItemRating {
+  top: 8px !important;
+  right: 0px !important;
+  line-height: 40px;
+}

@@ -85,7 +85,7 @@ export default class ProjectCard extends Component {
               <IconButton
                 style={{ cursor: 'help' }}
                 tooltip={
-                  <p dangerouslySetInnerHTML={{ __html: explanation }} />
+                  <span dangerouslySetInnerHTML={{ __html: explanation }} />
                 }
                 tooltipPosition="bottom-right"
               >
