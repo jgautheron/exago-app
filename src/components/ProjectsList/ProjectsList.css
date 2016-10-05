@@ -19,7 +19,9 @@
 }
 
 .listItemRating {
-  top: 8px !important;
+  display: flex;
+  height: auto !important;
+  top: 0px !important;
+  bottom: 0px !important;
   right: 0px !important;
-  line-height: 40px;
 }
