@@ -4,8 +4,13 @@ import { mount } from 'enzyme';
 import ProjectError from '../ProjectError/ProjectError';
 import { withTheme } from './WithTheme';
 
+const props = {
+  errors: { goget: '', gotest: '' },
+  output: { goget: '', gotest: '' },
+};
+
 describe('ProjectBadge', () => {
-  const wrapper = mount(withTheme(<ProjectError />));
+  const wrapper = mount(withTheme(<ProjectError {...props} />));
   const projectError = wrapper.find('ProjectError').get(0);
   it('should render correctly', () => {
     expect(projectError).toExist();

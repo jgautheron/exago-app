@@ -1,6 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 
 import { ProjectCard } from 'components';
+import IconButton from 'material-ui/IconButton';
+import ActionDone from 'material-ui/svg-icons/action/done';
+import ActionClock from 'material-ui/svg-icons/action/watch-later';
+import ContentClear from 'material-ui/svg-icons/content/clear';
+
 import * as formatter from './dataFormatter';
 import * as html from './popoverHtml';
 import * as constants from './constants';
@@ -20,22 +25,136 @@ export default class ProjectCardList extends Component {
     this.prepareData(nextProps.data);
   }
 
+  getCardValue(res, name) {
+    const timeoutClock = <ActionClock style={{ width: 48, height: 48 }} />;
+    let contents = {};
+    switch (name) {
+      case constants.TOTAL_AVG_LOC: {
+        let value = formatter.getAverageLines(res);
+        if (this.taskDidTimeout(res, name)) {
+          value = timeoutClock;
+        }
+        contents = {
+          value,
+        };
+        break;
+      }
+      case constants.RATIO_LOC_CLOC: {
+        let value = formatter.getRatioLines(res);
+        if (this.taskDidTimeout(res, name)) {
+          value = timeoutClock;
+        }
+        contents = {
+          value,
+        };
+        break;
+      }
+      case constants.THIRD_PARTIES: {
+        let value = formatter.getThirdParties(res);
+        if (this.taskDidTimeout(res, name)) {
+          value = timeoutClock;
+        }
+        contents = {
+          value,
+          popover: html.getThirdParties(res),
+        };
+        break;
+      }
+      case constants.CHECKLIST_COMPLIANCE: {
+        let value = formatter.getChecklistCompliance(res);
+        if (this.taskDidTimeout(res, name)) {
+          value = timeoutClock;
+        }
+        contents = {
+          value,
+          popover: html.getChecklist(res),
+        };
+        break;
+      }
+      case constants.TESTS: {
+        const passedIcon = <IconButton tooltip="Congrats! All tests passed"><ActionDone /></IconButton>;
+        const failedIcon = <IconButton tooltip="Oops! At least one test failed"><ContentClear /></IconButton>;
+        let value = (
+          <span>
+            {formatter.getTestsCount(res)}
+            {this.testResults.testsPassed ? passedIcon : failedIcon}
+          </span>
+        );
+        if (this.taskDidTimeout(res, name)) {
+          value = timeoutClock;
+        }
+        contents = {
+          value,
+          popover: html.getTestList(res),
+        };
+        break;
+      }
+      case constants.CODE_COVERAGE: {
+        let value = this.testResults.coverageMean;
+        if (this.taskDidTimeout(res, name)) {
+          value = timeoutClock;
+        }
+        contents = {
+          value,
+          popover: html.getTestCoverage(res),
+        };
+        break;
+      }
+      case constants.TEST_DURATION: {
+        let value = this.testResults.durationMean;
+        if (this.taskDidTimeout(res, name)) {
+          value = timeoutClock;
+        }
+        contents = {
+          value,
+          popover: html.getTestDuration(res),
+        };
+        break;
+      }
+      case constants.RATING: {
+        let value = formatter.getRank(res);
+        if (res.errors && Object.keys(res.errors).length > 0) {
+          value = '';
+        }
+        contents = {
+          value,
+          popover: html.getScoreDetails(this.props.data),
+        };
+        break;
+      }
+      default:
+        // do nothing
+    }
+    return contents;
+  }
+
+  taskDidTimeout(res, name) {
+    switch (name) {
+      case constants.THIRD_PARTIES:
+      case constants.CHECKLIST_COMPLIANCE:
+      case constants.CODE_COVERAGE:
+      case constants.TEST_DURATION:
+        return res.errors && res.errors.hasOwnProperty('projectrunner') &&
+          res.errors.projectrunner === 'The analysis timed out';
+      case constants.TOTAL_AVG_LOC:
+      case constants.RATIO_LOC_CLOC:
+      case constants.TESTS:
+        return res.errors && res.errors.hasOwnProperty('codestats') &&
+          res.errors.codestats === 'The analysis timed out';
+      default:
+        // do nothing
+    }
+    return false;
+  }
+
   prepareData(res) {
-    const {
-      coverageMean,
-      durationMean,
-      testsPassed, // eslint-disable-line no-unused-vars
-    } = formatter.getTestResults(res);
+    this.testResults = formatter.getTestResults(res);
 
     this.cards = {};
-    this.cards[constants.TOTAL_AVG_LOC] = formatter.getAverageLines(res);
-    this.cards[constants.RATIO_LOC_CLOC] = formatter.getRatioLines(res);
-    this.cards[constants.THIRD_PARTIES] = formatter.getThirdParties(res);
-    this.cards[constants.CHECKLIST_COMPLIANCE] = formatter.getChecklistCompliance(res);
-    this.cards[constants.TESTS] = formatter.getTestsCount(res);
-    this.cards[constants.CODE_COVERAGE] = coverageMean;
-    this.cards[constants.TEST_DURATION] = durationMean;
-    this.cards[constants.RATING] = formatter.getRank(res);
+    Object.keys(constants).forEach(constant => {
+      const cardTitle = constants[constant];
+      this.cards[cardTitle] = this.getCardValue(res, cardTitle);
+    });
   }
 
   render() {
@@ -72,31 +191,8 @@ export default class ProjectCardList extends Component {
       <div className={styles.row}>
         {Object.keys(this.cards).map((key, id) =>
           <div className={styles.card} key={id}>
-            <ProjectCard title={key} value={this.cards[key]} {...SPECIFIC_PROPS[key]}>
-              {(() => {
-                switch (key) {
-                  case constants.THIRD_PARTIES:
-                    return html.getThirdParties(this.props.data);
-
-                  case constants.CHECKLIST_COMPLIANCE:
-                    return html.getChecklist(this.props.data);
-
-                  case constants.TESTS:
-                    return html.getTestList(this.props.data);
-
-                  case constants.CODE_COVERAGE:
-                    return html.getTestCoverage(this.props.data);
-
-                  case constants.TEST_DURATION:
-                    return html.getTestDuration(this.props.data);
-
-                  case constants.RATING:
-                    return html.getScoreDetails(this.props.data);
-
-                  default:
-                    return '';
-                }
-              })()}
+            <ProjectCard title={key} value={this.cards[key].value} {...SPECIFIC_PROPS[key]}>
+              {this.cards[key].popover}
             </ProjectCard>
           </div>
         )}

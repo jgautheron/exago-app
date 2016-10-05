@@ -4,14 +4,24 @@ import FlatButton from 'material-ui/FlatButton';
 
 export default class ProjectError extends Component {
   static propTypes = {
-    type: PropTypes.string.isRequired,
-    error: PropTypes.string.isRequired,
-    output: PropTypes.string
+    errors: PropTypes.object.isRequired,
+    output: PropTypes.object
   };
 
   state = {
     showDialog: true,
   };
+
+  getError() {
+    const { errors, output } = this.props;
+    if (errors.goget !== '') {
+      return { name: 'goget', message: errors.goget, output: output.goget };
+    }
+    if (errors.gotest !== '') {
+      return { name: 'gotest', message: errors.gotest, output: output.gotest };
+    }
+    return {};
+  }
 
   closeDialog = () => {
     this.setState({
@@ -20,6 +30,7 @@ export default class ProjectError extends Component {
   }
 
   render() {
+    const processingError = this.getError();
     return (
       <Dialog
         title="Could not run Exago"
@@ -36,9 +47,9 @@ export default class ProjectError extends Component {
         onRequestClose={this.closeDialog}
       >
         <p style={{ paddingTop: 10 }}>
-          An error occurred while we were running {this.props.type}: <b>{this.props.error}</b><br />
+          An error occurred while we were running {processingError.name}: <b>{processingError.message}</b><br />
           Here’s the verbose output:
-          <pre>{this.props.output}</pre>
+          <pre>{processingError.output}</pre>
           A few reasons why we might have this issue:
           <ol>
             <li>The project is using CGO</li>

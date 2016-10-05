@@ -68,7 +68,7 @@ export default class Premium extends Component {
               <ActionCached5 className={styles.icon} />
               <p className={styles.featureName}>Progress Comparison</p>
               <p className={styles.featureDesc}>
-                Compare the evolution of your project based on two branches, commits or dates.
+                Compare the evolution of your project based on two branches, revisions or dates.
               </p>
             </div>
 
@@ -94,9 +94,9 @@ export default class Premium extends Component {
 
             <div className={styles.featureBox}>
               <ActionCached3 className={styles.icon} />
-              <p className={styles.featureName}>Windows, ARM, BSD</p>
+              <p className={styles.featureName}>Multi-environment</p>
               <p className={styles.featureDesc}>
-                Possibility to build and run tests in Windows and BSD environments,
+                Possibility to build and run tests in Linux, Windows and BSD environments,
                 with every processor architecture supported by Go: amd64, 386, arm[64], ppc64[le], mips64[le], s390x.
               </p>
             </div>

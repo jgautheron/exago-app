@@ -1,6 +1,7 @@
 /*  global Choose, When, Otherwise */
 
 import React, { Component, PropTypes } from 'react';
+import wrap from 'word-wrap';
 import styles from './ProjectCard.css';
 
 import { Card, CardText } from 'material-ui/Card';
@@ -21,6 +22,7 @@ export default class ProjectCard extends Component {
     title: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([
       PropTypes.string,
+      PropTypes.object,
       PropTypes.number
     ]),
     children: PropTypes.oneOfType([
@@ -68,6 +70,11 @@ export default class ProjectCard extends Component {
       height: 48
     };
 
+    let explanation = '';
+    if (this.props.explanation) {
+      explanation = wrap(this.props.explanation, { width: 50, newline: '<br />' });
+    }
+
     return (
       <Card className={styles.container}>
         <div className={styles.iconsBar}></div>
@@ -75,7 +82,15 @@ export default class ProjectCard extends Component {
         <Choose>
           <When condition={this.props.explanation}>
             <div className={styles.leftIconContainer}>
-              <IconButton style={{ cursor: 'help' }} tooltip={this.props.explanation} tooltipPosition="bottom-right">
+              <IconButton
+                style={{ cursor: 'help' }}
+                className={styles.explanationBtn}
+                tooltip={
+                  <span dangerouslySetInnerHTML={{ __html: explanation }} />
+                }
+                tooltipPosition="bottom-right"
+                tooltipStyles={{ fontSize: 11, top: 30 }}
+              >
                 <HelpIcon color={palette.disabledColor} hoverColor={palette.textColor} />
               </IconButton>
             </div>

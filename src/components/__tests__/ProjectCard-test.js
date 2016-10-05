@@ -44,7 +44,12 @@ describe('ProjectCard', () => {
   );
   it('should have help icon with explanation', () => {
     const helpContainer = cardWithExplanation.find(`.${styles.leftIconContainer.split(' ').join('.')}`);
-    expect(helpContainer.childAt(0).prop('tooltip')).toBe(extraProps.explanation);
+    expect(
+      // eslint-disable-next-line
+      helpContainer
+        .childAt(0).prop('tooltip').props.dangerouslySetInnerHTML
+        .__html.includes(extraProps.explanation)
+    ).toBeTruthy();
   });
 
 

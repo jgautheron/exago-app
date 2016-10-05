@@ -65,12 +65,13 @@ export default class ProjectsList extends Component {
                 {this.props.data.map((repo, idx) =>
                   <ListItem
                     key={idx}
+                    innerDivStyle={{ paddingTop: 20 }}
                     onTouchTap={() => push(`/project/${repo.name}`)}
                     primaryText={<div style={style.primaryText}>{repo.name.replace('github.com/', '')}</div>}
                     secondaryTextLines={2}
                     secondaryText={repo.description}
                     rightAvatar={
-                      <Avatar color={blueA200} backgroundColor={transparent} style={{ right: 8 }}>
+                      <Avatar color={blueA200} backgroundColor={transparent} className={styles.listItemRating}>
                         {repo.rank}
                       </Avatar>
                     }

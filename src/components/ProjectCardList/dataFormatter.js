@@ -27,7 +27,7 @@ export function getTestsCount(data) {
 }
 
 export function getTestResults(data) {
-  if (!data.projectrunner.hasOwnProperty('packages')) {
+  if (!data.projectrunner.hasOwnProperty('packages') || !Array.isArray(data.projectrunner.packages)) {
     return {
       coverageMean: '',
       durationMean: '',

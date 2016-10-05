@@ -26,6 +26,7 @@ function formatScore(score) {
 export function getTestList(data) {
   if (
     !data.projectrunner.hasOwnProperty('packages') ||
+    !Array.isArray(data.projectrunner.packages) ||
     data.projectrunner.packages.length === 0
   ) {
     return '';
@@ -94,7 +95,7 @@ export function getThirdParties(data) {
 }
 
 export function getChecklist(data) {
-  if (!data.projectrunner.hasOwnProperty('checklist')) {
+  if (!data.projectrunner.hasOwnProperty('checklist') || !Array.isArray(data.projectrunner.checklist.Passed)) {
     return '';
   }
 
@@ -180,6 +181,7 @@ export function getChecklist(data) {
 export function getTestCoverage(data) {
   if (
     !data.projectrunner.hasOwnProperty('packages') ||
+    !Array.isArray(data.projectrunner.packages) ||
     data.projectrunner.packages.length === 0
   ) {
     return '';
@@ -212,6 +214,7 @@ export function getTestCoverage(data) {
 export function getTestDuration(data) {
   if (
     !data.projectrunner.hasOwnProperty('packages') ||
+    !Array.isArray(data.projectrunner.packages) ||
     data.projectrunner.packages.length === 0
   ) {
     return '';

@@ -127,7 +127,8 @@
     "superagent": "^1.8.2",
     "url-loader": "^0.5.7",
     "warning": "^2.1.0",
-    "webpack-isomorphic-tools": "^2.2.18"
+    "webpack-isomorphic-tools": "^2.2.18",
+    "word-wrap": "^1.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.3",
