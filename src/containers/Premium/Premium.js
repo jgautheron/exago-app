@@ -49,10 +49,6 @@ export default class Premium extends Component {
       });
   }
 
-  notifyFormError(data) {
-    console.error('Form error:', data);
-  }
-
   render() {
     return (
       <div>
@@ -159,7 +155,6 @@ export default class Premium extends Component {
                 onValid={this.enableButton}
                 onInvalid={this.disableButton}
                 onValidSubmit={this.submitForm}
-                onInvalidSubmit={this.notifyFormError}
               >
                 <FormsyText
                   name="email"

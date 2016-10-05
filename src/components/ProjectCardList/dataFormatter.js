@@ -10,20 +10,16 @@ export function getRatioLines(data) {
 }
 
 export function getThirdParties(data) {
-  if (!data.projectrunner.third_parties) {
+  if (!data.projectrunner.thirdparties.data) {
     return 0;
   }
-  return data.projectrunner.third_parties.length;
+  return data.projectrunner.thirdparties.data.length;
 }
 
 export function getChecklistCompliance(data) {
-  if (!data.projectrunner.hasOwnProperty('checklist')) {
-    return '';
-  }
-
-  const results = data.projectrunner;
-  const checklistTotalItems = results.checklist.Passed.length + results.checklist.Failed.length;
-  return `${results.checklist.Passed.length} / ${checklistTotalItems}`;
+  const results = data.projectrunner.goprove.data;
+  const checklistTotalItems = results.passed.length + results.failed.length;
+  return `${results.passed.length} / ${checklistTotalItems}`;
 }
 
 export function getTestsCount(data) {

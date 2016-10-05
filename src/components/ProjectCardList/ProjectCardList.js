@@ -39,7 +39,7 @@ export default class ProjectCardList extends Component {
   }
 
   render() {
-    const rawTestOutput = this.props.data.projectrunner.raw_output.gotest;
+    const rawTestOutput = this.props.data.projectrunner.test.raw_output;
 
     const SPECIFIC_PROPS = {
       [constants.TOTAL_AVG_LOC]: {
