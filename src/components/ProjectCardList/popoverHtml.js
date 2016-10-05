@@ -24,7 +24,7 @@ function formatScore(score) {
 }
 
 export function getTestList(data) {
-  if (!data.projectrunner.test.data) {
+  if (!data.projectrunner.test.data.length) {
     return '';
   }
 
@@ -83,7 +83,7 @@ export function getScoreDetails(data) {
 }
 
 export function getThirdParties(data) {
-  if (!data.projectrunner.thirdparties.data) {
+  if (!data.projectrunner.thirdparties.data.length) {
     return '';
   }
 
@@ -175,7 +175,7 @@ export function getChecklist(data) {
 }
 
 export function getTestCoverage(data) {
-  if (!data.projectrunner.coverage.data.packages) {
+  if (!data.projectrunner.coverage.data.packages.length) {
     return '';
   }
 
@@ -204,7 +204,7 @@ export function getTestCoverage(data) {
 }
 
 export function getTestDuration(data) {
-  if (!data.projectrunner.test.data) {
+  if (!data.projectrunner.test.data.length) {
     return '';
   }
 

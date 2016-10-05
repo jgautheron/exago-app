@@ -5,9 +5,18 @@ import ProjectChartList from '../ProjectChartList/ProjectChartList';
 import styles from '../ProjectChartList/ProjectChartList.css';
 
 describe('ProjectChartList', () => {
+  const names = ['foo', 'bar'];
+  const coverages = [50, 10];
   const mock = {
     projectrunner: {
-      packages: ['foo', 'bar'],
+      coverage: {
+        data: {
+          packages: [
+            { name: names[0], coverage: coverages[0] },
+            { name: names[1], coverage: coverages[1] }
+          ],
+        }
+      }
     },
     lintmessages: {},
   };

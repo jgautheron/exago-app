@@ -9,10 +9,14 @@ describe('ProjectChartCodeCoverage', () => {
   const coverages = [50, 10];
   const mock = {
     projectrunner: {
-      packages: [
-        { name: names[0], coverage: coverages[0] },
-        { name: names[1], coverage: coverages[1] }
-      ]
+      coverage: {
+        data: {
+          packages: [
+            { name: names[0], coverage: coverages[0] },
+            { name: names[1], coverage: coverages[1] }
+          ],
+        }
+      }
     }
   };
   const props = {

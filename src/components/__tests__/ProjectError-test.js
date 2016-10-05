@@ -5,8 +5,11 @@ import ProjectError from '../ProjectError/ProjectError';
 import { withTheme } from './WithTheme';
 
 const props = {
-  errors: { goget: '', gotest: '' },
-  output: { goget: '', gotest: '' },
+  results: { projectrunner: {
+    download: {
+      error: 'Could not download repository'
+    }
+  } },
 };
 
 describe('ProjectBadge', () => {
