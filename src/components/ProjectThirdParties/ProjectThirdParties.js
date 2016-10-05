@@ -16,14 +16,13 @@ import { formatUrl } from '../../helpers/ApiClient';
 
 export default class ProjectThirdParties extends Component {
   static propTypes = {
-    data: PropTypes.object.isRequired
+    thirdParties: PropTypes.array.isRequired
   }
 
   state = {};
 
-
   componentWillMount() {
-    const thirdParties = this.props.data.projectrunner.third_parties;
+    const { thirdParties } = this.props;
 
     thirdParties.forEach((thirdPartyRepo) => {
       fetch(formatUrl(`/cached/${thirdPartyRepo}`)).then(res => {
@@ -45,7 +44,7 @@ export default class ProjectThirdParties extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { thirdParties } = this.props;
 
     return (
       <Table>
@@ -56,7 +55,7 @@ export default class ProjectThirdParties extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-          {data.projectrunner.third_parties.map((repoPath, id) =>
+          {thirdParties.map((repoPath, id) =>
             <TableRow key={id}>
               <TableRowColumn>
               {this.state[repoPath] !== 'error' ?

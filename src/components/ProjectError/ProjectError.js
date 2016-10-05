@@ -4,8 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 export default class ProjectError extends Component {
   static propTypes = {
-    errors: PropTypes.object.isRequired,
-    output: PropTypes.object
+    results: PropTypes.object.isRequired,
   };
 
   state = {
@@ -13,13 +12,22 @@ export default class ProjectError extends Component {
   };
 
   getError() {
-    const { errors, output } = this.props;
-    if (errors.goget !== '') {
-      return { name: 'goget', message: errors.goget, output: output.goget };
+    const { results } = this.props;
+    if (results.hasOwnProperty('errors') && Object.keys(results.errors) > 0) {
+      const globalErrors = Object.keys(results.errors);
+      return { name: globalErrors[0], message: results.errors[globalErrors[0]] };
     }
-    if (errors.gotest !== '') {
-      return { name: 'gotest', message: errors.gotest, output: output.gotest };
+
+    let i;
+    const projectrunnerErrorList = Object.keys(results.projectrunner);
+    for (i = 0; i < projectrunnerErrorList.length; i++) {
+      const key = projectrunnerErrorList[i];
+      const { label, error, raw_output } = results.projectrunner[key];
+      if (error !== null) {
+        return { name: label, message: error, output: raw_output };
+      }
     }
+
     return {};
   }
 

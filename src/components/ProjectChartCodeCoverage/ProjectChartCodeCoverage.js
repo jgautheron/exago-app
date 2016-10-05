@@ -14,7 +14,7 @@ export class ProjectChartCodeCoverage extends Component {
 
   componentWillMount() {
     this.data = [];
-    const data = this.props.data.projectrunner;
+    const data = this.props.data.projectrunner.coverage.data;
     data.packages.forEach((pkg) => {
       this.data.push({ name: pkg.name, coverage: pkg.coverage });
     });

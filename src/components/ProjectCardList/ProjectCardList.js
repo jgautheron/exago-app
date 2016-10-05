@@ -77,7 +77,7 @@ export default class ProjectCardList extends Component {
         let value = (
           <span>
             {formatter.getTestsCount(res)}
-            {this.testResults.testsPassed ? passedIcon : failedIcon}
+            {formatter.didTestsPass(res) ? passedIcon : failedIcon}
           </span>
         );
         if (this.taskDidTimeout(res, name)) {
@@ -90,7 +90,7 @@ export default class ProjectCardList extends Component {
         break;
       }
       case constants.CODE_COVERAGE: {
-        let value = this.testResults.coverageMean;
+        let value = formatter.getTestCoverage(res);
         if (this.taskDidTimeout(res, name)) {
           value = timeoutClock;
         }
@@ -101,7 +101,7 @@ export default class ProjectCardList extends Component {
         break;
       }
       case constants.TEST_DURATION: {
-        let value = this.testResults.durationMean;
+        let value = formatter.getTestDuration(res);
         if (this.taskDidTimeout(res, name)) {
           value = timeoutClock;
         }
@@ -148,8 +148,6 @@ export default class ProjectCardList extends Component {
   }
 
   prepareData(res) {
-    this.testResults = formatter.getTestResults(res);
-
     this.cards = {};
     Object.keys(constants).forEach(constant => {
       const cardTitle = constants[constant];

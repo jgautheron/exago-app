@@ -14,9 +14,9 @@ export class ProjectChartTestDuration extends Component {
 
   componentWillMount() {
     this.data = [];
-    const data = this.props.data.projectrunner;
-    data.packages.forEach((pkg) => {
-      this.data.push({ name: pkg.name, coverage: pkg.execution_time });
+    const data = this.props.data.projectrunner.test.data;
+    data.forEach((pkg) => {
+      this.data.push({ name: pkg.name, duration: pkg.execution_time });
     });
   }
 
@@ -32,7 +32,7 @@ export class ProjectChartTestDuration extends Component {
               <YAxis style={labelStyle} />
               <CartesianGrid strokeDasharray="5 5" />
               <Tooltip />
-              <Bar dataKey="coverage" fill={primary1Color} label style={labelStyle} />
+              <Bar dataKey="duration" fill={primary1Color} label style={labelStyle} />
             </BarChart>
           </ResponsiveContainer>
         </CardMedia>

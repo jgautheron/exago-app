@@ -26,46 +26,20 @@ export function getTestsCount(data) {
   return data.codestats.Test;
 }
 
-export function getTestResults(data) {
-  if (!data.projectrunner.hasOwnProperty('packages') || !Array.isArray(data.projectrunner.packages)) {
-    return {
-      coverageMean: '',
-      durationMean: '',
-      testsPassed: false
-    };
+export function getTestCoverage(data) {
+  const covMean = data.projectrunner.coverage.data.coverage;
+  return `${covMean.toFixed(2)}%`;
+}
+
+export function getTestDuration(data) {
+  if (!data.projectrunner.test.data) {
+    return '';
   }
 
-  // There were tests but we couldn't run them
-  if (data.codestats.Test > 0 && data.projectrunner.packages.length === 0) {
-    return {
-      coverageMean: '',
-      durationMean: '',
-      testsPassed: false
-    };
-  }
-
-  let testsPassed = true;
-  const cov = [];
   const duration = [];
-
-  data.projectrunner.packages.forEach((pkg) => {
-    if (!pkg.success) {
-      testsPassed = false;
-    }
-
-    if (pkg.hasOwnProperty('coverage')) {
-      cov.push(parseFloat(pkg.coverage));
-      duration.push(parseFloat(pkg.execution_time));
-    }
+  data.projectrunner.test.data.forEach((pkg) => {
+    duration.push(parseFloat(pkg.execution_time));
   });
-
-  let covMean = 0;
-  if (cov.length > 0) {
-    cov.forEach((val) => {
-      covMean += val;
-    });
-    covMean /= cov.length;
-  }
 
   let durationMean = 0;
   if (duration.length > 0) {
@@ -75,11 +49,22 @@ export function getTestResults(data) {
     durationMean /= duration.length;
   }
 
-  return {
-    coverageMean: `${covMean.toFixed(2)} %`,
-    durationMean: `${durationMean.toFixed(3)}s`,
-    testsPassed
-  };
+  return `${durationMean.toFixed(3)}s`;
+}
+
+export function didTestsPass(data) {
+  if (!data.projectrunner.test.data) {
+    return false;
+  }
+
+  let passed = true;
+  data.projectrunner.test.data.forEach((pkg) => {
+    if (!pkg.success) {
+      passed = false;
+    }
+  });
+
+  return passed;
 }
 
 export function getRank(res) {

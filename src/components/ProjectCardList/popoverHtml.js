@@ -24,15 +24,11 @@ function formatScore(score) {
 }
 
 export function getTestList(data) {
-  if (
-    !data.projectrunner.hasOwnProperty('packages') ||
-    !Array.isArray(data.projectrunner.packages) ||
-    data.projectrunner.packages.length === 0
-  ) {
+  if (!data.projectrunner.test.data) {
     return '';
   }
 
-  const pkgs = data.projectrunner.packages;
+  const pkgs = data.projectrunner.test.data;
   const rowStyle = {
     width: '45px'
   };
@@ -87,32 +83,32 @@ export function getScoreDetails(data) {
 }
 
 export function getThirdParties(data) {
-  if (!data.projectrunner.third_parties || data.projectrunner.third_parties.length === 0) {
+  if (!data.projectrunner.thirdparties.data) {
     return '';
   }
 
-  return <ProjectThirdParties data={data} />;
+  return <ProjectThirdParties thirdParties={data.projectrunner.thirdparties.data} />;
 }
 
 export function getChecklist(data) {
-  if (!data.projectrunner.hasOwnProperty('checklist') || !Array.isArray(data.projectrunner.checklist.Passed)) {
+  if (!data.projectrunner.goprove.data) {
     return '';
   }
 
-  const res = data.projectrunner.checklist;
+  const res = data.projectrunner.goprove.data;
   const sortedData = { minimumCriteria: [], goodCitizen: [], extraCredit: [] };
 
   let cnt;
   let item;
-  for (cnt = 0; item = res.Passed[cnt++];) {
-    sortedData[item.Category].push({
-      desc: item.Desc,
+  for (cnt = 0; item = res.passed[cnt++];) {
+    sortedData[item.category].push({
+      desc: item.desc,
       passed: true
     });
   }
-  for (cnt = 0; item = res.Failed[cnt++];) {
-    sortedData[item.Category].push({
-      desc: item.Desc,
+  for (cnt = 0; item = res.failed[cnt++];) {
+    sortedData[item.category].push({
+      desc: item.desc,
       passed: false
     });
   }
@@ -179,15 +175,11 @@ export function getChecklist(data) {
 }
 
 export function getTestCoverage(data) {
-  if (
-    !data.projectrunner.hasOwnProperty('packages') ||
-    !Array.isArray(data.projectrunner.packages) ||
-    data.projectrunner.packages.length === 0
-  ) {
+  if (!data.projectrunner.coverage.data.packages) {
     return '';
   }
 
-  const pkgs = data.projectrunner.packages;
+  const pkgs = data.projectrunner.coverage.data.packages;
   const rowStyle = {
     width: '70px'
   };
@@ -203,7 +195,7 @@ export function getTestCoverage(data) {
       {pkgs.map((el, id) =>
         <TableRow key={id}>
           <TableRowColumn>{el.name}</TableRowColumn>
-          <TableRowColumn style={rowStyle}>{el.coverage}%</TableRowColumn>
+          <TableRowColumn style={rowStyle}>{el.coverage.toFixed(2)}%</TableRowColumn>
         </TableRow>
       )}
       </TableBody>
@@ -212,15 +204,11 @@ export function getTestCoverage(data) {
 }
 
 export function getTestDuration(data) {
-  if (
-    !data.projectrunner.hasOwnProperty('packages') ||
-    !Array.isArray(data.projectrunner.packages) ||
-    data.projectrunner.packages.length === 0
-  ) {
+  if (!data.projectrunner.test.data) {
     return '';
   }
 
-  const pkgs = data.projectrunner.packages;
+  const pkgs = data.projectrunner.test.data;
   const rowStyle = {
     width: '70px'
   };

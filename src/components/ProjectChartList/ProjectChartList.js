@@ -17,10 +17,10 @@ export default class ProjectChartList extends Component {
 
   hasMoreThanOnePackage() {
     const { data } = this.props;
-    if (!Array.isArray(data.projectrunner.packages)) {
+    if (!data.projectrunner.coverage.data.packages) {
       return false;
     }
-    return data.projectrunner.packages.length > 1;
+    return data.projectrunner.coverage.data.packages.length > 1;
   }
 
   hasLintMessages() {

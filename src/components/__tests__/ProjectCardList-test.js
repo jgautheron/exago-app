@@ -29,78 +29,100 @@ const dataMock = {
       Test: 0
     },
     projectrunner: {
-      third_parties: [],
-      checklist: {
-        Failed: [
-          {
-            Category: 'extraCredit',
-            Desc: 'Blackbox Tests: In addition to standard tests, does the project have blackbox tests?',
-            Name: 'hasBlackboxTests'
-          },
-          {
-            Category: 'goodCitizen',
-            Desc: 'Contribution Process: Does the project document a contribution process?',
-            Name: 'hasContributing'
-          },
-          {
-            Category: 'extraCredit',
-            Desc: 'Benchmarks: In addition to tests, does the project have benchmarks?',
-            Name: 'hasBenches'
-          }
+      coverage: {
+        label: 'Code Coverage',
+        data: {
+          packages: [],
+          coverage: 0
+        },
+        raw_output: '',
+        execution_time: 0,
+        error: null
+      },
+      download: {
+        label: 'Go Get',
+        data: null,
+        raw_output: '',
+        execution_time: 6939199169,
+        error: null
+      },
+      goprove: {
+        label: 'Go Prove',
+        data: {
+          failed: [
+            {
+              category: 'minimumCriteria',
+              desc: "README Presence: Does the project's include a documentation entrypoint?",
+              name: 'hasReadme'
+            },
+            {
+              category: 'goodCitizen',
+              desc: 'Contribution Process: Does the project document a contribution process?',
+              name: 'hasContributing'
+            },
+            {
+              category: 'minimumCriteria',
+              desc: 'Licensed: Does the project have a license?',
+              name: 'hasLicense'
+            },
+            {
+              category: 'minimumCriteria',
+              desc: 'Compiles: Does the project build?',
+              name: 'projectBuilds'
+            },
+            {
+              category: 'minimumCriteria',
+              desc: 'go tool vet Correctness: Is the Go vet satisfied?',
+              name: 'isVetted'
+            },
+            {
+              category: 'minimumCriteria',
+              desc: "Directory Names and Packages Match: Does each package <pkg> statement's package name match the containing directory name?",
+              name: 'isDirMatch'
+            },
+            {
+              category: 'minimumCriteria',
+              desc: 'gofmt Correctness: Is the code formatted correctly?',
+              name: 'isFormatted'
+            }
+          ],
+          passed: [
+            {
+              category: 'minimumCriteria',
+              desc: 'golint Correctness: Is the linter satisfied?',
+              name: 'isLinted'
+            },
+            {
+              category: 'extraCredit',
+              desc: 'Blackbox Tests: In addition to standard tests, does the project have blackbox tests?',
+              name: 'hasBlackboxTests'
+            },
+            {
+              category: 'extraCredit',
+              desc: 'Benchmarks: In addition to tests, does the project have benchmarks?',
+              name: 'hasBenches'
+            }
+          ]
+        },
+        raw_output: '',
+        execution_time: 9228815606,
+        error: null
+      },
+      test: {
+        label: 'Go Test',
+        data: [],
+        raw_output: '?   \tgithub.com/jgautheron/goconst\t[no test files]\n?   \tgithub.com/jgautheron/goconst/cmd/goconst\t[no test files]\n',
+        execution_time: 1143001562,
+        error: null
+      },
+      thirdparties: {
+        label: 'Go List (finds all 3rd parties)',
+        data: [
+          'golang.org/x/arch'
         ],
-        Passed: [
-          {
-            Category: 'minimumCriteria',
-            Desc: 'README Presence: Does the project\'s include a documentation entrypoint?',
-            Name: 'hasReadme'
-          },
-          {
-            Category: 'minimumCriteria',
-            Desc: 'Licensed: Does the project have a license?',
-            Name: 'hasLicense'
-          },
-          {
-            Category: 'minimumCriteria',
-            Desc: 'golint Correctness: Is the linter satisfied?',
-            Name: 'isLinted'
-          },
-          {
-            Category: 'minimumCriteria',
-            Desc: 'gofmt Correctness: Is the code formatted correctly?',
-            Name: 'isFormatted'
-          },
-          {
-            Category: 'minimumCriteria',
-            Desc: 'Directory Names and Packages Match: Does each package <pkg> ' +
-                  'statement\'s package name match the containing directory name?',
-            Name: 'isDirMatch'
-          },
-          {
-            Category: 'minimumCriteria',
-            Desc: 'Compiles: Does the project build?',
-            Name: 'projectBuilds'
-          },
-          {
-            Category: 'minimumCriteria',
-            Desc: 'go tool vet Correctness: Is the Go vet satisfied?',
-            Name: 'isVetted'
-          }
-        ]
-      },
-      packages: [
-      ],
-      execution_time: {
-        goget: '1.151458244s',
-        goprove: '339.318887ms',
-        gotest: '870.398525ms'
-      },
-      raw_output: {
-        goget: '',
-        gotest: '?   \tgithub.com/jgautheron/goconst\t[no test files]\n?   \tgithub.com/jgautheron/goconst/cmd/goconst\t[no test files]\n'
-      },
-      errors: {
-        goget: '',
-        gotest: ''
+        raw_output: '',
+        execution_time: 883241335,
+        error: null
       }
     },
     lintmessages: {
