@@ -4,6 +4,7 @@ import ProjectCardTitle from '../ProjectCardTitle/ProjectCardTitle';
 import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 import { projectChartStyles } from '../ProjectChartStyles/ProjectChartStyles';
+import styles from './ProjectChartLinterWarnings.css';
 
 export class ProjectChartLinterWarnings extends Component {
   static propTypes = {
@@ -64,7 +65,7 @@ export class ProjectChartLinterWarnings extends Component {
         <ProjectCardTitle title="Most warnings per linter" />
         <CardMedia>
           <ResponsiveContainer minHeight={300} minWidth={200}>
-            <PieChart>
+            <PieChart className={styles.wrapper}>
               <Pie
                 data={this.data}
                 fill={primary1Color}
