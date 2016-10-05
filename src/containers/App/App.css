@@ -132,3 +132,9 @@
   font-weight: 300;
   text-align: center;
 }
+
+/* charts */
+:global(.recharts-polar-radius-axis),
+:global(.recharts-layer.recharts-bar-labels) {
+  display: none;
+}

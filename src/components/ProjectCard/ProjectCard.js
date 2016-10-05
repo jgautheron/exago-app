@@ -121,6 +121,7 @@ export default class ProjectCard extends Component {
                 <Choose>
                   <When condition={this.props.extra}>
                     <Dialog
+                      contentStyle={{ maxWidth: '1200px', width: '90%' }}
                       title={this.props.extraTitle}
                       autoScrollBodyContent
                       actions={
