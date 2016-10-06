@@ -17,6 +17,9 @@ export default class ProjectChartList extends Component {
 
   hasMoreThanOnePackage() {
     const { data } = this.props;
+    if (data.codestats.Test === 0) {
+      return false;
+    }
     if (!data.projectrunner.coverage.data.packages) {
       return false;
     }

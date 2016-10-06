@@ -72,12 +72,16 @@ export default class ProjectCardList extends Component {
         break;
       }
       case constants.TESTS: {
-        const passedIcon = <IconButton tooltip="Congrats! All tests passed"><ActionDone /></IconButton>;
-        const failedIcon = <IconButton tooltip="Oops! At least one test failed"><ContentClear /></IconButton>;
+        let statusIcon = '';
+        if (res.codestats.Test > 0) {
+          statusIcon = formatter.didTestsPass(res) ?
+            <IconButton tooltip="Congrats! All tests passed"><ActionDone /></IconButton> :
+            <IconButton tooltip="Oops! At least one test failed"><ContentClear /></IconButton>;
+        }
         let value = (
           <span>
             {formatter.getTestsCount(res)}
-            {formatter.didTestsPass(res) ? passedIcon : failedIcon}
+            {statusIcon}
           </span>
         );
         if (this.taskDidTimeout(res, name)) {

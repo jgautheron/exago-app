@@ -32,10 +32,6 @@ export function getTestCoverage(data) {
 }
 
 export function getTestDuration(data) {
-  if (!data.projectrunner.test.data) {
-    return '';
-  }
-
   const duration = [];
   data.projectrunner.test.data.forEach((pkg) => {
     duration.push(parseFloat(pkg.execution_time));
@@ -53,7 +49,7 @@ export function getTestDuration(data) {
 }
 
 export function didTestsPass(data) {
-  if (!data.projectrunner.test.data) {
+  if (!data.projectrunner.test.data.length) {
     return false;
   }
 
