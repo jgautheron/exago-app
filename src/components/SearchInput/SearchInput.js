@@ -4,7 +4,7 @@ import TextField from 'material-ui/TextField';
 const errInvalidRepository = 'The specified repository is invalid';
 const errUnsupportedProvider = 'For now only GitHub is supported';
 
-const githubDomain = 'github.com';
+const allowedDomains = ['github.com'];
 
 export default class SearchInput extends Component {
   static propTypes = {
@@ -52,21 +52,19 @@ export default class SearchInput extends Component {
 
     // if there's a single "/", we assume it's a GitHub repository
     if (sp.length === 2) {
-      this.props.onRepositorySet(`${githubDomain}/${val}`);
+      this.props.onRepositorySet(`${allowedDomains[0]}/${val}`);
       return;
     }
 
     // if there are 3 elements in the array, the provider is included
     if (sp.length === 3) {
-      switch (sp[0]) {
-        // only GitHub allowed
-        case githubDomain:
-          this.props.onRepositorySet(val);
-          break;
-        default:
-          this.showError(errUnsupportedProvider);
+      if (!allowedDomains.includes(sp[0])) {
+        this.showError(errUnsupportedProvider);
+        return;
       }
     }
+
+    this.props.onRepositorySet(sp.slice(0, 3).join('/'));
   }
   render() {
     const textStyle = {
