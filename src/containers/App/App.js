@@ -7,6 +7,7 @@ import config from '../../config';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import Stars from 'material-ui/svg-icons/action/stars';
+import Love from 'material-ui/svg-icons/action/favorite';
 
 import exagoTheme from '../../theme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -54,7 +55,9 @@ export class AppPure extends Component {
               </div>
             </div>
             <div className={styles.footer}>
-              Brought to you with 💙 by
+              Brought to you with
+              {' '}
+              <Love style={{ color: '#375EAB', width: 18, height: 16, position: 'relative', top: 4 }} /> by
               {' '}
               <a title="Jonathan Gautheron" href="https://twitter.com/jgautheron">@jgautheron</a>,
               {' '}
