@@ -24,7 +24,7 @@ export default class ProjectError extends Component {
       const key = projectrunnerErrorList[i];
       const { label, error, raw_output } = results.projectrunner[key];
       if (error !== null) {
-        return { name: label, message: error, output: raw_output };
+        return { name: label, message: error.RawOutput, output: raw_output };
       }
     }
 
@@ -57,13 +57,13 @@ export default class ProjectError extends Component {
         <p style={{ paddingTop: 10 }}>
           An error occurred while we were running {processingError.name}: <b>{processingError.message}</b><br />
           Here’s the verbose output:
-          <pre>{processingError.output}</pre>
-          A few reasons why we might have this issue:
-          <ol>
-            <li>The project is using CGO</li>
-            <li>The projet is not go-gettable</li>
-          </ol>
         </p>
+        <pre>{processingError.output}</pre>
+        A few reasons why we might have this issue:
+        <ol>
+          <li>The project is using CGO</li>
+          <li>The projet is not go-gettable</li>
+        </ol>
       </Dialog>
     );
   }
