@@ -89,7 +89,7 @@ export default class ProjectCard extends Component {
                   <span dangerouslySetInnerHTML={{ __html: explanation }} />
                 }
                 tooltipPosition="bottom-right"
-                tooltipStyles={{ fontSize: 11, top: 30 }}
+                tooltipStyles={{ fontSize: 11 }}
               >
                 <HelpIcon color={palette.disabledColor} hoverColor={palette.textColor} />
               </IconButton>
