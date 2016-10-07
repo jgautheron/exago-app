@@ -54,7 +54,13 @@ export class AppPure extends Component {
               </div>
             </div>
             <div className={styles.footer}>
-              Brought to you by <a href="https://www.hotolab.com/">Hoto Lab</a>.
+              Brought to you with 💙 by
+              {' '}
+              <a title="Jonathan Gautheron" href="https://twitter.com/jgautheron">@jgautheron</a>,
+              {' '}
+              <a title="Christophe Eble" href="https://twitter.com/christopheeble">@christopheeble</a> &
+              {' '}
+              <a title="Karol Górecki" href="https://twitter.com/karolgorecki">@karolgorecki</a>
             </div>
           </div>
         </MuiThemeProvider>
