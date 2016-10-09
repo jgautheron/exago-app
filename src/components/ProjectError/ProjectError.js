@@ -13,9 +13,11 @@ export default class ProjectError extends Component {
 
   getError() {
     const { results } = this.props;
-    if (results.hasOwnProperty('errors') && Object.keys(results.errors) > 0) {
+    if (results.hasOwnProperty('errors')) {
       const globalErrors = Object.keys(results.errors);
-      return { name: globalErrors[0], message: results.errors[globalErrors[0]] };
+      if (globalErrors.length > 0) {
+        return { name: globalErrors[0], message: results.errors[globalErrors[0]] };
+      }
     }
 
     let i;
