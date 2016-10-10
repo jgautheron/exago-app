@@ -25,8 +25,8 @@ export default class ProjectError extends Component {
     for (i = 0; i < projectrunnerErrorList.length; i++) {
       const key = projectrunnerErrorList[i];
       const { label, error, raw_output } = results.projectrunner[key];
-      if (error !== null) {
-        return { name: label, message: error.RawOutput, output: raw_output };
+      if (error) {
+        return { name: label, message: error, output: raw_output };
       }
     }
 

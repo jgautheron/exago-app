@@ -94,7 +94,7 @@ export default class Project extends Component {
 
     let hasError = false;
     Object.keys(results.projectrunner).forEach(item => {
-      if (results.projectrunner[item].error !== null) {
+      if (results.projectrunner[item].error) {
         hasError = true;
       }
     });
