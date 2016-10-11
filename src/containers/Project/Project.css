@@ -25,6 +25,12 @@
   font-size: 12px;
 }
 
+@media (max-width: 660px) {
+  .update__text {
+    display: none;
+  }
+}
+
 .errorMessage {
   lost-flex-container: row;
 }

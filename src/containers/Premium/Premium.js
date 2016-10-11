@@ -53,10 +53,10 @@ export default class Premium extends Component {
     return (
       <div>
         <Helmet title="Unleash the Gopher!" />
-        <div style={{ float: 'left', width: '34%', position: 'relative' }}>
-          <img src={gopherImg} alt="Gopher" style={{ position: 'fixed', top: 90, left: -50 }} />
+        <div className={styles.gopherContainer}>
+          <img src={gopherImg} alt="Gopher" className={styles.gopherImage} />
         </div>
-        <div style={{ float: 'left', marginLeft: '30%', width: '50%', padding: '4%', paddingTop: 50, background: 'rgba(255,255,255,.9)' }}>
+        <div className={styles.textContainer}>
           <h1 className={styles.bigText}>Unleash the Gopher</h1>
           <p className={styles.introText}>While Exago is open source and will stay that way,
             there are a few interesting but costly features in terms of infrastructure and development

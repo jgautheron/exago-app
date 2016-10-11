@@ -5,3 +5,24 @@
   margin: 0 auto;
   width: 85%;
 }
+
+.paper {
+  background-image: url(/gopher01bw.svg);
+  background-size: 18%;
+  background-position: 85% 101px;
+  background-repeat: no-repeat;
+  padding: 30px 20px 50px 90px;
+  width: 85%;
+  margin: 40px auto;
+}
+
+@media (max-width: 560px) {
+  .paper {
+    background-image: none;
+    text-align: center;
+    padding: 10px 20px;
+  }
+  h1 {
+    font-size: 22px;
+  }
+}

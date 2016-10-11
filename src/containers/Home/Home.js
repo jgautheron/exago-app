@@ -6,17 +6,6 @@ import styles from './Home.css';
 import Paper from 'material-ui/Paper';
 import { SearchInput, ProjectsList } from 'components';
 
-const paperStyle = {
-  width: '85%',
-  margin: '40px auto',
-  display: 'block',
-  backgroundImage: 'url(/gopher01bw.svg)',
-  backgroundSize: '18%',
-  backgroundPosition: '85% 101px',
-  backgroundRepeat: 'no-repeat',
-  padding: '30px 20px 50px 90px'
-};
-
 export class HomePure extends Component {
   static propTypes = {
     repository: PropTypes.string.isRequired,
@@ -46,7 +35,7 @@ export class HomePure extends Component {
       <div>
         <Helmet title="Home" />
         <Paper
-          style={paperStyle}
+          className={styles.paper}
           zDepth={1}
           children={
             <div>

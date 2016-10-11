@@ -42,13 +42,6 @@ export default class ProjectsList extends Component {
   render() {
     const IconName = PROJECTS_LISTS[this.props.type].icon;
     const { push } = this.context.router;
-    const style = {
-      primaryText: {
-        width: 242,
-        textOverflow: 'ellipsis',
-        overflow: 'hidden'
-      }
-    };
 
     return (
       <Paper
@@ -66,7 +59,7 @@ export default class ProjectsList extends Component {
                   <ListItem
                     key={idx}
                     onTouchTap={() => push(`/project/${repo.name}`)}
-                    primaryText={<div style={style.primaryText}>{repo.name.replace('github.com/', '')}</div>}
+                    primaryText={<div>{repo.name.replace('github.com/', '')}</div>}
                     secondaryTextLines={2}
                     secondaryText={repo.description}
                     rightAvatar={

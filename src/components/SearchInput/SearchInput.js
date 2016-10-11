@@ -68,7 +68,7 @@ export default class SearchInput extends Component {
   }
   render() {
     const textStyle = {
-      width: '30%'
+      width: '300px'
     };
     return (
       <TextField

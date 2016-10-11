@@ -16,3 +16,21 @@
 .card:hover {
   z-index: 10;
 }
+
+@media (max-width: 1250px) {
+  .card {
+    lost-column: 1/3;
+  }
+}
+
+@media (max-width: 980px) {
+  .card {
+    lost-column: 1/2;
+  }
+}
+
+@media (max-width: 660px) {
+  .card {
+    lost-column: 1/1;
+  }
+}
