@@ -13,3 +13,18 @@
     margin-top: 20px;
   }
 }
+
+@media (max-width: 980px) {
+  .card {
+    lost-column: 1/2;
+  }
+}
+
+@media (max-width: 660px) {
+  .card {
+    lost-column: 1/1;
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
+  }
+}

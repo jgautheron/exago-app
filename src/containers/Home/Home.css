@@ -16,11 +16,19 @@
   margin: 40px auto;
 }
 
+@media (max-width: 980px) {
+  .paper, .featuredHolder {
+    width: 100%;
+  }
+}
+
+
 @media (max-width: 560px) {
   .paper {
     background-image: none;
     text-align: center;
     padding: 10px 20px;
+    width: 100%;
   }
   h1 {
     font-size: 22px;

@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 
+import styles from './SearchInput.css';
+
 const errInvalidRepository = 'The specified repository is invalid';
 const errUnsupportedProvider = 'For now only GitHub is supported';
 
@@ -67,9 +69,6 @@ export default class SearchInput extends Component {
     this.props.onRepositorySet(sp.slice(0, 3).join('/'));
   }
   render() {
-    const textStyle = {
-      width: '300px'
-    };
     return (
       <TextField
         id="repoSearch"
@@ -78,7 +77,7 @@ export default class SearchInput extends Component {
         hintText="go-gettable GitHub repository"
         errorText={this.state.searchInputError}
         value={this.state.value}
-        style={textStyle}
+        className={styles.input}
       />
     );
   }

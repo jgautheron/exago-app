@@ -176,7 +176,7 @@ export default class Premium extends Component {
                 />
                 <RaisedButton
                   type="submit"
-                  style={{ marginLeft: 20 }}
+                  className={styles.submitButton}
                   label="I’m interested!"
                   disabled={!this.state.canSubmit}
                   primary

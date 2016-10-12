@@ -20,17 +20,26 @@
 @media (max-width: 1250px) {
   .card {
     lost-column: 1/3;
+    &:nth-of-type(4), &:nth-of-type(5), &:nth-of-type(6), &:nth-of-type(7), &:nth-of-type(8) {
+      margin-top: 20px;
+    }
   }
 }
 
 @media (max-width: 980px) {
   .card {
     lost-column: 1/2;
+    &:nth-of-type(3), &:nth-of-type(4), &:nth-of-type(5), &:nth-of-type(6), &:nth-of-type(7), &:nth-of-type(8) {
+      margin-top: 20px;
+    }
   }
 }
 
 @media (max-width: 660px) {
   .card {
     lost-column: 1/1;
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
   }
 }
