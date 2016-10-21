@@ -16,3 +16,4 @@ export ProjectError from './ProjectError/ProjectError';
 export ProjectBadge from './ProjectBadge/ProjectBadge';
 export ProjectShare from './ProjectShare/ProjectShare';
 export ProjectThirdParties from './ProjectThirdParties/ProjectThirdParties';
+export ProjectCardScoreColor from './ProjectCardScoreColor/ProjectCardScoreColor';

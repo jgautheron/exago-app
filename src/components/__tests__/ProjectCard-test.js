@@ -23,7 +23,7 @@ describe('ProjectCard', () => {
     return expect(card).toExist();
   });
   it('the title is there', () => {
-    return expect(card.find('ProjectCardTitle').prop('title')).toBe(props.title);
+    return expect(card.find('ProjectCardTitle').at(0).prop('title')).toBe(props.title);
   });
   it('the value is there', () => {
     return expect(card.find('span').at(0).text()).toBe(props.value);

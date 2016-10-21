@@ -13,7 +13,7 @@ import AlertError from 'material-ui/svg-icons/alert/error';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-import { ProjectCardTitle } from 'components';
+import { ProjectCardTitle, ProjectCardScoreColor } from 'components';
 
 import { palette } from '../../theme';
 
@@ -24,6 +24,10 @@ export default class ProjectCard extends Component {
       PropTypes.string,
       PropTypes.object,
       PropTypes.number
+    ]),
+    score: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.bool,
     ]),
     children: PropTypes.oneOfType([
       PropTypes.string,
@@ -81,7 +85,7 @@ export default class ProjectCard extends Component {
         <ProjectCardTitle title={this.props.title} />
         <Choose>
           <When condition={this.props.explanation}>
-            <div className={styles.leftIconContainer}>
+            <div className={`explanationContainer ${styles.leftIconContainer}`}>
               <IconButton
                 style={{ cursor: 'help' }}
                 className={styles.explanationBtn}
@@ -96,6 +100,7 @@ export default class ProjectCard extends Component {
             </div>
           </When>
         </Choose>
+        <ProjectCardScoreColor score={this.props.score} />
         <Choose>
           <When condition={this.props.children}>
             <div className={styles.childrenContainer}>

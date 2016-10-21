@@ -14,7 +14,7 @@ import styles from './ProjectCardList.css';
 
 export default class ProjectCardList extends Component {
   static propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
@@ -26,6 +26,15 @@ export default class ProjectCardList extends Component {
   }
 
   getCardValue(res, name) {
+    const [
+      { score: thirdParties },
+      { score: codestats },
+      { score: testcov },
+      { score: testdur },
+      { score: checklist },
+      { score: lint }, // eslint-disable-line
+    ] = res.score.details;
+
     const timeoutClock = <ActionClock style={{ width: 48, height: 48 }} />;
     let contents = {};
     switch (name) {
@@ -36,6 +45,7 @@ export default class ProjectCardList extends Component {
         }
         contents = {
           value,
+          score: false,
         };
         break;
       }
@@ -46,6 +56,7 @@ export default class ProjectCardList extends Component {
         }
         contents = {
           value,
+          score: codestats.toFixed(),
         };
         break;
       }
@@ -56,6 +67,7 @@ export default class ProjectCardList extends Component {
         }
         contents = {
           value,
+          score: thirdParties.toFixed(),
           popover: html.getThirdParties(res),
         };
         break;
@@ -67,6 +79,7 @@ export default class ProjectCardList extends Component {
         }
         contents = {
           value,
+          score: checklist.toFixed(),
           popover: html.getChecklist(res),
         };
         break;
@@ -89,6 +102,7 @@ export default class ProjectCardList extends Component {
         }
         contents = {
           value,
+          score: formatter.didTestsPass(res) ? 100 : 0,
           popover: html.getTestList(res),
         };
         break;
@@ -100,6 +114,7 @@ export default class ProjectCardList extends Component {
         }
         contents = {
           value,
+          score: testcov.toFixed(),
           popover: html.getTestCoverage(res),
         };
         break;
@@ -111,6 +126,7 @@ export default class ProjectCardList extends Component {
         }
         contents = {
           value,
+          score: testdur.toFixed(),
           popover: html.getTestDuration(res),
         };
         break;
@@ -122,6 +138,7 @@ export default class ProjectCardList extends Component {
         }
         contents = {
           value,
+          score: res.score.value.toFixed() - 25,
           popover: html.getScoreDetails(this.props.data),
         };
         break;
@@ -193,7 +210,11 @@ export default class ProjectCardList extends Component {
       <div className={styles.row}>
         {Object.keys(this.cards).map((key, id) =>
           <div className={styles.card} key={id}>
-            <ProjectCard title={key} value={this.cards[key].value} {...SPECIFIC_PROPS[key]}>
+            <ProjectCard
+              title={key}
+              score={parseInt(this.cards[key].score, 10) || false}
+              value={this.cards[key].value} {...SPECIFIC_PROPS[key]}
+            >
               {this.cards[key].popover}
             </ProjectCard>
           </div>

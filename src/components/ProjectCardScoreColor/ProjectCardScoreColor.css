@@ -1,0 +1,13 @@
+.wrapper {
+  position: absolute;
+  left: 15px;
+  top: 19px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  opacity: .5;
+}
+
+:global(.explanationContainer) + .wrapper {
+  left: 50px;
+}
