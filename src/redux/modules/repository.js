@@ -13,6 +13,8 @@ const repositoryState = {
   loaded: false,
   cached: false,
   loading: true,
+  lastUpdate: '',
+  executionTime: '',
   results: {}
 };
 
@@ -38,10 +40,12 @@ export default function reducer(state = repositoryState, action = {}) {
       if (action.name !== state.accept) return state;
       return {
         ...state,
-        name: action.name,
+        name: action.result.data.name,
         loading: false,
         loaded: true,
-        results: action.result.data
+        lastUpdate: action.result.data.last_update,
+        executionTime: action.result.data.execution_time,
+        results: action.result.data.results,
       };
     case LOAD_FAIL:
       return {

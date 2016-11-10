@@ -8,27 +8,19 @@ import { withTheme } from './WithTheme';
 
 const dataMock = {
   data: {
-    codestats: {
-      Assertion: 0,
-      CLOC: 35,
-      ExportedFunction: 1,
-      ExportedMethod: 2,
-      Function: 5,
-      FunctionLOC: 112,
-      GoStatement: 0,
-      IfStatement: 34,
-      Import: 19,
-      Interface: 0,
-      LOC: 342,
-      Method: 6,
-      MethodLOC: 168,
-      NCLOC: 307,
-      NOF: 3,
-      Struct: 5,
-      SwitchStatement: 1,
-      Test: 0
-    },
     projectrunner: {
+      golocc: {
+        label: 'Lines of code: LOC, CLOC, NCLOC',
+        data: {
+          cloc: 48,
+          files: 3,
+          loc: 342,
+          ncloc: 307,
+          test: 1
+        },
+        raw_output: '',
+        execution_time: 79610705
+      },
       coverage: {
         label: 'Code Coverage',
         data: {
@@ -350,7 +342,7 @@ describe('ProjectCardList', () => {
     expect(pcl.instance().props.data.projectrunner.test.raw_output).toNotBe('');
 
     dataMock.data.projectrunner.test.raw_output = '';
-    dataMock.data.codestats.Test = 1;
+    dataMock.data.projectrunner.golocc.data.test = 1;
 
     pcl.setProps(dataMock);
     expect(pcl.instance().props.data.projectrunner.test.raw_output).toBe('');

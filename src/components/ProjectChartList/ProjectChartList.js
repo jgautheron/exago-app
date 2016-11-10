@@ -16,8 +16,9 @@ export default class ProjectChartList extends Component {
   };
 
   hasMoreThanOneTestedPackage() {
-    const { data, data: { projectrunner: { coverage } } } = this.props;
-    if (data.codestats.Test === 0) {
+    const { data, data: { projectrunner: { coverage, golocc } } } = this.props;
+    const codestats = golocc.data;
+    if (codestats.test === 0) {
       return false;
     }
     if (!data.projectrunner.coverage.data.packages.length) {

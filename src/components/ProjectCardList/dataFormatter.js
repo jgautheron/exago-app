@@ -1,12 +1,14 @@
 export function getAverageLines(data) {
-  let out = data.codestats.LOC;
+  const codestats = data.projectrunner.golocc.data;
+  let out = codestats.loc;
   out += ' / ';
-  out += (data.codestats.LOC / data.codestats.NOF).toFixed(0);
+  out += (codestats.loc / codestats.files).toFixed(0);
   return out;
 }
 
 export function getRatioLines(data) {
-  return (data.codestats.LOC / data.codestats.NCLOC).toFixed(3);
+  const codestats = data.projectrunner.golocc.data;
+  return ((codestats.cloc / codestats.loc) * 100).toFixed(2);
 }
 
 export function getThirdParties(data) {
@@ -23,7 +25,8 @@ export function getChecklistCompliance(data) {
 }
 
 export function getTestsCount(data) {
-  return data.codestats.Test;
+  const codestats = data.projectrunner.golocc.data;
+  return codestats.test;
 }
 
 export function getTestCoverage(data) {
