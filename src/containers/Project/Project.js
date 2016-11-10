@@ -1,4 +1,4 @@
-/*  global Choose, When, Otherwise */
+/*  global If, Choose, When, Otherwise */
 
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
@@ -78,6 +78,13 @@ export default class Project extends Component {
     }
   }
 
+  getRepositoryName() {
+    if (this.props.repository.results.hasOwnProperty('name')) {
+      return this.props.repository.results.name;
+    }
+    return this.props.repository.name;
+  }
+
   getLoadingDuration() {
     const executionTime = this.props.repository.results.execution_time;
     if (!executionTime) {
@@ -135,8 +142,8 @@ export default class Project extends Component {
     };
 
     const { repository } = this.props;
-
-    const title = `Code quality report for ${this.props.repository.name}`;
+    const repositoryName = this.getRepositoryName();
+    const title = `Code quality report for ${repositoryName}`;
 
     return (
       <div>
@@ -146,7 +153,7 @@ export default class Project extends Component {
             { property: 'og:title', content: title },
           ]}
         />
-        <ProjectHeader repository={repository.name} />
+        <ProjectHeader repository={repositoryName} />
         <Choose>
           <When condition={repository.loading}>
             <ProjectLoadingScreen duration={this.getLoadingDuration()} />
@@ -161,22 +168,18 @@ export default class Project extends Component {
             </div>
           </When>
           <Otherwise>
-            <Choose>
-              <When condition={this.hasProcessingError()}>
-                <ProjectError
-                  results={repository.results}
-                />
-              </When>
-            </Choose>
+            <If condition={this.hasProcessingError()}>
+              <ProjectError results={repository.results} />
+            </If>
             <div>
               <div className={styles.share}>
                 <ProjectShare
-                  repository={repository.name}
+                  repository={repositoryName}
                   rank={repository.results.score.rank}
                 />
               </div>
               <div className={styles.badge}>
-                <ProjectBadge repository={repository.name} />
+                <ProjectBadge repository={repositoryName} />
               </div>
               <div className={styles.update}>
                 <span className={styles.update__text}>Updated <TimeAgo date={repository.results.last_update} /></span>
@@ -193,7 +196,7 @@ export default class Project extends Component {
               <Choose>
                 <When condition={this.state.showDetails}>
                   <ProjectChartList data={repository.results} />
-                  <ProjectFileList data={repository.results} repository={repository.name} />
+                  <ProjectFileList data={repository.results} repository={repositoryName} />
                 </When>
                 <Otherwise>
                   <Choose>

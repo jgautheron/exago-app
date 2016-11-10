@@ -32,7 +32,7 @@ const PROJECTS_LISTS = {
 export default class ProjectsList extends Component {
   static propTypes = {
     type: PropTypes.string.isRequired,
-    data: PropTypes.array.isRequired
+    data: PropTypes.array,
   };
 
   static contextTypes = {

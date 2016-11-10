@@ -9,7 +9,7 @@ import { SearchInput, ProjectsList } from 'components';
 export class HomePure extends Component {
   static propTypes = {
     repository: PropTypes.string.isRequired,
-    projects: PropTypes.object.isRequired
+    projects: PropTypes.object
   };
 
   static reduxAsyncConnect = [{
