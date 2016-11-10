@@ -8,10 +8,12 @@ describe('ProjectChartList', () => {
   const names = ['foo', 'bar'];
   const coverages = [50, 10];
   const mock = {
-    codestats: {
-      Test: 123,
-    },
     projectrunner: {
+      golocc: {
+        data: {
+          loc: 285,
+        },
+      },
       coverage: {
         data: {
           packages: [

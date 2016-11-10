@@ -43,6 +43,8 @@ export default class ProjectCardList extends Component {
 
   getCardValue(res, name) {
     const timeoutClock = <ActionClock style={{ width: 48, height: 48 }} />;
+    const codestats = res.projectrunner.golocc.data;
+
     let contents = {};
     switch (name) {
       case constants.TOTAL_AVG_LOC: {
@@ -93,7 +95,7 @@ export default class ProjectCardList extends Component {
       }
       case constants.TESTS: {
         let statusIcon = '';
-        if (res.codestats.Test > 0) {
+        if (codestats.test > 0) {
           statusIcon = formatter.didTestsPass(res) ?
             <IconButton tooltip="Congrats! All tests passed"><ActionDone /></IconButton> :
             <IconButton tooltip="Oops! At least one test failed"><ContentClear /></IconButton>;

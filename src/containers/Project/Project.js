@@ -182,7 +182,7 @@ export default class Project extends Component {
                 <ProjectBadge repository={repositoryName} />
               </div>
               <div className={styles.update}>
-                <span className={styles.update__text}>Updated <TimeAgo date={repository.results.last_update} /></span>
+                <span className={styles.update__text}>Updated <TimeAgo date={repository.lastUpdate} /></span>
                 <IconButton
                   tooltip="Refresh Statistics"
                   tooltipPosition="bottom-center"
