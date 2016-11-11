@@ -10,7 +10,6 @@ import { set, isCached, load, refresh, clear } from 'redux/modules/repository';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import AlertError from 'material-ui/svg-icons/alert/error';
-import AlertErrorOutline from 'material-ui/svg-icons/alert/error-outline';
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import ActionCached from 'material-ui/svg-icons/action/cached';
 
@@ -24,7 +23,6 @@ import {
   ProjectChartList,
   ProjectFileList,
   ProjectBadge,
-  ProjectError,
   ProjectShare
 } from 'components';
 
@@ -78,34 +76,12 @@ export default class Project extends Component {
     }
   }
 
-  getRepositoryName() {
-    if (this.props.repository.results.hasOwnProperty('name')) {
-      return this.props.repository.results.name;
-    }
-    return this.props.repository.name;
-  }
-
   getLoadingDuration() {
-    const executionTime = this.props.repository.results.execution_time;
+    const executionTime = this.props.repository.executionTime;
     if (!executionTime) {
       return 0;
     }
     return parseInt(executionTime, 10);
-  }
-
-  hasProcessingError() {
-    const { results } = this.props.repository;
-    if (results.hasOwnProperty('errors') && Object.keys(results.errors).length > 0) {
-      return true;
-    }
-
-    let hasError = false;
-    Object.keys(results.projectrunner).forEach(item => {
-      if (results.projectrunner[item].error) {
-        hasError = true;
-      }
-    });
-    return hasError;
   }
 
   refreshRepository = () => {
@@ -142,7 +118,7 @@ export default class Project extends Component {
     };
 
     const { repository } = this.props;
-    const repositoryName = this.getRepositoryName();
+    const repositoryName = repository.name;
     const title = `Code quality report for ${repositoryName}`;
 
     return (
@@ -162,15 +138,12 @@ export default class Project extends Component {
             <div className={styles.errorMessage}>
               <AlertError style={bigIconStyle} />
               <p className={styles.errorMessage__text}>
-                Something went wrong!<br />
-                {repository.error.message}
+                Something went wrong.<br />
+                <pre>{repository.error.message}</pre>
               </p>
             </div>
           </When>
           <Otherwise>
-            <If condition={this.hasProcessingError()}>
-              <ProjectError results={repository.results} />
-            </If>
             <div>
               <div className={styles.share}>
                 <ProjectShare
@@ -199,30 +172,15 @@ export default class Project extends Component {
                   <ProjectFileList data={repository.results} repository={repositoryName} />
                 </When>
                 <Otherwise>
-                  <Choose>
-                    <When condition={this.hasProcessingError()}>
-                      <RaisedButton
-                        label="Oops, something went wrong"
-                        style={buttonStyle}
-                        labelStyle={labelStyle}
-                        icon={<AlertErrorOutline />}
-                        className={styles.buttonIcon}
-                        primary
-                        disabled
-                      />
-                    </When>
-                    <Otherwise>
-                      <RaisedButton
-                        label="Explore"
-                        backgroundColor={palette.primary1Color}
-                        style={buttonStyle}
-                        labelStyle={labelStyle}
-                        icon={<HardwareKeyboardArrowRight />}
-                        primary
-                        onClick={this.showDetails}
-                      />
-                    </Otherwise>
-                  </Choose>
+                  <RaisedButton
+                    label="Explore"
+                    backgroundColor={palette.primary1Color}
+                    style={buttonStyle}
+                    labelStyle={labelStyle}
+                    icon={<HardwareKeyboardArrowRight />}
+                    primary
+                    onClick={this.showDetails}
+                  />
                 </Otherwise>
               </Choose>
             </div>

@@ -47,14 +47,15 @@ export default function reducer(state = repositoryState, action = {}) {
         executionTime: action.result.data.execution_time,
         results: action.result.data.results,
       };
-    case LOAD_FAIL:
+    case LOAD_FAIL: {
       return {
         ...state,
         name: action.name,
         loading: false,
         loaded: false,
-        error: action.error
+        error: action.error,
       };
+    }
     case CACHED_LOAD:
       return state;
     case CACHED_LOAD_SUCCESS:
