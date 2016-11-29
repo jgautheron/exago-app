@@ -12,9 +12,9 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 
 if (__DEVELOPMENT__) {
   if (!require('piping')({
-      hook: true,
-      ignore: /(\/\.|~$|\.json|\.scss$)/i
-    })) {
+    hook: true,
+    ignore: /(\/\.|~$|\.json|\.scss$)/i
+  })) {
     return;
   }
 }
@@ -22,7 +22,6 @@ if (__DEVELOPMENT__) {
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/webpack-isomorphic-tools'))
-  .development(__DEVELOPMENT__)
-  .server(rootDir, function() {
+  .server(rootDir, function () {
     require('../src/server');
   });
