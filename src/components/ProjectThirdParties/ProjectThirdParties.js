@@ -35,7 +35,7 @@ export default class ProjectThirdParties extends Component {
           this.setState({ [thirdPartyRepo]: 'not-checked' });
           return;
         }
-        this.setState({ [thirdPartyRepo]: res.data.score.rank });
+        this.setState({ [thirdPartyRepo]: res.data.results.score.rank });
       })
       .catch(() => {
         this.setState({ [thirdPartyRepo]: 'error' });
