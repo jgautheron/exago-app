@@ -37,7 +37,7 @@ app.post('/premium-submit', (req, res) => {
   const feature = req.body.feature;
 
   Spreadsheet.load({
-    debug: true,
+    debug: false,
     spreadsheetId: process.env.PREMIUM_SPREADSHEET_ID,
     worksheetId: process.env.PREMIUM_WORKSHEET_ID,
     oauth: {

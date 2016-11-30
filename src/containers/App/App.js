@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import ga from 'react-ga';
 
 import config from '../../config';
 
@@ -20,12 +21,25 @@ injectTapEventPlugin();
 export class AppPure extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    })
   };
 
   static contextTypes = {
     store: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
   };
+
+  componentDidMount() {
+    ga.initialize('UA-2118940-7', { debug: false });
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      ga.pageview(nextProps.location.pathname);
+    }
+  }
 
   render() {
     const titleStyle = {
@@ -34,6 +48,7 @@ export class AppPure extends Component {
       fontWeight: '300',
       letterSpacing: '-.01em'
     };
+
     return (
       <div>
         <Helmet {...config.app.head} />
