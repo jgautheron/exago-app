@@ -14,6 +14,10 @@ import CheckIcon from 'material-ui/svg-icons/action/help';
 
 import { formatUrl } from '../../helpers/ApiClient';
 
+// eslint-disable-next-line
+import { polyfill } from 'es6-promise';
+import 'isomorphic-fetch';
+
 export default class ProjectThirdParties extends Component {
   static propTypes = {
     thirdParties: PropTypes.array.isRequired
