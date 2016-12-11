@@ -26,8 +26,9 @@ export class HomePure extends Component {
     router: PropTypes.object.isRequired
   };
 
-  onRepositorySet = (repository) => {
-    this.context.router.push(`/project/${repository}`);
+  handleRepositorySet = (repo, branch, goversion) => {
+    repo = repo.replace(/\//g, '|'); // eslint-disable-line
+    this.context.router.push(`/${repo}/${branch}/${goversion}`);
   };
 
   render() {
@@ -40,7 +41,7 @@ export class HomePure extends Component {
           children={
             <div>
               <h1>Check All The Things</h1>
-              <SearchInput onRepositorySet={this.onRepositorySet} repository={this.props.repository} />
+              <SearchInput onRepositorySet={this.handleRepositorySet} repository={this.props.repository} />
             </div>
           }
         />

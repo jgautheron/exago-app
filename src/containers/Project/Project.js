@@ -31,6 +31,7 @@ import styles from './Project.css';
 @asyncConnect([{
   // eslint-disable-next-line react/prop-types
   promise: ({ params, store: { dispatch, getState } }) => {
+    console.log('asyncConnect', params);
     const repositoryName = params.splat;
     const repository = getState().repository;
 

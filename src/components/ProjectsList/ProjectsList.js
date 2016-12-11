@@ -39,9 +39,13 @@ export default class ProjectsList extends Component {
     router: PropTypes.object.isRequired
   };
 
+  handleRedirect = (repo) => {
+    const repoName = repo.name.replace(/\//g, '|'); // eslint-disable-line
+    this.context.router.push(`/${repoName}/${repo.branch}/${repo.goversion}`);
+  }
+
   render() {
     const IconName = PROJECTS_LISTS[this.props.type].icon;
-    const { push } = this.context.router;
 
     return (
       <Paper
@@ -58,7 +62,7 @@ export default class ProjectsList extends Component {
                 {this.props.data.map((repo, idx) =>
                   <ListItem
                     key={idx}
-                    onTouchTap={() => push(`/project/${repo.name}`)}
+                    onTouchTap={() => this.handleRedirect(repo)}
                     primaryText={<div>{repo.name.replace('github.com/', '')}</div>}
                     secondaryTextLines={2}
                     secondaryText={repo.description}

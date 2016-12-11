@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import styles from './SearchInput.css';
 
@@ -7,6 +9,7 @@ const errInvalidRepository = 'The specified repository is invalid';
 const errUnsupportedProvider = 'For now only GitHub is supported';
 
 const allowedDomains = ['github.com'];
+const availableVersions = ['1.7.4', '1.8beta1'];
 
 export default class SearchInput extends Component {
   static propTypes = {
@@ -52,9 +55,12 @@ export default class SearchInput extends Component {
       return;
     }
 
+    const defaultBranch = 'master';
+    const defaultVersion = '1.7.4';
+
     // if there's a single "/", we assume it's a GitHub repository
     if (sp.length === 2) {
-      this.props.onRepositorySet(`${allowedDomains[0]}/${val}`);
+      this.props.onRepositorySet(`${allowedDomains[0]}/${val}`, defaultBranch, defaultVersion);
       return;
     }
 
@@ -66,19 +72,28 @@ export default class SearchInput extends Component {
       }
     }
 
-    this.props.onRepositorySet(sp.slice(0, 3).join('/'));
+    this.props.onRepositorySet(sp.slice(0, 3).join('/'), defaultBranch, defaultVersion);
   }
   render() {
     return (
-      <TextField
-        id="repoSearch"
-        onChange={this.handleChange}
-        onKeyDown={this.handleSubmit}
-        hintText="go-gettable GitHub repository"
-        errorText={this.state.searchInputError}
-        value={this.state.value}
-        className={styles.input}
-      />
+      <div>
+        <TextField
+          id="repoSearch"
+          onChange={this.handleChange}
+          onKeyDown={this.handleSubmit}
+          hintText="go-gettable GitHub repository"
+          errorText={this.state.searchInputError}
+          value={this.state.value}
+          className={styles.input}
+        />
+        <SelectField
+          floatingLabelText="Go version"
+        >
+          {availableVersions.map((version) =>
+            <MenuItem key={version} value={version} primaryText={version} />
+          )}
+        </SelectField>
+      </div>
     );
   }
 }

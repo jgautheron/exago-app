@@ -5,7 +5,6 @@ import {
   Home,
   Project,
   File,
-  About,
   Premium,
   NotFound,
 } from 'containers';
@@ -14,9 +13,8 @@ export default () => {
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
-      <Route path="project/*" component={Project} />
-      <Route path="file/*" component={File} />
-      <Route path="about" component={About} />
+      <Route path=":repo/:branch/:goversion" component={Project} />
+      <Route path=":repo/:branch/:goversion/*file" component={File} />
       <Route path="premium" component={Premium} />
       <Route path="*" component={NotFound} status={404} />
     </Route>

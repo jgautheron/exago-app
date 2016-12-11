@@ -21,7 +21,7 @@ export default function reducer(state = homeProjects, action = {}) {
     case LOAD_SUCCESS:
       return {
         ...state,
-        [action.boxType]: action.result.data,
+        [action.boxType]: action.result,
         loading: false,
         loaded: true
       };

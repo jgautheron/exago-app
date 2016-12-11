@@ -1,9 +1,6 @@
 const LOAD = 'exago/repository/LOAD';
 const LOAD_SUCCESS = 'exago/repository/LOAD_SUCCESS';
 const LOAD_FAIL = 'exago/repository/LOAD_FAIL';
-const CACHED_LOAD = 'exago/repository/CACHED_LOAD';
-const CACHED_LOAD_SUCCESS = 'exago/repository/CACHED_LOAD_SUCCESS';
-const CACHED_LOAD_FAIL = 'exago/repository/CACHED_LOAD_FAIL';
 const SET = 'exago/repository/SET';
 const CLEAR = 'exago/repository/CLEAR';
 
@@ -56,18 +53,6 @@ export default function reducer(state = repositoryState, action = {}) {
         error: action.error,
       };
     }
-    case CACHED_LOAD:
-      return state;
-    case CACHED_LOAD_SUCCESS:
-      return {
-        ...state,
-        cached: action.result.data
-      };
-    case CACHED_LOAD_FAIL:
-      return {
-        ...state,
-        error: action.error
-      };
     default:
       return state;
   }
@@ -81,25 +66,28 @@ export function clear() {
   return { type: CLEAR };
 }
 
-export function isCached(repositoryName) {
+export function load(repo, branch, goversion) {
+  repo = repo.replace(/\//g, '|'); // eslint-disable-line
   return {
-    types: [CACHED_LOAD, CACHED_LOAD_SUCCESS, CACHED_LOAD_FAIL],
-    promise: (client) => client.get(`/cached/${repositoryName}`)
+    name: repo,
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get(`/repos/${repo}/branches/${branch}/goversions/${goversion}`)
   };
 }
 
-export function load(repositoryName) {
+export function process(repo, branch, goversion) {
+  const rp = repo.split('/');
   return {
-    name: repositoryName,
+    name: repo,
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/project/${repositoryName}`)
-  };
-}
-
-export function refresh(repositoryName) {
-  return {
-    name: repositoryName,
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/refresh/${repositoryName}`)
+    promise: (client) => client.post('/repos', {
+      data: {
+        host: rp[0],
+        owner: rp[1],
+        name: rp[2],
+        branch,
+        goversion,
+      },
+    })
   };
 }
