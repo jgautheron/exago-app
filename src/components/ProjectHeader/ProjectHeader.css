@@ -1,7 +1,18 @@
 .root {
   padding-top: 20px;
-  
+
   & h1 {
     font-size: 20px;
+    float: left;
+  }
+
+  & h5 {
+    float: left;
+    position: relative;
+    top: -5px;
+    margin-left: 5px;
+    padding: 2px 4px;
+    background: #ccc;
+    border-radius: 3px;
   }
 }

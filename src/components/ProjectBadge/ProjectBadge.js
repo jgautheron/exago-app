@@ -15,6 +15,8 @@ import * as config from '../../config';
 export default class ProjectBadge extends Component {
   static propTypes = {
     repository: PropTypes.string.isRequired,
+    branch: PropTypes.string.isRequired,
+    goversion: PropTypes.string.isRequired,
   };
 
   state = {
@@ -34,38 +36,40 @@ export default class ProjectBadge extends Component {
   }
 
   render() {
-    const urlPrefix = `${config.apiProtocol}://${config.apiHost}:${config.apiPort}/badge`;
-    const repository = this.props.repository;
+    const { branch, goversion } = this.props;
+    const repository = this.props.repository.replace(/\//g, '|');
+    const host = `${config.apiProtocol}://${config.apiHost}:${config.apiPort}`;
+    const urlPrefix = `${host}/repos/${repository}/branches/${branch}/goversions/${goversion}/badges`;
     const badges = [
       {
         desc: 'Rank',
-        url: `${urlPrefix}/rank/${repository}`,
-        markdown: `[![Exago](${urlPrefix}/rank/${repository})](https://exago.io/project/${repository})`
+        url: `${urlPrefix}/rank`,
+        markdown: `[![Exago](${urlPrefix}/rank/)](https://exago.io/project/${repository})`
       },
       {
         desc: 'Code Coverage',
-        url: `${urlPrefix}/cov/${repository}`,
-        markdown: `[![Exago](${urlPrefix}/cov/${repository})](https://exago.io/project/${repository})`
+        url: `${urlPrefix}/cov`,
+        markdown: `[![Exago](${urlPrefix}/cov)](https://exago.io/project/${repository})`
       },
       {
         desc: 'Test Duration',
-        url: `${urlPrefix}/duration/${repository}`,
-        markdown: `[![Exago](${urlPrefix}/duration/${repository})](https://exago.io/project/${repository})`
+        url: `${urlPrefix}/duration`,
+        markdown: `[![Exago](${urlPrefix}/duration)](https://exago.io/project/${repository})`
       },
       {
         desc: 'Tests',
-        url: `${urlPrefix}/tests/${repository}`,
-        markdown: `[![Exago](${urlPrefix}/tests/${repository})](https://exago.io/project/${repository})`
+        url: `${urlPrefix}/tests`,
+        markdown: `[![Exago](${urlPrefix}/tests)](https://exago.io/project/${repository})`
       },
       {
         desc: 'Third Parties',
-        url: `${urlPrefix}/thirdparties/${repository}`,
-        markdown: `[![Exago](${urlPrefix}/thirdparties/${repository})](https://exago.io/project/${repository})`
+        url: `${urlPrefix}/thirdparties`,
+        markdown: `[![Exago](${urlPrefix}/thirdparties)](https://exago.io/project/${repository})`
       },
       {
         desc: 'LOC',
-        url: `${urlPrefix}/loc/${repository}`,
-        markdown: `[![Exago](${urlPrefix}/loc/${repository})](https://exago.io/project/${repository})`
+        url: `${urlPrefix}/loc`,
+        markdown: `[![Exago](${urlPrefix}/loc)](https://exago.io/project/${repository})`
       },
     ];
 
@@ -82,7 +86,7 @@ export default class ProjectBadge extends Component {
     return (
       <div>
         <img
-          src={`${urlPrefix}/rank/${repository}`}
+          src={`${urlPrefix}/rank`}
           onClick={this.showDialog}
           style={{ cursor: 'pointer' }}
           alt="Rank"

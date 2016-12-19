@@ -6,7 +6,9 @@ import ContentLink from 'material-ui/svg-icons/content/link';
 
 export default class ProjectHeader extends Component {
   static propTypes = {
-    repository: PropTypes.string.isRequired
+    repository: PropTypes.string.isRequired,
+    branch: PropTypes.string.isRequired,
+    goversion: PropTypes.string.isRequired,
   };
   render() {
     return (
@@ -18,7 +20,9 @@ export default class ProjectHeader extends Component {
         >
           <ContentLink />
         </IconButton>
-        <h1 style={{ float: 'left' }}>{this.props.repository}</h1>
+        <h1>{this.props.repository}</h1>
+        <h5>{this.props.branch}</h5>
+        <h5>{this.props.goversion}</h5>
         <br style={{ clear: 'left' }} />
       </div>
     );

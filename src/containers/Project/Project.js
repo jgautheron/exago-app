@@ -5,14 +5,13 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import TimeAgo from 'react-timeago';
 import { asyncConnect } from 'redux-connect';
-import { set, isCached, load, refresh, clear } from 'redux/modules/repository';
+import { set, load, clear, process } from 'redux/modules/repository';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import AlertError from 'material-ui/svg-icons/alert/error';
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import ActionCached from 'material-ui/svg-icons/action/cached';
-
 
 import { palette } from '../../theme';
 
@@ -31,39 +30,31 @@ import styles from './Project.css';
 @asyncConnect([{
   // eslint-disable-next-line react/prop-types
   promise: ({ params, store: { dispatch, getState } }) => {
-    console.log('asyncConnect', params);
-    const repositoryName = params.splat;
+    const repositoryName = `${params.host}/${params.owner}/${params.name}`;
     const repository = getState().repository;
 
     // If the repository is not the current one (what we want)
     if (repositoryName !== repository.name) {
       dispatch(clear());
-      dispatch(set(repositoryName));
+      dispatch(set(repositoryName, params.branch, params.goversion));
     }
 
-    if (__SERVER__) {
-      return dispatch(isCached(repositoryName)).then((res) => {
-        if (res.data === true) {
-          return dispatch(load(repositoryName));
-        }
-        return Promise.reject();
-      });
-    }
-    return Promise.reject();
+    return dispatch(load(repositoryName, params.branch, params.goversion));
   }
 }])
 @connect(
   state => ({
     repository: state.repository
   }),
-  { load, refresh, clear }
+  { load, clear, process }
 )
 export default class Project extends Component {
   static propTypes = {
+    params: PropTypes.object.isRequired,
     repository: PropTypes.object.isRequired,
     load: PropTypes.func.isRequired,
-    refresh: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
+    process: PropTypes.func.isRequired,
   };
 
   state = {
@@ -73,7 +64,7 @@ export default class Project extends Component {
 
   componentDidMount() {
     if (!this.props.repository.loaded) {
-      this.props.load(this.props.repository.name);
+      this.processRepository();
     }
   }
 
@@ -85,8 +76,11 @@ export default class Project extends Component {
     return parseInt(executionTime, 10);
   }
 
-  refreshRepository = () => {
-    this.props.refresh(this.props.repository.name);
+  processRepository = () => {
+    const { repository: { name }, params: { branch, goversion } } = this.props;
+    this.props.process(name, branch, goversion).then(
+      () => this.props.load(name, branch, goversion)
+    );
   }
 
   showDetails = () => {
@@ -130,7 +124,11 @@ export default class Project extends Component {
             { property: 'og:title', content: title },
           ]}
         />
-        <ProjectHeader repository={repositoryName} />
+        <ProjectHeader
+          repository={repositoryName}
+          branch={repository.branch}
+          goversion={repository.goversion}
+        />
         <Choose>
           <When condition={repository.loading}>
             <ProjectLoadingScreen duration={this.getLoadingDuration()} />
@@ -153,7 +151,11 @@ export default class Project extends Component {
                 />
               </div>
               <div className={styles.badge}>
-                <ProjectBadge repository={repositoryName} />
+                <ProjectBadge
+                  repository={repositoryName}
+                  branch={repository.branch}
+                  goversion={repository.goversion}
+                />
               </div>
               <div className={styles.update}>
                 <span className={styles.update__text}>Updated <TimeAgo date={repository.lastUpdate} /></span>
@@ -161,7 +163,7 @@ export default class Project extends Component {
                   tooltip="Refresh Statistics"
                   tooltipPosition="bottom-center"
                   style={tooltipStyle}
-                  onClick={this.refreshRepository}
+                  onClick={this.processRepository}
                 >
                   <ActionCached color={palette.disabledColor} hoverColor={palette.textColor} />
                 </IconButton>
