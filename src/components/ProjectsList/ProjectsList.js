@@ -40,8 +40,7 @@ export default class ProjectsList extends Component {
   };
 
   handleRedirect = (repo) => {
-    const repoName = repo.name.replace(/\//g, '|'); // eslint-disable-line
-    this.context.router.push(`/${repoName}/${repo.branch}/${repo.goversion}`);
+    this.context.router.push(`/${repo.name}/${repo.branch}/${repo.goversion}`);
   }
 
   render() {

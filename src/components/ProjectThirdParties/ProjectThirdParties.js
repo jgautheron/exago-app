@@ -18,18 +18,26 @@ import { formatUrl } from '../../helpers/ApiClient';
 import { polyfill } from 'es6-promise';
 import 'isomorphic-fetch';
 
+const defaultBranch = 'master';
+
 export default class ProjectThirdParties extends Component {
   static propTypes = {
     thirdParties: PropTypes.array.isRequired
   }
 
+  static contextTypes = {
+    params: PropTypes.object.isRequired,
+  };
+
   state = {};
 
   componentWillMount() {
     const { thirdParties } = this.props;
+    const goversion = this.context.params.goversion;
 
     thirdParties.forEach((thirdPartyRepo) => {
-      fetch(formatUrl(`/cached/${thirdPartyRepo}`)).then(res => {
+      thirdPartyRepo = thirdPartyRepo.replace(/\//g, '|'); // eslint-disable-line
+      fetch(formatUrl(`/repos/${thirdPartyRepo}/branches/${defaultBranch}/goversions/${goversion}`)).then(res => {
         if (!res.ok) {
           throw Error();
         }
@@ -49,13 +57,14 @@ export default class ProjectThirdParties extends Component {
 
   render() {
     const { thirdParties } = this.props;
+    const goversion = this.context.params.goversion;
 
     return (
       <Table>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             <TableHeaderColumn>Package</TableHeaderColumn>
-            <TableHeaderColumn style={{ width: 80 }} >Score</TableHeaderColumn>
+            <TableHeaderColumn style={{ width: 80 }}>Score</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
@@ -63,7 +72,7 @@ export default class ProjectThirdParties extends Component {
             <TableRow key={id}>
               <TableRowColumn>
               {this.state[repoPath] !== 'error' ?
-                <Link to={`/project/${repoPath}`}>{repoPath}</Link> :
+                <Link to={`/${repoPath}/${defaultBranch}/${goversion}`}>{repoPath}</Link> :
                 repoPath
               }
               </TableRowColumn>

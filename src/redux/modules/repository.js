@@ -21,7 +21,6 @@ const repositoryState = {
 };
 
 export default function reducer(state = repositoryState, action = {}) {
-  console.log(action);
   switch (action.type) {
     case SET:
       return {

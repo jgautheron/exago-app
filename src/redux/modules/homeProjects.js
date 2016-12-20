@@ -42,6 +42,6 @@ export function load(type) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     boxType: type,
-    promise: (client) => client.get(`/projects/${type}`)
+    promise: (client) => client.get(`/projects?type=${type}`)
   };
 }

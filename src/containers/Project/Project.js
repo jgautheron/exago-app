@@ -57,10 +57,20 @@ export default class Project extends Component {
     process: PropTypes.func.isRequired,
   };
 
+  static childContextTypes = {
+    params: PropTypes.object,
+  };
+
   state = {
     showDetails: false,
     showBadges: false
   };
+
+  getChildContext() {
+    return {
+      params: this.props.params,
+    };
+  }
 
   componentDidMount() {
     if (!this.props.repository.loaded) {

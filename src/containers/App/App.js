@@ -32,10 +32,11 @@ export class AppPure extends Component {
   };
 
   componentDidMount() {
-    ga.initialize('UA-2118940-7', { debug: true });
+    ga.initialize('UA-2118940-7', { debug: false });
   }
 
   componentWillUpdate(nextProps) {
+    console.log(this.props.location);
     if (nextProps.location.pathname !== this.props.location.pathname) {
       ga.set({ page: nextProps.location.pathname });
       ga.pageview(nextProps.location.pathname);
