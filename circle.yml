@@ -27,6 +27,5 @@ deployment:
       - npm run build
       - npm dedupe
       - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD -e $REGISTRY_EMAIL
-      - docker build -t hotolab/exago-app:$TAG .
-      - docker build -t hotolab/exago-app:latest .
-      - docker push hotolab/exago-app
+      - docker build -t jgautheron/exago-app:latest .
+      - docker push jgautheron/exago-app
