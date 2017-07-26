@@ -7,7 +7,6 @@ import config from '../../config';
 
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
-import Stars from 'material-ui/svg-icons/action/stars';
 import Love from 'material-ui/svg-icons/action/favorite';
 
 import exagoTheme from '../../theme';
@@ -63,7 +62,11 @@ export class AppPure extends Component {
                 title={<a href="/" className={styles.logo}>exago</a>}
                 showMenuIconButton={false}
                 iconElementRight={
-                  <FlatButton label="Premium" icon={<Stars />} href="/premium" />
+                  <FlatButton
+                    label="GitHub"
+                    href="https://github.com/jgautheron/exago"
+                    target="_blank"
+                  />
                 }
               />
               <div style={{ padding: '0 20px' }}>
